@@ -1,16 +1,20 @@
 package cn.bdqn.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.bdqn.pojo.Role;
 import cn.bdqn.service.UserService;
 import cn.bdqn.util.MyPasswordEncrypt;
 
@@ -19,7 +23,7 @@ import cn.bdqn.util.MyPasswordEncrypt;
 @Controller
 public class UserController {
 	@Autowired
-	private UserService service;
+	private UserService userservice;
 
 	/**
 	 * 登录
@@ -67,7 +71,12 @@ public class UserController {
 	 * 首页外层展示
 	 */
 	@RequestMapping("/toshops_index.html")
-	public String showList() {
+	public String showList(Model model) {
+		//获取用户名
+		String name=(String) SecurityUtils.getSubject().getPrincipal();
+		//获取用户所拥有的所有角色
+		List<Role> allRoleAndPermissions = userservice.queryAllRoleAndPermissions(name);
+		model.addAttribute("role",allRoleAndPermissions);
 		return "shops_index";
 	}
 

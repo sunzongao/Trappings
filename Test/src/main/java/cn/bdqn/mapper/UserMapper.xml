@@ -5,18 +5,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="cn.bdqn.mapper.UserMapper">
 	<select id="queryUser" resultType="User">
-		select * from user where uname=#{uname}
+		select * from user where
+		uname=#{uname}
 	</select>
 	<select id="queryRole" resultType="String">
-		select flag from role where id in
-		(select  rid from user_role where uid in
-		(select * from user where uname=#{uname}))
+		select flag from role where id
+		in
+		(select rid from user_role where uid in
+		(select id from user where
+		uname=#{uname}))
 	</select>
 	<select id="querypermission" resultType="String">
-		select flag from permission where id in
+		select flag from
+		permission where id in
 		(select pid from role_permission where rid in
 		(select rid from user_role where uid in
-		(select * from user where uname=#{uname})))
+		(select id from user where
+		uname=#{uname})))
 	</select>
-	
+
+	<resultMap type="Role" id="r">
+		<id property="id" column="id" />
+		<collection property="permissions" ofType="Permission">
+			<id property="id" column="id" />
+			<result property="permission" column="permission" />
+			<result property="flag" column="flag" />
+			<result property="url" column="url" />
+		</collection>
+	</resultMap>
+
+	<select id="queryAllRoleAndPermissions" resultMap="r"
+		parameterType="String">
+		SELECT * from role r LEFT JOIN role_permission rp on
+		r.id=rp.rid
+		LEFT JOIN permission p on p.id=rp.pid
+		LEFT JOIN user_role ur on r.id=ur.rid
+		LEFT JOIN user u ON u.id=ur.uid
+		WHERE u.uname='sunzongao'
+	</select>
 </mapper>
