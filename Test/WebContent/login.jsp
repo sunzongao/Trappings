@@ -127,7 +127,7 @@ $('#login_btn').on('click', function(){
 											function(data) {
 												changeImg();
 												if (data == "list") {
-													location.href = "${pageContext.request.contextPath}/toshops_index";
+													location.href = "${pageContext.request.contextPath}/toshops_index.html";
 												}
 												layer.alert(data, {
 													title : '提示框',
