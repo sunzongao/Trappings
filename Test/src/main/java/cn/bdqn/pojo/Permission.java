@@ -9,6 +9,7 @@ public class Permission {
 	private String flag;
 	// 权限对应的url地址
 	private String url;
+	
 	public int getId() {
 		return id;
 	}

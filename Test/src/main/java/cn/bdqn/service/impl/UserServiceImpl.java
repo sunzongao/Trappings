@@ -1,12 +1,14 @@
 package cn.bdqn.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.bdqn.mapper.UserMapper;
+import cn.bdqn.pojo.Role;
 import cn.bdqn.pojo.User;
 import cn.bdqn.service.UserService;
 @Service
@@ -24,6 +26,11 @@ public class UserServiceImpl implements UserService {
 		map.put("allRoles", mapper.queryRole(name));
 		map.put("allPremission", mapper.querypermission(name));
 		return map;
+	}
+
+	@Override
+	public List<Role> queryAllRoleAndPermissions(String name) {
+		return mapper.queryAllRoleAndPermissions(name);
 	}
 
 }
