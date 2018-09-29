@@ -12,7 +12,7 @@
 			hheight:70,//顶部高度
 			bheight:30,//底部高度
 			mwidth:200,//菜单栏宽度
-			switchwidth:60,//切换菜单栏目宽度
+			switchwidth:10,//切换菜单栏目宽度
 			close_btn_width:25,//设置点击按钮宽度
             float :'',//位置
 			treename:'.tree',
@@ -361,8 +361,8 @@
 					str+='<span class="h com-time ">'+d.getHours()+'</span>'+'<b class="">：</b>'; 
 					str+='<span class="m com-time ">'+d.getMinutes()+'</span>'+'<b class="">：</b>'; 
 					str+='<span class="s com-time ">'+d.getSeconds()+'</span></div>';		
-					str+='<div class="date_display clearfix"><div class="years"><span>AD'+d.getFullYear()+'年'+'</span>'; 
-					str+='<span>'+d.getMonth() + 1+'月'+'</span></div>'; 
+					str+='<div class="date_display clearfix"><div class="years"><span>'+d.getFullYear()+'&nbsp;年'+'&nbsp;</span>'; 
+					str+='<span>'+(d.getMonth()+1)+'&nbsp;月'+'</span></div>'; 
 					str+='<div class="day">'+d.getDate()+'</div>';
 					str+='<div>'+weekday[d.getDay()-1]+'</div></div>';  
 					return str; 

@@ -66,7 +66,7 @@ public class UserController {
 	/**
 	 * 首页外层展示
 	 */
-	@RequestMapping("/toshops_index.html")
+	@RequestMapping("/toshops_index")
 	public String showList() {
 		return "shops_index";
 	}
