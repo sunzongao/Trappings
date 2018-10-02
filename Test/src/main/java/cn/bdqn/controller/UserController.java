@@ -1,5 +1,6 @@
 package cn.bdqn.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,11 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cn.bdqn.pojo.Data;
 import cn.bdqn.pojo.Role;
 import cn.bdqn.service.UserService;
 import cn.bdqn.util.MyPasswordEncrypt;
-
-
 
 @Controller
 public class UserController {
@@ -48,8 +48,8 @@ public class UserController {
 				b = true;
 			} else {
 				// 生成token
-				//转换成盐
-				password=MyPasswordEncrypt.encryptPassword(password);
+				// 转换成盐
+				password = MyPasswordEncrypt.encryptPassword(password);
 				UsernamePasswordToken token = new UsernamePasswordToken(name, password);
 				// 设置rememberme
 				if (remberme) {
@@ -72,14 +72,40 @@ public class UserController {
 	 */
 	@RequestMapping("/toshops_index.html")
 	public String showList(Model model) {
-		//获取用户名
-		String name=(String) SecurityUtils.getSubject().getPrincipal();
-		//获取用户所拥有的所有角色
-		List<Role> allRoleAndPermissions = userservice.queryAllRoleAndPermissions(name);
-		model.addAttribute("role",allRoleAndPermissions);
-
 		return "shops_index";
 	}
 
-	
+	@RequestMapping(value="/getdata", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String getedata() {
+		// 获取用户名
+		String name = (String) SecurityUtils.getSubject().getPrincipal();
+		// 获取用户所拥有的所有角色
+		List<Role> a = userservice.queryAllRoleAndPermissions(name);
+		List<Data> data=new ArrayList<>();
+		Data d;
+		for(int i=0;i<a.size();i++) {
+			d=new Data();
+			d.setId(a.get(i).getId());
+			d.setIcon(a.get(i).getIcon());
+			d.setName(a.get(i).getRname());
+			d.setPid(0);
+			d.setUrl("#");
+			data.add(d);
+			for(int j=0;j<a.get(i).getPermissions().size();j++) {
+				d=new Data();
+				d.setId(a.get(i).getPermissions().get(j).getId()+30);
+				d.setIcon("fa fa-angle-double-right");
+				d.setName(a.get(i).getPermissions().get(j).getPermission());
+				d.setPid(a.get(i).getId());
+				d.setUrl(a.get(i).getPermissions().get(j).getUrl());
+				data.add(d);
+			}
+		}
+		return cn.bdqn.util.JSONUtils.beanToJson(data);
+	}
+	@RequestMapping("/toaddFilter.html")
+	public String toshow() {
+		return "index";
+	}
 }

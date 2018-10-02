@@ -128,11 +128,12 @@ $('#login_btn').on('click', function(){
 												changeImg();
 												if (data == "list") {
 													location.href = "${pageContext.request.contextPath}/toshops_index.html";
+												}else{
+													layer.alert(data, {
+														title : '提示框',
+														icon : 0,
+													});
 												}
-												layer.alert(data, {
-													title : '提示框',
-													icon : 0,
-												});
 											});
 						}
 					});

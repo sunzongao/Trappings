@@ -9,6 +9,8 @@ public class Role {
 	private String rname;
 	// 角色名称（英文）
 	private String flag;
+	//首页图标
+	private String icon;
 	// 角色所拥有的权限集合
 	private List<Permission> permissions;
 	public int getId() {
@@ -28,6 +30,12 @@ public class Role {
 	}
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	public List<Permission> getPermissions() {
 		return permissions;
