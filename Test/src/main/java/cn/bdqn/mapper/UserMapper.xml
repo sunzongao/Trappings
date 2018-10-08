@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="Role" id="r">
 		<id property="id" column="id" />
 		<collection property="permissions" ofType="Permission">
-			<id property="id" column="id" />
+			<id property="id" column="pid" />
 			<result property="permission" column="permission" />
 			<result property="flag" column="flag" />
 			<result property="url" column="url" />
@@ -36,11 +36,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="queryAllRoleAndPermissions" resultMap="r"
 		parameterType="String">
-		SELECT * from role r LEFT JOIN role_permission rp on
+		SELECT r.*,p.id as pid,p.permission,p.url from role r LEFT JOIN role_permission rp on
 		r.id=rp.rid
 		LEFT JOIN permission p on p.id=rp.pid
 		LEFT JOIN user_role ur on r.id=ur.rid
 		LEFT JOIN user u ON u.id=ur.uid
-		WHERE u.uname='sunzongao'
+		WHERE u.uname=#{uname}
+
 	</select>
 </mapper>
