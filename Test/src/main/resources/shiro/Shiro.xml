@@ -150,8 +150,7 @@
 			<value>
 				<!-- /**=authc 表示所有的url都可以匿名访问，anon是shiro中一个过滤器的简写，关于shiro中的过滤器介绍见 -->
 				/*=anon
-				/jsp/*=authc
-				/info/*=user
+				/jsp/*=user
 			</value>
 		</property>
 	</bean>

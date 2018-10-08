@@ -128,6 +128,8 @@ $('#login_btn').on('click', function(){
 												changeImg();
 												if (data == "list") {
 													location.href = "${pageContext.request.contextPath}/toshops_index.html";
+												}else if(data=="login"){
+													location.href = "${pageContext.request.contextPath}/login.html";
 												}else{
 													layer.alert(data, {
 														title : '提示框',

@@ -5,6 +5,9 @@
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
+	if(session.getAttribute("login")==null){
+		return;
+	}
 %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -170,37 +173,6 @@
 </body>
 </html>
 <script type="text/javascript">
-/* 	$(function(){
-		 $.get("${pageContext.request.contextPath}/getdata",
-					function(data) {
-			 		var d=JSON.parse(data);
-
-					 var data = "[";
-			 			for(i in d){
-			 				for(j in d[i].permissions){
-			 					data =data+"{id:"+d[i].id+", pid:0,url:"+d[i].permissions[j].url+",icon:"+d[i].icon+", name:"+d[i].rname+",},"
-			 				}
-			 			}
-			 			 alert(data);
-					});
-					data += "]"; 
-					getdata(data);
-	}); */
-/* var data =[
-    {
-    	 id:1,
-		 pid:0,
-		 url:"#",
-		 icon:'fa fa-home',
-         name:'系统首页22',
-    },
-    {
-		 id:2,
-		 pid:0,
-		 url:"#",
-		 icon:'fa fa-desktop',
-		 name:'商品管理',
-    },]  */
 //设置框架
  $(function() {  	
 	 $.get("${pageContext.request.contextPath}/getdata",null,
@@ -240,7 +212,7 @@ $('#Exit_system').on('click', function(){
 	 icon:2,
     }, 
 	function(){
-	  location.href="${pageContext.request.contextPath }/jsp/login.jsp";  
+	  location.href="${pageContext.request.contextPath }/loginout";  
     });
 });
 </script>
