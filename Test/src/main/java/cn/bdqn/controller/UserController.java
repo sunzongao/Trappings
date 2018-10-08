@@ -43,7 +43,6 @@ public class UserController {
 			return "login";
 		}
 		String message = "";
-		System.out.println(remberme);
 		boolean b = false;
 		try {
 			if (!code.equalsIgnoreCase(session.getAttribute("code").toString())) {
@@ -59,7 +58,6 @@ public class UserController {
 					token.setRememberMe(remberme);
 				}
 				SecurityUtils.getSubject().login(token);
-				session.setAttribute("login", 1);//±íÊ¾ÒÑµÇÂ½
 			}
 		} catch (Exception e) {
 			message = e.getMessage();
