@@ -39,8 +39,10 @@ public class UserController {
 	@ResponseBody
 	public String login(@RequestParam("name") String name, @RequestParam("password") String password,
 			@RequestParam("code") String code, @RequestParam("remberme") boolean remberme, HttpSession session) {
+		if(name==null) {
+			return "login";
+		}
 		String message = "";
-		System.out.println(remberme);
 		boolean b = false;
 		try {
 			if (!code.equalsIgnoreCase(session.getAttribute("code").toString())) {
@@ -66,7 +68,14 @@ public class UserController {
 		}
 		return message;
 	}
-
+	/**
+	 * 展示登陆
+	 * @return
+	 */
+	@RequestMapping("/login.html")
+	public String tologin() {
+		return "forward:login.jsp";
+	}
 	/**
 	 * 首页外层展示
 	 */
@@ -107,5 +116,14 @@ public class UserController {
 	@RequestMapping("/toaddFilter.html")
 	public String toshow() {
 		return "index";
+	}
+	/**
+	 * 登出
+	 * @return
+	 */
+	@RequestMapping("/loginout")
+	public String loginOut() {
+		SecurityUtils.getSubject().logout();
+		return "forward:login.jsp";
 	}
 }

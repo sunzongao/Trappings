@@ -64,9 +64,6 @@
 				<div class="search_style l_f">
 					<form action="#" method="get" class="sidebar_form">
 						<div class="input-group">
-							<input type="text" name="q" class="form-control"><span
-								class="input-group-btn"><a class="btn_flat"
-								href="javascript:" onclick=""><i class="fa fa-search"></i></a></span>
 						</div>
 					</form>
 				</div>
@@ -167,40 +164,33 @@
 		<div class="Sellerber_bottom info" id="bottom">
 			<span class="l_f">版权所有：江苏易佳服饰有限公司</span>
 		</div>
+		  <!--消息提示板块内容-->
+<div class="prompt_style prompt">
+	<div class="prompt_title">通知消息</div>
+	<div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-user icon_prompt label-danger"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-volume-up icon_prompt label-success"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-user icon_prompt label-warning"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-user icon_prompt label-danger"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix submenu">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="javascript:void()" class="" name="Personal_info.html" title="订单消息"><i class="fa fa-user icon_prompt label-danger"></i>你有订单还没有处理请及时处理</a>
+    </div>
+  </div> 
 </body>
 </html>
 <script type="text/javascript">
-/* 	$(function(){
-		 $.get("${pageContext.request.contextPath}/getdata",
-					function(data) {
-			 		var d=JSON.parse(data);
-
-					 var data = "[";
-			 			for(i in d){
-			 				for(j in d[i].permissions){
-			 					data =data+"{id:"+d[i].id+", pid:0,url:"+d[i].permissions[j].url+",icon:"+d[i].icon+", name:"+d[i].rname+",},"
-			 				}
-			 			}
-			 			 alert(data);
-					});
-					data += "]"; 
-					getdata(data);
-	}); */
-/* var data =[
-    {
-    	 id:1,
-		 pid:0,
-		 url:"#",
-		 icon:'fa fa-home',
-         name:'系统首页22',
-    },
-    {
-		 id:2,
-		 pid:0,
-		 url:"#",
-		 icon:'fa fa-desktop',
-		 name:'商品管理',
-    },]  */
 //设置框架
  $(function() {  	
 	 $.get("${pageContext.request.contextPath}/getdata",null,
@@ -240,7 +230,7 @@ $('#Exit_system').on('click', function(){
 	 icon:2,
     }, 
 	function(){
-	  location.href="${pageContext.request.contextPath }/jsp/login.jsp";  
+	  location.href="${pageContext.request.contextPath }/loginout";  
     });
 });
 </script>
