@@ -42,9 +42,9 @@ public class UserController {
 		if(name==null) {
 			return "login";
 		}
-		String message = "";
+		String message = "";	
 		boolean b = false;
-		try {
+		try {			
 			if (!code.equalsIgnoreCase(session.getAttribute("code").toString())) {
 				message = "验证码不正确";
 				b = true;
@@ -82,7 +82,7 @@ public class UserController {
 	@RequestMapping("/toshops_index.html")
 	public String showList(Model model) {
 		return "shops_index";
-	}
+	} 
 
 	@RequestMapping(value="/getdata", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
 	@ResponseBody
@@ -105,7 +105,7 @@ public class UserController {
 				d=new Data();
 				d.setId(a.get(i).getPermissions().get(j).getId()+30);
 				d.setIcon("fa fa-angle-double-right");
-				d.setName(a.get(i).getPermissions().get(j).getPermission());
+				d.setName(a.get(i).getPermissions().get(j).getPermission());	
 				d.setPid(a.get(i).getId());
 				d.setUrl(a.get(i).getPermissions().get(j).getUrl());
 				data.add(d);

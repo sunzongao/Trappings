@@ -1,13 +1,16 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <link href="${pageContext.request.contextPath }/statics/css/shop.css" type="text/css" rel="stylesheet" />
+
 <link href="${pageContext.request.contextPath }/statics/css/Sellerber.css" type="text/css"  rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/statics/css/bkg_ui.css" type="text/css"  rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/statics/font/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
@@ -32,7 +35,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <button class="btn button_btn btn-danger" type="button" onclick=""><i class="fa fa-trash-o"></i>&nbsp;删除</button>
 <span class="submenu"><a href="javascript:void(0)" name="" onclick="add_AD_sort()" class="btn button_btn bg-deep-blue" title="添加分类"><i class="fa  fa-edit"></i>&nbsp;添加分类</a></span>
 <div class="search  clearfix">
- <label class="label_name">搜索：</label><input name="" type="text"  class="form-control col-xs-6"/><button class="btn button_btn bg-deep-blue " onclick=""  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+ <select name="storehouseId" id="storehouseId"  class="form-control col-xs-6"> 
+						<option value="0">全部</option>
+						<c:forEach var="s" items="${storehouse }">
+							<option value="${s.storehouseId }"
+								<c:if test="${s.storehouseId eq storehouseId}">
+									selected
+								</c:if>
+							>${s.sName }</option>
+						</c:forEach>
+					</select>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="btn button_btn bg-deep-blue " onclick=""  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
 </div>
 </div>
 <!--分类管理-->
@@ -41,15 +55,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <thead>
   <tr>
   <th width="30"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
-   <th width="100">排序</th>
-   <th>分类名称</th> 
-   <th>介绍</th>   
-   <th width="150">广告数量</th>
-   <th width="180">添加时间（最新）</th>
-   <th width="150">状态</th>
-   <th >备注</th>
+   <th width="100">客户编号</th>
+   <th>客户名称</th> 
+   <th>联系人</th>   
+   <th>联系电话</th>
+   <th width="180">联系地址</th>
+   <th width="150">客户类型</th>
    <th width="200">操作</th>
    </tr>   
+   		<c:forEach var="c" items="${pageUtil.lists }">
+   		
+				<tr>
+				<th><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
+					<th>${c.customerId}</th>
+					<th>${c.cName}</th>
+					<th>${c.cContacts}</th>
+					<th>${c.cPhone}</th>
+					<th>${c.cAddress}</th>
+					<th>${c.cTypename}</th>
+					<th>修改</th>
+					<th>
+						<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> 
+						<a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> 
+						<a href="advert_detailed_left.html" onclick="Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>
+					</th>
+				</tr>
+			</c:forEach>
   </thead>
   <tbody>
    <tr>
@@ -115,11 +146,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 </html>
 <script>
-var dataSet=[
+/* var dataSet=[
  ['<label><input type="checkbox" class="ace"><span class="lbl"></span></label>','1','首页轮播图（大）','首页轮播图','4','2016-08-28 15:23:12','启用','','<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> <a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> <a href="advert_detailed_left.html" onclick=Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>'],
 	 ['<label><input type="checkbox" class="ace"><span class="lbl"></span></label>','1','首页轮播图（大）','首页轮播图','4','2016-08-28 15:23:12','启用','','<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> <a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> <a href="advert_detailed_left.html" onclick=Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>'],
 	 ['<label><input type="checkbox" class="ace"><span class="lbl"></span></label>','1','首页轮播图（大）','首页轮播图','4','2016-08-28 15:23:12','启用','','<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> <a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> <a href="advert_detailed_left.html" onclick=Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>'],
- ];
+ ]; */
+
 	
 jQuery(function($) {
 				var oTable1 = $('#sample-table').dataTable( {

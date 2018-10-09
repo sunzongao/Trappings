@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.bdqn.mapper.CustomerMapper">
+	<select id="queryAll" resultType="Customer" parameterType="java.util.Map">
+		select c.customerId,c.cName,c.cContacts,c.cPhone,c.cAddress,t.name as cTypename
+	    from Customer c inner join Customertype t 
+	    on c.cId = t.id
+	    <trim prefix="where" prefixOverrides="and|or">
+	    	<if test="cName!=null and cName!=''">
+	    		cName like CONCAT('%',#{cName},'%') 
+	    	</if>
+	    	<if test="cId!=0">
+	    	   and cId=#{cId}
+	    	</if>
+	    </trim>
+	    
+	    limit #{startRow},#{pageSize}
+	</select>
+	
+	<select id="count" resultType="java.lang.Integer" parameterType="java.util.Map">
+		select count(1) from Customer
+		 <trim prefix="where" prefixOverrides="and|or">
+	    	<if test="cName!=null and cName!=''">
+	    		cName like CONCAT('%',#{cName},'%') 
+	    	</if>
+	    	<if test="cId!=0">
+	    	   and cId=#{cId}
+	    	</if>
+	    </trim>
+	</select>
+	
+	
+	<insert id="add" parameterType="Customer">
+		insert into customer(customerId,cName,cContacts,cPhone,cAddress,cId,comments)
+		values(#{customerId},#{cName},#{cContacts},#{cPhone},#{cAddress},#{cId},#{comments})
+	</insert>
+	
+	
+</mapper>
