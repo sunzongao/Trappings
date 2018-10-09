@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PageUtil<T> {
-	private int currentPage;//当前页数
-	private int pageSize;//每页显示的数据量
-	private int startRow;//起始行数
-	private int totalCount;//数据总条数
-	private int totalPage;//总页数
-	private List<T> lists = new ArrayList<T>();//每页显示的数据的集合
-
+	private int currentPage;
+	private int pageSize=4;
+	private int startRow;
+	private int totalCount;
+	private int totalPage;
+	private List<T> lists = new ArrayList<T>();
 	public int getCurrentPage() {
 		return currentPage;
 	}

@@ -38,7 +38,7 @@ public class SupplierController {
 		map.put("currentPage", 1);
 		else
 		map.put("currentPage", Integer.parseInt(currentPage));
-		PageUtil<Supplier> pageUtil=supplierService.querySupplier(map);
+		PageUtil<Supplier> pageUtil=supplierService.querySupplier(sName, currentPage, pageSize);
 		model.addAttribute("page", pageUtil);
 			
 		return "supplier_list";
