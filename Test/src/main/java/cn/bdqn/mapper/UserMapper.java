@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
+import cn.bdqn.pojo.Permission;
 import cn.bdqn.pojo.Role;
 import cn.bdqn.pojo.User;
 
@@ -19,5 +20,5 @@ public interface UserMapper {
 	public Set<String> querypermission(@Param("uname") String uname);
 	
 	//查询登陆用户所用有的所有角色和权限
-	public List<Role> queryAllRoleAndPermissions(@Param("uname") String uname);
+	public List<Permission> queryAllRoleAndPermissions(@Param("uname") String uname);
 }
