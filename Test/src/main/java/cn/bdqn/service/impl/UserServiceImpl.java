@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.bdqn.mapper.UserMapper;
-import cn.bdqn.pojo.Role;
+import cn.bdqn.pojo.Permission;
 import cn.bdqn.pojo.User;
 import cn.bdqn.service.UserService;
 @Service
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Role> queryAllRoleAndPermissions(String name) {
+	public List<Permission> queryAllRoleAndPermissions(String name) {
 		return mapper.queryAllRoleAndPermissions(name);
 	}
 
