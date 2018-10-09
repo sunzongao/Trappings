@@ -6,5 +6,6 @@ import cn.bdqn.pojo.Supplier;
 import cn.bdqn.util.PageUtil;
 
 public interface SupplierService {
-	public PageUtil<Supplier> querySupplier(Map<String, Object> map);
+	public PageUtil<Supplier> querySupplier(String sName,
+			int currentPage, int pageSize);
 }

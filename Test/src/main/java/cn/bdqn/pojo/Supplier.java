@@ -10,6 +10,7 @@ public class Supplier {
 	private String supplierId;
 	private String sName;
 	private String sContacts;
+	private String sSex;
 	private String sPhone;
 	private String sEmail;
 	private String sAddress;
@@ -33,6 +34,12 @@ public class Supplier {
 	}
 	public void setsContacts(String sContacts) {
 		this.sContacts = sContacts;
+	}
+	public String getsSex() {
+		return sSex;
+	}
+	public void setsSex(String sSex) {
+		this.sSex = sSex;
 	}
 	public String getsPhone() {
 		return sPhone;
