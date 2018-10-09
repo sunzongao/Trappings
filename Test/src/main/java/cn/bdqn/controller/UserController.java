@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.bdqn.pojo.Data;
+import cn.bdqn.pojo.Permission;
 import cn.bdqn.pojo.Role;
 import cn.bdqn.service.UserService;
 import cn.bdqn.util.MyPasswordEncrypt;
@@ -89,27 +90,18 @@ public class UserController {
 	public String getedata() {
 		// 获取用户名
 		String name = (String) SecurityUtils.getSubject().getPrincipal();
-		// 获取用户所拥有的所有角色
-		List<Role> a = userservice.queryAllRoleAndPermissions(name);
+		// 获取用户所拥有的所有权限
+		List<Permission> a = userservice.queryAllRoleAndPermissions(name);
 		List<Data> data=new ArrayList<>();
 		Data d;
 		for(int i=0;i<a.size();i++) {
-			d=new Data();
-			d.setId(a.get(i).getId());
-			d.setIcon(a.get(i).getIcon());
-			d.setName(a.get(i).getRname());
-			d.setPid(0);
-			d.setUrl("#");
-			data.add(d);
-			for(int j=0;j<a.get(i).getPermissions().size();j++) {
 				d=new Data();
-				d.setId(a.get(i).getPermissions().get(j).getId()+30);
-				d.setIcon("fa fa-angle-double-right");
-				d.setName(a.get(i).getPermissions().get(j).getPermission());
-				d.setPid(a.get(i).getId());
-				d.setUrl(a.get(i).getPermissions().get(j).getUrl());
+				d.setIcon(a.get(i).getIcon());
+				d.setId(a.get(i).getId());
+				d.setName(a.get(i).getPermission());
+				d.setPid(a.get(i).getPid());
+				d.setUrl(a.get(i).getUrl());
 				data.add(d);
-			}
 		}
 		return cn.bdqn.util.JSONUtils.beanToJson(data);
 	}

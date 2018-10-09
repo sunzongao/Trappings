@@ -60,7 +60,7 @@
 									src="${pageContext.request.contextPath}/statics/images/login_img.png" />
 							</div>
 							<form class=""
-								style="width: 300px; float: right; margin-right: 50px;">
+								style="width: 300px; float: right; margin-right: 50px;" id="form">
 								<h4 class="title_name">
 									<img src="statics/images/login_title.png" />
 								</h4>
@@ -119,7 +119,7 @@
 </html>
 <script type="text/javascript">
 	//回车触发登陆
-	document.onkeyup = function (e) {//按键信息对象以函数参数的形式传递进来了，就是那个e
+	document.getElementById("form").onkeyup = function (e) {//按键信息对象以函数参数的形式传递进来了，就是那个e
     var code =e.keyCode;  //取出按键信息中的按键代码(大部分浏览器通过keyCode属性获取按键代码，但少部分浏览器使用的却是charCode)
     if (code == 13) {
        login();
