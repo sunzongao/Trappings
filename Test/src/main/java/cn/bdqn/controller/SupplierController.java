@@ -3,13 +3,14 @@ package cn.bdqn.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.bdqn.pojo.Employee;
 import cn.bdqn.pojo.Supplier;
 import cn.bdqn.service.SupplierService;
 import cn.bdqn.util.PageUtil;
@@ -26,22 +27,39 @@ public class SupplierController {
 	private SupplierService supplierService;
 	
 	
-	@RequestMapping("/jsp/supplierList.html")
-	public String supplierList(HttpServletRequest request,Model model) {
-		String sName=request.getParameter("sName");
-		Map<String, Object> map =new HashMap<String,Object>();
-		map.put("pageSize", 5);
-		map.put("sName", sName);
-		String currentPage=request.getParameter("currentPage");
+	/**
+	 * 查看供应商列表
+	 * @param pageindex
+	 * @param sName
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/jsp/supplier_list.html")
+	public String supplierList(String pageindex,String sName,Model model) {
+		int temp=1;
+		if(pageindex!=null) {
+			temp=Integer.parseInt(pageindex);
+		}
 		
-		if(currentPage==null)
-		map.put("currentPage", 1);
-		else
-		map.put("currentPage", Integer.parseInt(currentPage));
-		PageUtil<Supplier> pageUtil=supplierService.querySupplier(sName, currentPage, pageSize);
-		model.addAttribute("page", pageUtil);
-			
+		PageUtil<Supplier> pageUtil = supplierService.querySupplier(sName, temp);
+		model.addAttribute("pageUtil",pageUtil);
+		model.addAttribute("sName",sName);
 		return "supplier_list";
+	}
+	
+	
+	
+	@RequestMapping("/jsp/supplier_show.html")
+	public String supplierShow(String id,Model model) {
+		id=id.substring(12, id.length());
+		Supplier supplier=supplierService.getSupplierById(id);
+		model.addAttribute("supplier",supplier);
+		return "supplier_show";
+	}
+	
+	@RequestMapping("/jsp/supplier_doupdate.html")
+	public String supplierDoUpdate(String id,Model model) {
+		return "supplier_update";
 	}
 	
 	

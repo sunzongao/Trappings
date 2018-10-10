@@ -8,16 +8,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="querySupplier" resultType="Supplier"
 		parameterType="map">
 		select * from supplier
-		<if test="sName!=null and sName!=''">
-			where sName LIKE CONCAT('%',#{sName},'%')
-		</if>
-		limit #{startRow},#{pageSize}
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="sName!=null and sName!=''">
+				and  sName like CONCAT('%',#{sName},'%') 
+			</if>
+		</trim>
+		limit #{start},#{end}
 	</select>
 
-	<select id="count" resultType="int">
+	<select id="queryCount"  resultType="int" parameterType="map">
 		select count(1) from supplier
-		<if test="sName!=null and sName!=''">
-			where sName LIKE CONCAT('%',#{sName},'%')
-		</if>
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="sName!=null and sName!=''">
+				and  sName like CONCAT('%',#{sName},'%') 
+			</if>
+		</trim>
 	</select>
+	
+	<select id="getSupplierById" resultType="Supplier">
+		select * from supplier where supplierId=#{supplierId}
+	</select>
+	
+	
+	<update id="updateSupplier" parameterType="Supplier">
+		update supplier set sName=#{sName},sContacts=#{sContacts},
+		sPhone=#{sPhone},sEmail=#{sEmail},sAddress=#{sAddress},
+		sDate=#{sDate},sStatus=#{sStatus},comments=#{comments}
+		where supplierId=#{supplierId}
+	</update>
 </mapper>

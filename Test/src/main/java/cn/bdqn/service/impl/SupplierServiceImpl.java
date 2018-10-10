@@ -17,23 +17,27 @@ public class SupplierServiceImpl implements SupplierService{
 
 	@Autowired
 	private SupplierMapper supplierMapper;
-	
-	public PageUtil<Supplier> querySupplier(String sName,
-			int currentPage, int pageSize) {
-		PageUtil<Supplier> pageUtil = new PageUtil<Supplier>();
-		Map<String, Object> map = new HashMap<String, Object>();
+
+	public PageUtil<Supplier> querySupplier(String sName, int pageindex) {
+		PageUtil<Supplier> pageUtil =new PageUtil<>();
+		Map<String, Object> map=new HashMap<>();
 		map.put("sName", sName);
-		int totalCount = supplierMapper.count(map);
-		pageUtil.setTotalCount(totalCount);
-		pageUtil.setPageSize(pageSize);
-		pageUtil.setCurrentPage(currentPage);
-		int startRow = pageUtil.getStartRow();
-		map.put("startRow", startRow);
-		map.put("pageSize", pageSize);
-		List<Supplier> list = supplierMapper.querySupplier(map);
-		pageUtil.setLists(list);
+		pageUtil.setTotalCount(supplierMapper.queryCount(map));
+		pageUtil.setCurrentPage(pageindex);
+		map.put("start", pageUtil.getStartRow());
+		map.put("end", pageUtil.getPageSize());
+		pageUtil.setLists(supplierMapper.querySupplier(map));
 		return pageUtil;
 	}
+
+	public Supplier getSupplierById(String supplierId) {
+		return supplierMapper.getSupplierById(supplierId);
+	}
+
+	public int updateSupplier(Supplier s) {
+		return supplierMapper.updateSupplier(s);
+	}
+	
 
 
 }

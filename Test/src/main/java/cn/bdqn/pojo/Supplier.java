@@ -77,5 +77,23 @@ public class Supplier {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+	public Supplier() {
+		super();
+	}
+	public Supplier(String supplierId, String sName, String sContacts, String sSex, String sPhone, String sEmail,
+			String sAddress, String sDate, int sStatus, String comments) {
+		super();
+		this.supplierId = supplierId;
+		this.sName = sName;
+		this.sContacts = sContacts;
+		this.sSex = sSex;
+		this.sPhone = sPhone;
+		this.sEmail = sEmail;
+		this.sAddress = sAddress;
+		this.sDate = sDate;
+		this.sStatus = sStatus;
+		this.comments = comments;
+	}
+	
 	
 }
