@@ -11,13 +11,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="eName!=null and eName!=''">
 				and  e.eName like CONCAT('%',#{eName},'%') 
 			</if>
-			<if test="begintime!=null and begintime!='' and endtime==null">
+			<if test="begintime!=null and begintime!='' and (endtime==null or endtime=='')">
 				and e.entryDate >= #{begintime} 
 			</if>
-			<if test="begintime!=null and begintime!='' and endtime!=null">
+			<if test="begintime!=null and begintime!='' and endtime!=null and endtime!=''">
 				and e.entryDate BETWEEN #{begintime} and #{endtime} 
 			</if>
-			<if test="endtime!=null and endtime!='' and begintime==null">
+			<if test="endtime!=null and endtime!='' and (begintime==null or begintime=='')">
 				and e.entryDate <![CDATA[ <= ]]> #{endtime} 
 			</if>
 		</trim>
@@ -41,4 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</trim>
 	</select>
+	<select id="queryById" resultType="Employee" parameterType="String">
+		select e.*,d.dName as dName,j.jName as jName from employee e LEFT JOIN
+		department d ON e.departmentId=d.departmentId LEFT JOIN job j ON e.jobId=j.jobId
+		where e.employeeId=#{employeeId}
+	</select>
+	<update id="updateEmployeeById">
+		update 	employee set eName=#{eName},eSex=#{eSex},birthDate=#{birthDate},entryDate=#{entryDate},ePhone=#{ePhone},eAddress=#{eAddress},departmentId=#{departmentId},jobId=#{jobId},comments=#{comments}
+		where employeeId=#{employeeId}
+	</update>
 </mapper>

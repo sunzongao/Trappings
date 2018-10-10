@@ -23,6 +23,14 @@ public class Employee {
 	private int jobId;
 	//职务名称
 	private String jName;
+	//备注
+	private String comments;
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 	public String getEmployeeId() {
 		return employeeId;
 	}

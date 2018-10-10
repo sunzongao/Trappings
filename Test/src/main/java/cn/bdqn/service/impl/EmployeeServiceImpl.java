@@ -28,5 +28,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		util.setLists(employeeMapper.queryEmployeeByName(map));
 		return util;
 	}
+	@Override
+	public Employee queryById(String employeeId) {
+		return employeeMapper.queryById(employeeId);
+	}
+	@Override
+	public int updateEmployeeById(Employee employee) {
+		return employeeMapper.updateEmployeeById(employee);
+	}
 
 }
