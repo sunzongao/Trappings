@@ -14,14 +14,45 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="${pageContext.request.contextPath }/statics/css/Sellerber.css" type="text/css"  rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/statics/css/bkg_ui.css" type="text/css"  rel="stylesheet" />
 <link href="${pageContext.request.contextPath }/statics/font/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath }/statics/css/jquery.pagination.css" rel="stylesheet" type="text/css"/>
 <script src="${pageContext.request.contextPath }/statics/js/jquery-1.9.1.min.js" type="text/javascript" ></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/jquery.cookie.js"></script>
+<script src="${pageContext.request.contextPath }/statics/js/jquery.cookie.js"></script>
 <script src="${pageContext.request.contextPath }/statics/js/shopFrame.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath }/statics/js/Sellerber.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath }/statics/js/layer/layer.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath }/statics/js/laydate/laydate.js" type="text/javascript"></script>
 <script src="${pageContext.request.contextPath }/statics/js/jquery.dataTables.min.js"></script>
 <script src="${pageContext.request.contextPath }/statics/js/jquery.dataTables.bootstrap.js"></script>
+<script src="${pageContext.request.contextPath }/statics/js/jquery.pagination.min.js"></script>
+
+<script type="text/javascript">
+	 $(function(){
+		$("#del").click(function(){
+				var sss = $(this).attr('value');
+				if(layer.confirm("确定删除吗?")){
+					$.ajax({
+					type:"post",
+					url:"jsp/del",
+					data:{id:sss},
+					dataType:"json",
+					success:function(result){
+						if(result>0){
+							alert("删除成功");
+							window.location.reload();
+						}else{
+							alert("删除失败");
+						}
+					}
+				})
+				}
+				
+			});
+			
+	})  
+	
+	
+	
+</script>
 <title>广告分类</title>
 </head>
 <!--[if lt IE 9]>
@@ -33,21 +64,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="margin advertising" id="page_style">
   <div class="operation clearfix">
 <button class="btn button_btn btn-danger" type="button" onclick=""><i class="fa fa-trash-o"></i>&nbsp;删除</button>
-<span class="submenu"><a href="javascript:void(0)" name="" onclick="add_AD_sort()" class="btn button_btn bg-deep-blue" title="添加分类"><i class="fa  fa-edit"></i>&nbsp;添加分类</a></span>
+<span class="submenu"><a href="javascript:void(0)" id="customerAdd" name="" onclick="add_AD_sort()" class="btn button_btn bg-deep-blue" title="添加客户"><i class="fa  fa-edit"></i>&nbsp;添加客户</a></span>
 <div class="search  clearfix">
- <select name="storehouseId" id="storehouseId"  class="form-control col-xs-6"> 
+<form action="${pageContext.request.contextPath}/jsp/customerShow.html" method="post">
+ <select name="cId" id="cId"  class="form-control col-xs-6"> 
 						<option value="0">全部</option>
-						<c:forEach var="s" items="${storehouse }">
-							<option value="${s.storehouseId }"
-								<c:if test="${s.storehouseId eq storehouseId}">
+						<c:forEach var="s" items="${lists}">
+							<option value="${s.id}"
+								<c:if test="${s.id eq cId}">
 									selected
 								</c:if>
-							>${s.sName }</option>
+							>${s.name}</option>
 						</c:forEach>
 					</select>
 					&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="btn button_btn bg-deep-blue " onclick=""  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+					<button class="btn button_btn bg-deep-blue " onclick="search" id="search"  type="submit"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+</form>					
 </div>
+
 </div>
 <!--分类管理-->
 <div class="sort_list">
@@ -63,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <th width="150">客户类型</th>
    <th width="200">操作</th>
    </tr>   
-   		<c:forEach var="c" items="${pageUtil.lists }">
+   		<c:forEach var="c" items="${pageUtils.lists }">
    		
 				<tr>
 				<th><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
@@ -73,10 +107,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th>${c.cPhone}</th>
 					<th>${c.cAddress}</th>
 					<th>${c.cTypename}</th>
-					<th>修改</th>
+					
 					<th>
-						<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> 
-						<a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> 
+						<a href="javascript:${c.customerId }" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn" id="customerUpdate">编辑</a> 
+						<a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn" id="del">删除</a> 
 						<a href="advert_detailed_left.html" onclick="Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>
 					</th>
 				</tr>
@@ -85,64 +119,70 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <tbody>
    <tr>
    </tr>
+    <input id="totalPage" value="${pageUtils.totalPage }" type="hidden">
+    <input id="currentPage" value="${pageUtils.currentPage }" type="hidden">
   </tbody>
  </table>
+ <span><span class="r">共有数据:<strong>${pageUtils.totalCount}</strong>条</span></span>
+ 
+ 	   <div class="box">
+				<div id="pagination1" class="page fl"></div>
+					<div class="info fl">
+							<p>
+								<span id="current1"></span>
+							</p>
+						</div>
+					</div>
+ 	
+		<script>
+			$(function() {
+			var a = $("#totalPage").val();
+			var b = $("#currentPage").val();
+				$("#pagination1").pagination(
+						{
+							currentPage : parseInt(b),
+							totalPage : a,
+							callback : function(current) {
+							$("#current1").text(current);
+							window.location.href = "${pageContext.request.contextPath }/jsp/customerShow.html?currentPage="
+													+ current;
+										}
+						});
+				});
+			</script>
+							
+
 </div>
 </div>
-<!--添加分类-->
+
+
+
+
+
+<!--添加客户-->
 <div id="ad_sort" class="display">
- <div class="add_style">
+ <div class="add_style" id="customerAdd">
   <ul>
-   <li class="clearfix"><label class="label_name col-xs-2">分类名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="分类名称" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">状&nbsp;&nbsp;态：&nbsp;&nbsp;</label>
-   <div class="Add_content col-xs-9">
-     <label><input name="form-field-radio2" type="radio" checked="checked" class="ace">
-     <span class="lbl">显示</span></label>&nbsp;&nbsp;&nbsp;
-     <label><input name="form-field-radio2" type="radio" class="ace">
-     <span class="lbl">隐藏</span></label>
-     </div>
-     </li >
-      <li class="clearfix"><label class="label_name col-xs-2">描&nbsp;&nbsp;述：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><textarea name="权限描述" class="form-control col-xs-12 col-sm-5" id="form_textarea" placeholder="" onkeyup="checkLength(this);"></textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">客户编号：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="customerId" id="customerId" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:200px"></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">客户名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cName" id="cName" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:200px"></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">联系人：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cContacts" id="cContacts" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:200px"></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">联系电话：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cPhone" id="cPhone" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:200px"></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">联系地址：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cAddress" id="cAddress" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:200px"></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">备注信息：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><textarea name="comments" id="comments" class="form-control col-xs-12 col-sm-5" id="form_textarea" placeholder="" onkeyup="checkLength(this);" style="width:200px" ></textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">50</span>字</span></span></li> 
+     <li class="clearfix"><label class="label_name col-xs-2">客户类型：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+    	<select name="cId">
+    			<option value="0">全部</option>
+    			<c:forEach var="c" items="${lists}">
+    				<option value="${c.id}">${c.name}</option>
+    			</c:forEach>
+    		</select> 
+     </span></li>
   </ul>
  </div>
 </div>
-<!--添加广告-->
-<div id="Advert_add_style" class="Advert_add_style padding display" >
- <div class="add_style">
- <ul>
-  <li class="clearfix"><label class="label_name col-xs-2">图片名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="图片名称" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-  <li class="clearfix"><label class="label_name col-xs-2">显示排序：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="排序" type="text" id="form-field-1" placeholder="0" class="col-xs-10 col-sm-5" style="width:50px"></span></li>
-  <li class="clearfix"><label class="label_name col-xs-2">链接地址：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="地址" type="text" id="form-field-1" placeholder="地址" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">状&nbsp;&nbsp;态：&nbsp;&nbsp;</label>
-   <div class="Add_content col-xs-9">
-     <label><input name="form-field-radio1" type="radio" checked="checked" class="ace">
-     <span class="lbl">显示</span></label>&nbsp;&nbsp;&nbsp;
-     <label><input name="form-field-radio1" type="radio" class="ace">
-     <span class="lbl">隐藏</span></label>
-     </div>
-     </li >
-     <li class="clearfix">
-     <label class="label_name col-xs-2">设置时间：&nbsp;&nbsp;</label> 
-    <div class="Add_content col-xs-9">
-    <label class="l_f checkbox_time"><input type="checkbox" name="checkbox" class="ace" id="checkbox"><span class="lbl">是</span></label>
-    <div class="Date_selection" style="display:none">
-      <span class="label_name">开始日：</span><p class="laydate-icon" id="start" style="width:160px; margin-right:10px; height:30px; line-height:30px; float:left"></p>
-      <span class="label_name">结束日：</span><p class="laydate-icon" id="end" style="width:160px;height:30px; line-height:30px; float:left"></p>
-    </div>
-    </div>   
-    </li>
-     <li class="clearfix"><label class="label_name col-xs-2">图&nbsp;&nbsp;片：&nbsp;&nbsp;</label>
-     <span class="cont_style col-xs-9">        
-       <div id="preview" class="preview_img"><img id="imghead" border="0" src="images/image.png" /></div>
-       <div class="fileInput ">
-        <input type="file" onchange="previewImage(this)" name="upfile" id="upfile" class="upfile"/>
-        <input class="upFileBtn" type="button" value="上传图片" onclick="document.getElementById('upfile').click()" />
-        </div>
-      </span>
-  </li>
- </ul>
- </div>
-</div>
+
+
+
 </body>
 </html>
 <script>
@@ -178,54 +218,50 @@ jQuery(function($) {
 						
 				});
 			});
-	/*产品-删除*/
-function picture_del(obj,id){
+	/*客户-删除*/
+ /* function picture_del(obj,id){
 	layer.confirm('确认要删除吗？',{icon:0,},function(index){
-		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
+		if(id!=""){
+			$.post("jsp/delete?id="+id,null,function(data){
+				if(data == "ok"){
+					layer.msg('已删除!',{
+						icon : 1,
+						time : 1000
+					},function(){
+						window.location.reload();
+					});
+				}else if(data == "error"){
+					layer.alert('删除失败!', {icon: 2});
+					return ;
+				}
+			},"text");
+		}
+		/* $(obj).parents("tr").remove();
+		layer.msg('已删除!',{icon:1,time:1000}); 
 	});
-}
-/*****添加广告******/
-function Advert_add(obj ,id){
+}  */
+	
+	
+
+/*****编辑客户信息******/
+ function Advert_add(obj ,id){
+	var id = $("#customerId").val();
 	layer.open({
-        type: 1,
-        title: '添加广告',
+        type: 2,
+        title: '编辑客户信息',
 		maxmin: true, 
 		shadeClose: false, //点击遮罩关闭层
         area : ['800px' , ''],
-        content:$('#Advert_add_style'),
-		btn:['提交','取消'],
-		yes:function(index,layero){	
-		 var num=0;
-		 var str="";
-     $(".add_style input[type$='text']").each(function(n){
-          if($(this).val()=="")
-          {
-               
-			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
-                title: '提示框',				
-				icon:0,								
-          }); 
-		    num++;
-            return false;            
-          } 
-		 });
-		  if(num>0){  return false;}	 	
-          else{
-			  layer.alert('添加成功！',{
-               title: '提示框',				
-			icon:1,		
-			  });
-			   layer.close(index);	
-		  }		  		     				
-		}
+        content:"/jsp/doupdate?id="+id,
+		
     });	
-}
-/***************添加分类***********/
-function add_AD_sort( ){
+} 
+/***************添加客户***********/
+   function add_AD_sort( ){
 	  layer.open({
+		url: "",
         type: 1,
-        title: '添加分类',
+        title: '添加客户',
 		maxmin: false, 
 		shadeClose: false, //点击遮罩关闭层
         area : ['600px' , ''],
@@ -234,10 +270,9 @@ function add_AD_sort( ){
 			yes:function(index,layero){	
 		 var num=0;
 		 var str="";
-		  $(".add_style input[type$='text']").each(function(n){
+		  $("#customerAdd input[type$='text']").each(function(n){
           if($(this).val()=="")
           {
-               
 			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
                 title: '提示框',				
 				icon:0,								
@@ -245,19 +280,43 @@ function add_AD_sort( ){
 		    num++;
             return false;            
           } 
-		 });
+		 });   
 		  if(num>0){  return false;}	 	
-          else{
-			  layer.alert('添加成功！',{
-               title: '提示框',				
-			icon:1,		
-			  });
-			   layer.close(index);	
+          else{ 
+        	  var customerId = $("#customerId").val();
+        	  var cName = $("#cName").val();
+        	  var cContacts = $("#cContacts").val();
+        	  var cPhone = $("#cPhone").val();
+        	  var cAddress = $("#cAddress").val();
+        	  var cId = $("#cId").val();
+        	  var comments = $("#comments").val();
+        	  $.ajax({
+        		  type:"post",
+        		  url:"${pageContext.request.contextPath}/jsp/doadd",
+        		  data:{customerId:customerId,cName:cName,cContacts:cContacts,cPhone:cPhone,
+        			  cAddress:cAddress,cId:cId,comments:comments},
+        			  dataType:"json",
+        			  success:function(data){		
+        				  if(data.result>0){
+        					  layer.alert('添加成功！',{
+        			               title: '提示框',				
+        								icon:1,		
+        						  });  
+        				  }else{
+        					  layer.alert('添加失败！',{
+       			               	title: '提示框',				
+       							icon:1,		
+       						  });
+        				  }
+        				  layer.close(index);
+        			  }
+        	  })
+			  
 		  }	
 		 
 		 }
 	  })
-	}
+	}   
  /*checkbox激发事件*/
 $('#checkbox').on('click',function(){
 	if($('input[name="checkbox"]').prop("checked")){
@@ -304,7 +363,7 @@ $("body").niceScroll({
 	cursorborderradius:"5px"  
 });
 function checkLength(which) {
-	var maxChars = 200; //
+	var maxChars = 50; //
 	if(which.value.length > maxChars){
 	   layer.open({
 	   icon:2,
@@ -320,4 +379,5 @@ function checkLength(which) {
 		return true;
 	}
 };
+
 </script>

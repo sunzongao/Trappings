@@ -38,5 +38,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{customerId},#{cName},#{cContacts},#{cPhone},#{cAddress},#{cId},#{comments})
 	</insert>
 	
+	<delete id="delete">
+		delete from customer where customerId=#{customerId}
+	</delete>
+	
+	
+	<select id="updateById" parameterType="integer"  resultType="Customer">
+		select * from customer where id = #{id}
+	</select>
+	
+	<update id="update" parameterType="Customer">
+		update Customer set customerId=#{customerId},cName=#{cName},
+		cContacts=#{cContacts},cPhone=#{cPhone},
+		cAddress=#{cAddress},cId=#{cId},comments=#{comments}
+		where id=#{id}
+	</update>
+	
 	
 </mapper>
