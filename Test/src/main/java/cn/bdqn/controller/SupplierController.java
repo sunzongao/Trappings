@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.bdqn.pojo.Employee;
 import cn.bdqn.pojo.Supplier;
@@ -57,8 +58,18 @@ public class SupplierController {
 		return "supplier_show";
 	}
 	
+	@RequestMapping("/jsp/supplier_toupdate.html")
+	public String supplierToUpdate(String id,Model model) {
+		id=id.substring(12, id.length());
+		Supplier supplier=supplierService.getSupplierById(id);
+		model.addAttribute("supplier",supplier);
+		return "supplier_update";
+	}
+	
 	@RequestMapping("/jsp/supplier_doupdate.html")
-	public String supplierDoUpdate(String id,Model model) {
+	@ResponseBody
+	public String supplierToUpdate(Supplier s) {
+		
 		return "supplier_update";
 	}
 	
