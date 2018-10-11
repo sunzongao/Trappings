@@ -165,9 +165,7 @@
 			var password = $("#userpwd").val();
 			var code = $("#Codes_text").val();
 			var remberme = $("#remberme").prop('checked');
-			$
-					.post(
-							"${pageContext.request.contextPath}/loginUrl",
+			$.post("${pageContext.request.contextPath}/loginUrl",
 							{
 								'name' : name,
 								'password' : password,

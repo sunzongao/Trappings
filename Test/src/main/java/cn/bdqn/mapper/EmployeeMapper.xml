@@ -3,7 +3,8 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.bdqn.mapper.EmployeeMapper">
+<mapper namespace="cn.bdqn.mapper.EmployeeMapper">	
+	<!-- 查询所有员工（分页加条件——入职时间，员工姓名） -->
 	<select id="queryEmployeeByName" parameterType="java.util.Map" resultType="Employee">
 		select e.*,d.dName as dName,j.jName as jName from employee e LEFT JOIN
 		department d ON e.departmentId=d.departmentId LEFT JOIN job j ON e.jobId=j.jobId
@@ -23,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 		limit #{start},#{end}
 	</select>
+	<!-- 查询所有员工记录数（分页加条件——入职时间，员工姓名） -->
 	<select id="queryCount" parameterType="java.util.Map" resultType="int">
 		select count(e.employeeId) from employee e LEFT JOIN
 		department d ON e.departmentId=d.departmentId LEFT JOIN job j ON e.jobId=j.jobId
@@ -41,13 +43,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			</if>
 		</trim>
 	</select>
+	<!-- 根据工号查询员工-->
 	<select id="queryById" resultType="Employee" parameterType="String">
 		select e.*,d.dName as dName,j.jName as jName from employee e LEFT JOIN
 		department d ON e.departmentId=d.departmentId LEFT JOIN job j ON e.jobId=j.jobId
 		where e.employeeId=#{employeeId}
 	</select>
-	<update id="updateEmployeeById">
-		update 	employee set eName=#{eName},eSex=#{eSex},birthDate=#{birthDate},entryDate=#{entryDate},ePhone=#{ePhone},eAddress=#{eAddress},departmentId=#{departmentId},jobId=#{jobId},comments=#{comments}
-		where employeeId=#{employeeId}
+	<!-- 修改雇员信息 -->
+	<update id="updateEmployeeById" parameterType="Employee">
+		update 	employee set eName=#{e.eName},eSex=#{e.eSex},birthDate=#{e.birthDate},entryDate=#{e.entryDate},ePhone=#{e.ePhone},eAddress=#{e.eAddress},departmentId=#{e.departmentId},jobId=#{e.jobId},comments=#{e.comments}
+		where employeeId=#{e.employeeId}
 	</update>
+	<!-- 删除员工 -->
+	<delete id="deleteEmployeeById">
+		delete from employee where employeeId=#{employeeId}
+	</delete>
+	<!-- 新增员工 -->
+	<insert id="addEmployee" parameterType="Employee">
+		insert into employee(employeeId,eName,eSex,birthDate,entryDate,ePhone,eAddress,departmentId,jobId,comments)
+		 values(#{e.employeeId},#{e.eName},#{e.eSex},#{e.birthDate},#{e.entryDate},#{e.ePhone},#{e.eAddress},#{e.departmentId},#{e.jobId},#{e.comments})
+	</insert>
 </mapper>
