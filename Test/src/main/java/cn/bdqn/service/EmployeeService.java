@@ -2,6 +2,8 @@ package cn.bdqn.service;
 
 
 
+
+
 import cn.bdqn.pojo.Employee;
 import cn.bdqn.util.PageUtil;
 
@@ -12,4 +14,8 @@ public interface EmployeeService {
 	public Employee queryById(String employeeId);
 	//修改员工信息
 	public int updateEmployeeById(Employee employee);
+	//根据员工id删除员工
+	public int deleteEmployeeById(String employeeId);
+	//新增员工
+	public int addEmployee(Employee employee);
 }
