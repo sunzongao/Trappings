@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PageUtil<T> {
 	private int currentPage;
-	private int pageSize;
+	private int pageSize=4;
 	private int startRow;
 	private int totalCount;
 	private int totalPage;
