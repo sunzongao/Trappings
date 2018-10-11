@@ -51,34 +51,41 @@
 		<input name="employeeId" value="${employee.employeeId}" type="hidden"> 
 		<div class="add_menber" id="add_menber_style">
 			<ul class=" page-content">
+				<li><label class="label_name">工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label><span
+					class="add_name"><input name="employeeId" id="employeeId"
+						 type="text" class="text_add" /></span>
+					<div class="prompt r_f"></div></li>
 				<li><label class="label_name">员工姓名：</label><span
 					class="add_name"><input name="eName"
-						value="${employee.eName}" type="text" class="text_add" /></span>
+						type="text" class="text_add" /></span>
 					<div class="prompt r_f"></div></li>
 					 <li class="clearfix col-xs-4 col-lg-5 col-ms-5 "><label class="label_name ">生&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;日：</label> 
-	     			<input class="laydate-icon col-xs-4 col-lg-3" name="birthDate" value="${employee.birthDate}" id="start" style="margin-left: 10px;width:166px;">
+	     			<input class="laydate-icon col-xs-4 col-lg-3" name="birthDate" value="${employee.birthDate}" id="start" style="margin-left: 10px;width:165px;">
 				   <li class="clearfix col-xs-4 col-lg-5 col-ms-5 "><label class="label_name ">入职时间：</label> 
-	     			<input class="laydate-icon col-xs-4 col-lg-3" name="entryDate" value="${employee.entryDate}" id="end" style="margin-left: 10px;width:166px;">
+	     			<input class="laydate-icon col-xs-4 col-lg-3" name="entryDate" value="${employee.entryDate}" id="end" style="margin-left: 10px;width:165px;">
 				<li><label class="label_name">联系电话：</label><span
 					class="add_name"><input name="ePhone" type="text"
-						value="${employee.ePhone}" class="text_add" /></span>
+						 class="text_add" /></span>
 					<div class="prompt r_f"></div></li>
 				<li><label class="label_name">家庭住址：</label><span
 					class="add_name"><input name="eAddress"
-						value="${employee.eAddress}" type="text" class="text_add" /></span>
+						 type="text" class="text_add" /></span>
 					<div class="prompt r_f"></div></li>
 				<li><label class="label_name">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</label><span
 					class="add_name"> <label><input value="男"
-							 name="eSex" type="radio" class="ace"
-							<c:if test="${employee.eSex=='男'}">checked="checked"</c:if>><span
+							 name="eSex" type="radio" checked="checked" class="ace"
+							><span
 							class="lbl">男</span></label>&nbsp;&nbsp;&nbsp; <label><input
 							 name="eSex" type="radio" class="ace" value="女"
-							<c:if test="${employee.eSex=='女'}">checked="checked"</c:if>><span
+							><span
 							class="lbl">女</span></label>&nbsp;&nbsp;&nbsp;
 				</span></li>
-				<li class="adderss"><label class="label_name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label><span
+				<li><label class="label_name"></label><span
+					class="add_name"></span>
+					<div class="prompt r_f"></div></li>
+				<li class="adderss"><label class="label_name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label><span
 					class="add_name">
-					<textarea  rows="1" cols="70" name="comments">${employee.comments}</textarea>
+					<textarea  rows="1" cols="70" name="comments"></textarea>
 						</span>
 					<div class="prompt r_f"></div></li>
 				<li class="adderss"><label class="label_name">所属部门：</label> <span
@@ -86,7 +93,7 @@
 					<c:forEach var="dept" items="${deptlist}">
 							<label><input type="radio" name="departmentId" value="${dept.departmentId}"
 								class="ace"
-								<c:if test="${dept.departmentId==employee.departmentId}">checked="checked"</c:if>><span
+								><span
 								class="lbl">${dept.dName}</span></label>&nbsp;&nbsp;
      				</c:forEach>
      				</span></li>
@@ -95,15 +102,15 @@
 			<c:forEach var="job"
 							items="${joblist}">
 							<label><input type="radio" name="jobId" class="ace" value="${job.jobId}"
-								<c:if test="${job.jobId==employee.jobId}">checked="checked"</c:if>><span
+								><span
 								class="lbl">${job.jName}</span></label>&nbsp;&nbsp;		
      		</c:forEach>
 				</span></li>
 			</ul>
 		</div>
 		<p style="text-align: center;">
-			<a class="btn btn-xs btn-info0" href="javascript:;" id="submit">修改</a>&nbsp;&nbsp;&nbsp; 
-			<a class="btn btn-xs btn-info" href="javascript:;" id="close">关闭</a>
+			<a class="btn btn-xs btn-info" href="javascript:;" id="submit"  style="font-size: 15px"><em>提交</em></a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-xs btn-info" href="javascript:;" id="reset" style="font-size: 15px">重置</a>
 		</p>
 	</form>
 </body>
@@ -135,6 +142,31 @@ var end = {
 laydate(start);
 laydate(end);
 $(function(){
+	//进行工号的查重
+	var employeeId;
+	$("input[name='employeeId']").blur(function(){
+		 employeeId=$("#employeeId").val().trim();
+		if(employeeId==null||employeeId.length==0){
+			layer.msg("工号不能为空！");
+			return;
+		}
+		$.post(
+			"${pageContext.request.contextPath}/jsp/checkid",
+			{
+				"employeeId":employeeId
+			},function(data){
+				if(data=="true"){
+					  layer.msg('工号重复',{icon:5,time:2000 },  
+							  function () {
+						  $("#submit").hide();
+		                }
+					  );
+				}else{
+					$("#submit").show();
+				}
+			}
+		);
+	})
 	/*部门改变后更改对应职位显示*/
 	$("input[name='departmentId']").change(function(){
 		//获取改变后的部门id
@@ -152,10 +184,9 @@ $(function(){
 		});
 	});
 	/*关闭*/
-	$("#close").click(function(){
-		//当你在iframe页面关闭自身时					
-		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		parent.layer.close(index); //再执行关闭
+	$("#reset").click(function(){
+		//关闭当前页面
+		window.location.reload();
 	});
 	/*提交修改*/
 	$("#submit").click(function(){
@@ -187,7 +218,12 @@ $(function(){
 			return;
 		}
 		//获取部门id
-		var departmentId=$("input[name='departmentId']:checked ").val().trim();
+		var departmentId;
+		if(isChecked("departmentId")){
+			departmentId=$("input[name='departmentId']:checked ").val().trim();
+		}else{
+			departmentId="";		
+		}
 		if(departmentId==null||departmentId.length==0){
 			layer.msg("请选择部门！");
 			return;
@@ -209,7 +245,7 @@ $(function(){
 		var comments=$("textarea[name='comments']").val().trim();
 		//使用ajax修改员工信息
 		$.post(
-		"${pageContext.request.contextPath}/jsp/doEmployeeUpdate",
+		"${pageContext.request.contextPath}/jsp/addemployee",
 		{	
 			"employeeId":employeeId,
 			"eName":eName,
@@ -223,19 +259,16 @@ $(function(){
 			"comments":comments
 		},function(data){
 			if(data=="true"){
-				layer.alert("修改成功！",{
+				layer.alert("新增成功！",{
 					icon:1,
 					btn:['确定'],
 					yes:function(){
-						//当你在iframe页面关闭自身时					
-						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-						parent.location.reload();//刷新父级页面
-						parent.layer.close(index); //再执行关闭
+						window.location.href="${pageContext.request.contextPath}/jsp/tomember_list.html";
 					}
 				});
 				
 			}else{
-				layer.msg("修改失败！");
+				layer.msg("新增失败！");
 				//刷新当前页面
 				window.location.reload();
 			}

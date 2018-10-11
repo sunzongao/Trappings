@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="bkg_List_style list_Exhibition list_show padding15">
  <div class="bkg_List_operation clearfix searchs_style">
   <ul class="bkg_List_Button_operation">
-   <li class="btn btn-danger"><a href="javascrpt:void()" class="btn_add"><em class="bkg_List_icon icon_add"></em>删除用户</a></li>
+   <li class="btn btn-danger"><a href="javascrpt:void()" onclick="deleteItem()" class="btn_add"><em class="bkg_List_icon icon_add"></em>删除用户</a></li>
   </ul>
  </div>
   <div class="datalist_show">
@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <table class="table  table_list table_striped table-bordered">
    <thead>
    <tr>
-     <th  width="40"><label><input id="a" type="checkbox" class="ace" /><span class="lbl"></span></label></th>
+     <th  width="40"><label><input id="a" type="checkbox"class="ace" /><span class="lbl"></span></label></th>
      <th>员工姓名</th>
      <th>性别</th>
      <th>出生日期</th>
@@ -76,7 +76,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <tbody>
    	<c:forEach items="${util.lists}" var="emp">
    		 <tr>
-	     <td><label><input type="checkbox" class="ace"><span class="lbl"></span></label></td>
+	     <td><label>
+	     <input type="hidden" value="${emp.employeeId}" />
+	     <input type="checkbox" value="${emp.employeeId}" name="ace" class="ace" />
+	     <span class="lbl"></span></label></td>
 	     <td><a href="javascript:;${emp.employeeId}" onClick="userinfo(this)">${emp.eName}</a></td>
 	     <td>${emp.eSex}</td>
 	     <td>${emp.birthDate}</td>
@@ -87,13 +90,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	     <td>${emp.jName}</td>
 	     <td class="td-manage">
 	        <a title="编辑" onclick="member_edit(this)" href="javascript:;${emp.employeeId}"  class="btn btn-xs btn-info" >编辑</a> 
-	        <a title="删除" href="javascript:;"  onclick="member_del(this,'1')" class="btn btn-xs btn-delete" >删除</a>
+	        <a title="删除" href="javascript:;"  onclick="member_del(this,${emp.employeeId})" class="btn btn-xs btn-delete" >删除</a>
 	     </td>
    	 </tr>
    	</c:forEach>
    </tbody>
   </table>
-  
   	<p style="margin-top: 5px;text-align: center;">
 		<a href="${pageContext.request.contextPath}/jsp/tomember_list.html?pageindex=${util.currentPage}&eName=${eName}&begintime=${begintime}&endtime=${endtime}" class="btn btn-xs btn-info" <c:if test="${util.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath}/jsp/tomember_list.html?pageindex=${util.currentPage-1}&eName=${eName}&begintime=${begintime}&endtime=${endtime}" class="btn btn-xs btn-info" <c:if test="${util.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
@@ -106,10 +108,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
  </div>
 </div>
+
  <!-- 用户信息 -->
 </body>
 </html>
 <script>
+/*批量删除*/
+ function deleteItem(){
+	if(!isChecked("ace")){
+		layer.msg("请选中要删除的员工！");
+		return;
+	}
+	var a=getid();
+	$.post(
+		"${pageContext.request.contextPath}/jsp/todeleteitem",
+		{
+			"id":a
+		},function(data){
+			if(data=="true"){
+				layer.msg('删除成功！');
+				window.location.reload();
+			}else{
+				layer.msg('删除异常！');
+			}
+		}
+	);
+}
 	//设置内页框架布局
 function search(){
 		$("#form1").submit();
@@ -185,8 +209,17 @@ function member_edit(id){
 	/*用户-删除*/
 function member_del(obj,id){
 	layer.confirm('确认要删除吗？',function(index){
-		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
+		$.post(
+		"${pageContext.request.contextPath}/jsp/employeeDelete",
+		{
+			"employeeId":id
+		},function(data){
+			if(data=="true"){
+				$(obj).parents("tr").remove();
+				layer.msg('已删除!',{icon:1,time:1000});
+			}
+		}
+		);
 	});
 }
 /********************列表操作js******************/
@@ -199,4 +232,26 @@ $('table th input:checkbox').on('click' , function(){
 					});
 						
 });
+//判断某个单选或复选按钮是否被选中至少一个
+function isChecked(chkName){
+	var cps = document.getElementsByName(chkName);
+	var chk = false;
+	for(var i=0;i<cps.length;i++){
+		chk =cps[i].checked;
+		if(chk){
+			break;
+		}
+	}
+	return chk
+}
+//获取选中员工id
+function getid(){
+	 obj = document.getElementsByName("ace");
+	    check_val = "";
+	    for(k in obj){
+	        if(obj[k].checked)
+	        	check_val+=obj[k].value+",";
+	    }
+	    return check_val;
+}
 </script>

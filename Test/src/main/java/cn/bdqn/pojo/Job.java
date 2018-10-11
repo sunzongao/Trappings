@@ -9,6 +9,15 @@ public class Job {
 	private int jobId;
 	//职位名称
 	private String jName;
+	//所属不么id
+	private int departmentId;
+	
+	public int getDepartmentId() {
+		return departmentId;
+	}
+	public void setDepartmentId(int departmentId) {
+		this.departmentId = departmentId;
+	}
 	public int getJobId() {
 		return jobId;
 	}
