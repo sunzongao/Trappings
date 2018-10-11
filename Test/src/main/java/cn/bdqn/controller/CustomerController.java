@@ -67,12 +67,12 @@ public class CustomerController {
 	}
 	
 	
-	@RequestMapping("/jsp/doupdate/{id}")
-	public String doupdate(@PathVariable int id,Model model,HttpServletRequest request)throws Exception{
+	@RequestMapping("/jsp/doupdate.html")
+	public String doupdate(String customerId,Model model)throws Exception{
 		List<Customertype>lists = customertypeService.query();
     	model.addAttribute("lists", lists);
-    	Customer customer = customerService.updateById(id);
-		model.addAttribute("id", id);
+    	Customer customer = customerService.updateById(customerId);
+		model.addAttribute("customerId", customerId);
 		model.addAttribute("customer", customer);
 		return "customerUpdate";
 	}

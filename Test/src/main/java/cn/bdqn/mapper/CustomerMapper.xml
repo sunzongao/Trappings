@@ -43,8 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	<select id="updateById" parameterType="integer"  resultType="Customer">
-		select * from customer where id = #{id}
+	<select id="updateById" parameterType="string"  resultType="Customer">
+		select * from customer where customerId = #{id}
 	</select>
 	
 	<update id="update" parameterType="Customer">

@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer updateById(int id) {
+	public Customer updateById(String id) {
 		return customerMapper.updateById(id);
 	}
 

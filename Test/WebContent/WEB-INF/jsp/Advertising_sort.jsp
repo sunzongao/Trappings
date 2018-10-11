@@ -79,15 +79,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</select>
 					&nbsp;&nbsp;&nbsp;&nbsp;
 					<button class="btn button_btn bg-deep-blue " onclick="search" id="search"  type="submit"><i class="fa  fa-search"></i>&nbsp;搜索</button>
+					<input type="hidden" name="customerId" id="customerId" value="${c.customerId }" />
 </form>					
 </div>
 
 </div>
 <!--分类管理-->
 <div class="sort_list">
+
  <table class="table table_list table_striped table-bordered" id="sample-table">
+ 
   <thead>
   <tr>
+  
   <th width="30"><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
    <th width="100">客户编号</th>
    <th>客户名称</th> 
@@ -97,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    <th width="150">客户类型</th>
    <th width="200">操作</th>
    </tr>   
-   		<c:forEach var="c" items="${pageUtils.lists }">
+   		<c:forEach var="c" items="${pageUtils.lists }">            
    		
 				<tr>
 				<th><label><input type="checkbox" class="ace"><span class="lbl"></span></label></th>
@@ -109,8 +113,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th>${c.cTypename}</th>
 					
 					<th>
-						<a href="javascript:${c.customerId }" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn" id="customerUpdate">编辑</a> 
-						<a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn" id="del">删除</a> 
+						<a href="javascript:;" onclick="Advert_add(this,'${c.customerId}')" class="btn bg-deep-blue  operation_btn">编辑</a> 
+						<a href="javascript:;${c.customerId}" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn" id="del">删除</a> 
 						<a href="advert_detailed_left.html" onclick="Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>
 					</th>
 				</tr>
@@ -243,17 +247,15 @@ jQuery(function($) {
 	
 	
 
-/*****编辑客户信息******/
+/*****编辑客户信息******/  
  function Advert_add(obj ,id){
-	var id = $("#customerId").val();
 	layer.open({
         type: 2,
         title: '编辑客户信息',
 		maxmin: true, 
 		shadeClose: false, //点击遮罩关闭层
-        area : ['800px' , ''],
-        content:"/jsp/doupdate?id="+id,
-		
+        area : ['700px' , '520px'],
+        content:"${pageContext.request.contextPath}/jsp/doupdate.html?customerId="+id
     });	
 } 
 /***************添加客户***********/

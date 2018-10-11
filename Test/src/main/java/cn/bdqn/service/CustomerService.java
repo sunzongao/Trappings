@@ -11,7 +11,7 @@ public interface CustomerService {
 	
 	public int delete(int customerId);
 	
-	public Customer updateById(@Param("id")int id);
+	public Customer updateById(@Param("id")String id);
 	
 	public int update(Customer customer);
 }

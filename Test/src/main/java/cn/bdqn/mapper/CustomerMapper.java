@@ -18,7 +18,7 @@ public interface CustomerMapper {
 	
 	
 	//编辑客户信息
-	public Customer updateById(@Param("id")int id);
+	public Customer updateById(@Param("id")String id);
 	
 	public int update(Customer customer);
 	
