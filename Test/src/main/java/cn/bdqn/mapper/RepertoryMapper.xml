@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.bdqn.mapper.RepertoryMapper">
+	<select id="queryRepertory" resultType="Repertory"
+		parameterType="java.util.Map">
+		SELECT
+		r.`commodityId`,r.`cName`,r.`inventory`,r.`avgPrice`,r.`totalCost`,r.`totalCost`,u.`uName`
+		AS repertoryUName,b.`bName` AS
+		repertoryBName,s.`sName` AS
+		repertorySName,s.`sAddress`,s.`sContacts`,s.`sPhone`,s.`comments`,r.`laidTime`,se.`sName`
+		AS repertorySeName FROM repertory AS r
+		INNER JOIN commodity AS c ON
+		r.commodityId = c.commodityId
+		INNER JOIN unit AS u ON r.unitId =
+		u.unitId
+		INNER JOIN brand AS b ON b.`brandId`=r.`brandId`
+		INNER JOIN
+		supplier AS s ON r.`supplierId`=s.`supplierId`
+		INNER JOIN storehouse AS
+		se ON r.`storehouseId` = se.`storehouseId`
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="laidTime!=null and laidTime!=''">
+				r.laidTime like concat('%',#{laidTime},'%')
+			</if>
+			<if test="storehouseId!=0">
+				and r.storehouseId=#{storehouseId}
+			</if>
+			<if test="unitId!=0">
+				and r.unitId=#{unitId}
+			</if>
+			<if test="brandId!=0">
+				and r.brandId=#{brandId}
+			</if>
+		</trim>
+		LIMIT #{startRow},#{pageSize}
+	</select>
+
+
+	<select id="count" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		SELECT
+		COUNT(1) FROM repertory AS r
+		INNER JOIN commodity AS c ON
+		r.commodityId =
+		c.commodityId
+		INNER JOIN unit AS u ON r.unitId =
+		u.unitId
+		INNER JOIN
+		brand AS b ON b.`brandId`=r.`brandId`
+		INNER JOIN
+		supplier AS s ON
+		r.`supplierId`=s.`supplierId`
+		INNER JOIN storehouse AS
+		se ON
+		r.`storehouseId` = se.`storehouseId`
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="laidTime!=null and laidTime!=''">
+				r.laidTime like concat('%',#{laidTime},'%')
+			</if>
+			<if test="storehouseId!=0">
+				and r.storehouseId=#{storehouseId}
+			</if>
+			<if test="unitId!=0">
+				and r.unitId=#{unitId}
+			</if>
+			<if test="brandId!=0">
+				and r.brandId=#{brandId}
+			</if>
+		</trim>
+	</select>
+
+	<insert id="addRepertory" parameterType="java.lang.Integer">
+		INSERT INTO repertory
+		(commodityId,cName,inventory,avgPrice,totalPrice,pretium,totalCost,unitId,
+		brandId,supplierId,laidTime,storehouseId)
+		VALUES(#{commodityId},#{cName},#{inventory},#{avgPrice},#{totalPrice},
+		#{pretium},#{totalCost},#{unitId},#{brandId},#{supplierId},#{laidTime},
+		#{storehouseId})
+	</insert>
+	
+</mapper>
