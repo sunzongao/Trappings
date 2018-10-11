@@ -137,22 +137,57 @@ bordered"
 <div id="ad_sort" class="display">
  <div class="add_style">
   <ul>
-   <li class="clearfix"><label class="label_name col-xs-2">商品编号：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="商品编号" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">商品名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="商品名称" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">商品编号：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   		<select name="commodityId" id="commodityId" 
+					class="form-control col-xs-6" style="width: 26%">
+					<option value="0">--商品编号--</option>
+					<c:forEach var="c" items="${commoditys }">
+						<option value="${c.commodityId }">${c.commodityId }</option>
+					</c:forEach>
+				</select>
+   </span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">商品名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   		<input name="商品名称" type="text" id="cName" disabled="disabled"  class="col-xs-10 col-sm-5" style="width:450px" >
+   </span></li>
    <li class="clearfix"><label class="label_name col-xs-2">库存数量：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="库存数量" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
    <li class="clearfix"><label class="label_name col-xs-2">成本价格：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="成本价格" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
    <li class="clearfix"><label class="label_name col-xs-2">成本总值：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="成本总值" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
    <li class="clearfix"><label class="label_name col-xs-2">销售价格：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="销售价格" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
    <li class="clearfix"><label class="label_name col-xs-2">总  价 值：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="总  价 值：" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">状&nbsp;&nbsp;态：&nbsp;&nbsp;</label>
-   <div class="Add_content col-xs-9">
-     <label><input name="form-field-radio2" type="radio" checked="checked" class="ace">
-     <span class="lbl">显示</span></label>&nbsp;&nbsp;&nbsp;
-     <label><input name="form-field-radio2" type="radio" class="ace">
-     <span class="lbl">隐藏</span></label>
-     </div>
-     </li >
-      <li class="clearfix"><label class="label_name col-xs-2">描&nbsp;&nbsp;述：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><textarea name="权限描述" class="form-control col-xs-12 col-sm-5" id="form_textarea" placeholder="" onkeyup="checkLength(this);"></textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">200</span>字</span></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">商品单位：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   		<select name="unitId" id="unitId" 
+					class="form-control col-xs-6" style="width: 23%">
+					<option value="0">--商品单位--</option>
+					<c:forEach var="u" items="${units }">
+						<option value="${u.unitId }">${u.uName }</option>
+					</c:forEach>
+				</select>
+   	</span></li>
+   	<li class="clearfix"><label class="label_name col-xs-2">商品单位：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   		<select name="brandId" id="brandId" 
+					class="form-control col-xs-6" style="width: 23%">
+					<option value="0">--商品品牌 --</option>
+					<c:forEach var="b" items="${brands }">
+						<option value="${b.brandId }"
+							<c:if test="${b.brandId eq brandId}">
+									selected
+								</c:if>>${b.bName }</option>
+					</c:forEach>
+				</select>
+   	</span></li>
+   	<li class="clearfix"><label class="label_name col-xs-2">供 应  商：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="供 应 商：" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+   	   	<li class="clearfix"><label class="label_name col-xs-2">商品单位：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   		<select name="storehouseId" id="storehouseId"
+					class="form-control col-xs-6" style="width: 23%" onchange="select(this)">
+					<option value="0">--所属仓库--</option>
+					<c:forEach var="s" items="${storehouses }">
+						<option value="${s.storehouseId }"
+							<c:if test="${s.storehouseId eq storehouseId}">
+									selected
+								</c:if>>${s.sName }</option>
+					</c:forEach>
+				</select>
+   	</span></li>
   </ul>
  </div>
 </div>
@@ -202,6 +237,22 @@ bordered"
 	 ['<label><input type="checkbox" class="ace"><span class="lbl"></span></label>','1','首页轮播图（大）','首页轮播图','4','2016-08-28 15:23:12','启用','','<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> <a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> <a href="advert_detailed_left.html" onclick=Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>'],
  ]; */
 	
+ $(function(){
+		$("#commodityId").change(function(){
+			var id = $("#commodityId").val();
+			var cName = $("#cName").val();
+			$.ajax({
+					type:"post",
+					url:"${pageContext.request.contextPath}/AjaxErJiLianDong",
+					data:{'CommodityId':id},
+					success:function(data){
+						$("#cName").val(data);
+					}
+			})
+		})	; 
+	 });
+ 
+ 
 jQuery(function($) {
 				var oTable1 = $('#sample-table').dataTable( {
 				"data": dataSet,
@@ -238,7 +289,7 @@ function picture_del(obj,id){
 function Advert_add(obj ,id){
 	layer.open({
         type: 1,
-        title: '添加广告',
+        title: '添加库存',
 		maxmin: true, 
 		shadeClose: false, //点击遮罩关闭层
         area : ['800px' , ''],
@@ -250,7 +301,6 @@ function Advert_add(obj ,id){
      $(".add_style input[type$='text']").each(function(n){
           if($(this).val()=="")
           {
-               
 			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
                 title: '提示框',				
 				icon:0,								
@@ -261,6 +311,7 @@ function Advert_add(obj ,id){
 		 });
 		  if(num>0){  return false;}	 	
           else{
+        	  
 			  layer.alert('添加成功！',{
                title: '提示框',				
 			icon:1,		
