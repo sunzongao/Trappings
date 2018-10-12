@@ -85,10 +85,6 @@ bordered"
 						<th>商品编号</th>
 						<th>商品名称</th>
 						<th>库存量</th>
-						<th>成本价</th>
-						<th>成本总值</th>
-						<th>销售价</th>
-						<th>总价值</th>
 						<th>单位</th>
 						<th>品牌</th>
 						<th>供应商</th>
@@ -105,10 +101,6 @@ bordered"
 							<th>${r.commodityId }</th>
 							<th>${r.cName }</th>
 							<th>${r.inventory }</th>
-							<th>${r.avgPrice }</th>
-							<th>${r.totalPrice }</th>
-							<th>${r.pretium }</th>
-							<th>${r.totalCost }</th>
 							<th>${r.repertoryUName}</th>
 							<th>${r.repertoryBName }</th>
 							<th>${r.repertorySName }</th>
@@ -149,11 +141,8 @@ bordered"
    <li class="clearfix"><label class="label_name col-xs-2">商品名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
    		<input name="商品名称" type="text" id="cName" disabled="disabled"  class="col-xs-10 col-sm-5" style="width:450px" >
    </span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">库存数量：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="库存数量" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">成本价格：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="成本价格" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">成本总值：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="成本总值" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">销售价格：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="销售价格" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">总  价 值：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="总  价 值：" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+   <li class="clearfix"><label class="label_name col-xs-2">库存数量：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   		<input name="库存数量" type="text" id="inventory" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
    <li class="clearfix"><label class="label_name col-xs-2">商品单位：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
    		<select name="unitId" id="unitId" 
 					class="form-control col-xs-6" style="width: 23%">
@@ -163,10 +152,10 @@ bordered"
 					</c:forEach>
 				</select>
    	</span></li>
-   	<li class="clearfix"><label class="label_name col-xs-2">商品单位：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   	<li class="clearfix"><label class="label_name col-xs-2">商品品牌：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
    		<select name="brandId" id="brandId" 
 					class="form-control col-xs-6" style="width: 23%">
-					<option value="0">--商品品牌 --</option>
+					<option value="0">--商品品牌--</option>
 					<c:forEach var="b" items="${brands }">
 						<option value="${b.brandId }"
 							<c:if test="${b.brandId eq brandId}">
@@ -175,8 +164,10 @@ bordered"
 					</c:forEach>
 				</select>
    	</span></li>
-   	<li class="clearfix"><label class="label_name col-xs-2">供 应  商：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="供 应 商：" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-   	   	<li class="clearfix"><label class="label_name col-xs-2">商品单位：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   	<li class="clearfix"><label class="label_name col-xs-2">供 应  商：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+   			<input name="供 应 商：" type="text" id="supplierId" class="col-xs-10 col-sm-5" style="width:450px"></span>
+   	</li>
+   	   	<li class="clearfix"><label class="label_name col-xs-2">所属仓库：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
    		<select name="storehouseId" id="storehouseId"
 					class="form-control col-xs-6" style="width: 23%" onchange="select(this)">
 					<option value="0">--所属仓库--</option>
@@ -236,7 +227,9 @@ bordered"
 	 ['<label><input type="checkbox" class="ace"><span class="lbl"></span></label>','1','首页轮播图（大）','首页轮播图','4','2016-08-28 15:23:12','启用','','<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> <a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> <a href="advert_detailed_left.html" onclick=Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>'],
 	 ['<label><input type="checkbox" class="ace"><span class="lbl"></span></label>','1','首页轮播图（大）','首页轮播图','4','2016-08-28 15:23:12','启用','','<a href="javascript:void()" onclick="Advert_add(this,'+102+')" class="btn bg-deep-blue  operation_btn">添加</a> <a href="javascript:void()" onclick="picture_del(this,'+10001+')" class="btn btn-danger operation_btn">删除</a> <a href="advert_detailed_left.html" onclick=Advert_info(this,'+234+')" class="btn bg-deep-blue operation_btn">查看</a>'],
  ]; */
-	
+ 
+ 
+ /*点击商品列表下拉框，自动在input标签中显示别的值  */
  $(function(){
 		$("#commodityId").change(function(){
 			var id = $("#commodityId").val();
@@ -340,7 +333,7 @@ function add_AD_sort( ){
                
 			   layer.alert(str+=""+$(this).attr("name")+"不能为空！\r\n",{
                 title: '提示框',				
-				icon:0,								
+				icon:0,	
           }); 
 		    num++;
             return false;            
@@ -348,11 +341,37 @@ function add_AD_sort( ){
 		 });
 		  if(num>0){  return false;}	 	
           else{
-			  layer.alert('添加成功！',{
-               title: '提示框',				
-			icon:1,		
-			  });
-			   layer.close(index);	
+        	  var commodityId = $("#commodityId").val();
+        	  var cName = $("#cName").val();
+        	  var inventory = $("#inventory").val();
+        	  var unitId = $("#unitId").val();
+        	  var brandId = $("#brandId").val();
+        	  var supplierId = $("#supplierId").val();
+        	  var storehouseId = $("#storehouseId").val();
+        	  $.ajax({
+					type:"post",
+					url:"${pageContext.request.contextPath}/jsp/addRepertory",
+					data:{"commodityId":commodityId,"cName":cName,"inventory":inventory,
+							"unitId":unitId,"brandId":brandId,"supplierId":supplierId,"storehouseId":storehouseId
+					},
+					dataType:"json",
+					success:function(data){
+						if(data>0){
+							  layer.alert('添加成功！',{
+					               title: '提示框',				
+								icon:1,		
+								  });
+								   layer.close(index);
+						}else{
+							layer.alert('添加失败！',{
+					               title: '提示框',				
+								icon:1,		
+								  });
+							window.location.reload();
+						}
+					}
+        	  })
+				
 		  }	
 		 
 		 }

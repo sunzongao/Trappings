@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="queryRepertory" resultType="Repertory"
 		parameterType="java.util.Map">
 		SELECT
-		r.`commodityId`,r.`cName`,r.`inventory`,r.`avgPrice`,r.`totalCost`,r.`totalCost`,u.`uName`
+		r.`commodityId`,r.`cName`,r.`inventory`,u.`uName`
 		AS repertoryUName,b.`bName` AS
 		repertoryBName,s.`sName` AS
 		repertorySName,s.`sAddress`,s.`sContacts`,s.`sPhone`,s.`comments`,r.`laidTime`,se.`sName`
@@ -72,12 +72,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 	</select>
 
+
 	<insert id="addRepertory" parameterType="java.lang.Integer">
 		INSERT INTO repertory
-		(commodityId,cName,inventory,avgPrice,totalPrice,pretium,totalCost,unitId,
+		(commodityId,cName,inventory,unitId,
 		brandId,supplierId,laidTime,storehouseId)
-		VALUES(#{commodityId},#{cName},#{inventory},#{avgPrice},#{totalPrice},
-		#{pretium},#{totalCost},#{unitId},#{brandId},#{supplierId},#{laidTime},
+		VALUES(#{commodityId},#{cName},#{inventory},
+		#{unitId},#{brandId},#{supplierId},#{laidTime},
 		#{storehouseId})
 	</insert>
 	
