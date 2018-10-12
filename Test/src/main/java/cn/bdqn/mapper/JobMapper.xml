@@ -7,4 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="queryAllJob" resultType="Job">
 		select * from job
 	</select>
+	<select id="queryJobByDepartmentId" parameterType="int" resultType="Job">
+		select * from job where departmentId=#{departmentId}
+	</select>
 </mapper>
