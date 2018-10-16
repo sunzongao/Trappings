@@ -90,14 +90,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	     <td>${emp.jName}</td>
 	     <td class="td-manage">
 	        <a title="编辑" onclick="member_edit(this)" href="javascript:;${emp.employeeId}"  class="btn btn-xs btn-info" >编辑</a> 
-	        <a title="删除" href="javascript:;"  onclick="member_del(this,${emp.employeeId})" class="btn btn-xs btn-delete" >删除</a>
+	        <a title="删除" href="javascript:;"  onclick="member_del(this,'${emp.employeeId}')" class="btn btn-xs btn-delete" >删除</a>
 	     </td>
    	 </tr>
    	</c:forEach>
    </tbody>
   </table>
   	<p style="margin-top: 5px;text-align: center;">
-		<a href="${pageContext.request.contextPath}/jsp/tomember_list.html?pageindex=${util.currentPage}&eName=${eName}&begintime=${begintime}&endtime=${endtime}" class="btn btn-xs btn-info" <c:if test="${util.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
+		<a href="${pageContext.request.contextPath}/jsp/tomember_list.html?pageindex=1&eName=${eName}&begintime=${begintime}&endtime=${endtime}" class="btn btn-xs btn-info" <c:if test="${util.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath}/jsp/tomember_list.html?pageindex=${util.currentPage-1}&eName=${eName}&begintime=${begintime}&endtime=${endtime}" class="btn btn-xs btn-info" <c:if test="${util.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath}/jsp/tomember_list.html?pageindex=${util.currentPage+1}&eName=${eName}&begintime=${begintime}&endtime=${endtime}" class="btn btn-xs btn-info" <c:if test="${util.currentPage==util.totalPage}">style="display: none;"</c:if>>下一页</a>&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath}/jsp/tomember_list.html?pageindex=${util.totalPage}&eName=${eName}&begintime=${begintime}&endtime=${endtime}" class="btn btn-xs btn-info" <c:if test="${util.currentPage==util.totalPage}">style="display: none;"</c:if>>尾页</a>
@@ -120,19 +120,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		return;
 	}
 	var a=getid();
-	$.post(
-		"${pageContext.request.contextPath}/jsp/todeleteitem",
-		{
-			"id":a
-		},function(data){
-			if(data=="true"){
-				layer.msg('删除成功！');
-				window.location.reload();
-			}else{
-				layer.msg('删除异常！');
-			}
-		}
-	);
+	
+	layer.confirm('确认要删除多条记录吗？',function(index){
+		$.post(
+				"${pageContext.request.contextPath}/jsp/todeleteitem",
+				{
+					"id":a
+				},function(data){
+					if(data=="true"){
+						layer.msg('删除成功！');
+						window.location.reload();
+					}else{
+						layer.msg('删除异常！');
+					}
+				}
+			);
+	});
+	
+	
 }
 	//设置内页框架布局
 function search(){

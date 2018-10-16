@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.bdqn.pojo.Data;
 import cn.bdqn.pojo.Permission;
 import cn.bdqn.pojo.Role;
+import cn.bdqn.pojo.User;
 import cn.bdqn.service.UserService;
 import cn.bdqn.util.MyPasswordEncrypt;
 
@@ -117,5 +118,17 @@ public class UserController {
 	public String loginOut() {
 		SecurityUtils.getSubject().logout();
 		return "forward:login.jsp";
+	}
+	/**
+	 * ≈–∂œ’À∫≈ «∑Ò±ªΩ˚”√
+	 */
+	@RequestMapping("/getUserState")
+	@ResponseBody
+	public String getUserState(String uname){
+		User user = userservice.queryUser(uname);
+		if(user==null) {
+			return "-1";
+		}
+		return user.getState()+""; 
 	}
 }

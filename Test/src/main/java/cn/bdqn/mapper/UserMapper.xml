@@ -25,11 +25,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="queryAllRoleAndPermissions" resultType="Permission"
 		parameterType="String">
-		SELECT p.flag,p.grade,p.icon,p.id,p.permission,p.pid,p.url from role r LEFT JOIN role_permission rp on
+		SELECT
+		p.flag,p.grade,p.icon,p.id,p.permission,p.pid,p.url from role r LEFT
+		JOIN role_permission rp on
 		r.id=rp.rid
-		LEFT JOIN permission p on p.id=rp.pid
+		LEFT JOIN permission p on
+		p.id=rp.pid
 		LEFT JOIN user_role ur on r.id=ur.rid
-		LEFT JOIN user u ON u.id=ur.uid
+		LEFT JOIN user u ON
+		u.id=ur.uid
 		WHERE u.uname=#{uname}
 	</select>
+	<select id="queryAllUser" parameterType="java.util.Map"
+		resultType="User">
+		select * from user
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="uname!=null and uname!=''">
+				and uname like CONCAT('%',#{uname},'%')
+			</if>
+			<if test="state!=null and state!=''">
+				and state=#{state}
+			</if>
+			<if test="id!=null and id!=''">
+				and id !=#{id}
+			</if>
+		</trim>
+		limit #{start},#{end}
+	</select>
+	<select id="queryCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(id) from user
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="uname!=null and uname!=''">
+				and uname like CONCAT('%',#{uname},'%')
+			</if>
+			<if test="state!=null and state!=''">
+				and state=#{state}
+			</if>
+			<if test="id!=null and id!=''">
+				and id !=#{id}
+			</if>
+		</trim>
+	</select>
+	<update id="updateUserStateById" parameterType="int">
+		update user set
+		state=#{state} where id=#{id}
+	</update>
+	<delete id="deleteAllRoleById" parameterType="int">
+		delete from
+		user_role where uid=${id}
+	</delete>
+	<insert id="addRoleById" parameterType="int">
+		insert into user_role
+		(uid,rid) VALUES(#{id},#{rid})
+	</insert>
 </mapper>
