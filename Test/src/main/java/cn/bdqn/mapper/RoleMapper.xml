@@ -71,4 +71,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addRolePer" parameterType="int">
 		INSERT INTO role_permission (rid,pid) VALUES(#{rid},#{pid}) 
 	</insert>
+	<select id="queryByflag" parameterType="String" resultType="Role">
+		select * from role where flag=#{flag}
+	</select>
+	<select id="queryByRname" parameterType="String" resultType="int">
+		select count(id) from role where rname=#{rname}
+	</select>
+	<insert id="addrole">
+		insert into role (flag,rname) values(#{flag},#{rname})
+	</insert>
 </mapper>

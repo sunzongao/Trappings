@@ -132,6 +132,7 @@ function ck(dd){
 					window.location.reload();
 				}else if(data=="2"){
 					layer.msg("授权异常！");
+					window.location.reload();
 					//刷新当前页面
 				}else{
 					layer.alert("授权成功！",{

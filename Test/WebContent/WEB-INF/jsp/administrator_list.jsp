@@ -73,7 +73,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   	 	<c:if test="${user.state==1}"><a title="停用" onclick="Competence_close(this,${user.id})" href="javascript:;" class="btn button_btn btn-gray">停用</a> </c:if>
             <c:if test="${user.state==0}"><a class="btn button_btn btn-Dark-success" onclick="Competence_start(this,${user.id})" href="javascript:;" title="启用">启用</a></c:if>
             <a title="授权"  onclick="member_edit(this,${user.id})" href="javascript:;${user.uname}" class="btn button_btn bg-deep-blue">授权</a>        
-            <a title="查看" href="javascript:;" onclick="Competence_View(this,'1')" class="btn button_btn btn-green">查看</a>
 		</td>
    	 </tr>
    	</c:forEach>

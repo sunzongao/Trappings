@@ -31,4 +31,12 @@ public interface RoleService {
 	
 	//新增角色权限
 	public int addRolePer(int rid,int pid);
+	// 根据角色名称flag查重
+	public Role queryByflag(String flag);
+
+	// 根据角色名称rname查重
+	public int queryByRname(String rname);
+	
+	//新增角色
+	public int addrole(String rname,String flag);
 }

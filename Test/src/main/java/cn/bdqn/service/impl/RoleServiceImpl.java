@@ -56,5 +56,17 @@ public class RoleServiceImpl implements RoleService {
 	public int addRolePer(int rid, int pid) {
 		return roleMapper.addRolePer(rid, pid);
 	}
+	@Override
+	public Role queryByflag(String flag) {
+		return roleMapper.queryByflag(flag);
+	}
+	@Override
+	public int queryByRname(String rname) {
+		return roleMapper.queryByRname(rname);
+	}
+	@Override
+	public int addrole(String rname, String flag) {
+		return roleMapper.addrole(rname, flag);
+	}
 
 }
