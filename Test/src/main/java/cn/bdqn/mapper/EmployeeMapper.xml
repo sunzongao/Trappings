@@ -58,6 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteEmployeeById">
 		delete from employee where employeeId=#{employeeId}
 	</delete>
+	<!-- 本地提交 -->
 	<!-- 新增员工 -->
 	<insert id="addEmployee" parameterType="Employee">
 		insert into employee(employeeId,eName,eSex,birthDate,entryDate,ePhone,eAddress,departmentId,jobId,comments)

@@ -3,6 +3,7 @@ package cn.bdqn.util;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class PageUtil<T> {
 	private int currentPage;
 	private int pageSize=4;

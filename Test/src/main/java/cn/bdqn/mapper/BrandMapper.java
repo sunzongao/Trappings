@@ -9,7 +9,8 @@ import cn.bdqn.pojo.Brand;
  * @author GCL105659
  *
  */
-public interface BrandMapper {
 	//查询品牌
+public interface BrandMapper {
+	//查询品牌表所
 	public List<Brand> queryBrand();
 }

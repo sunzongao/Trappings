@@ -38,4 +38,5 @@ public class Brand {
 	public void setcList(List<Commodity> cList) {
 		this.cList = cList;
 	}
+
 }

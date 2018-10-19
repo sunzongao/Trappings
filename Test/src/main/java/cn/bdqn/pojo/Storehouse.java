@@ -22,5 +22,6 @@ public class Storehouse {
 	public void setStoName(String stoName) {
 		this.stoName = stoName;
 	}
+
 	
 }

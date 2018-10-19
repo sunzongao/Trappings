@@ -5,5 +5,6 @@ import java.util.List;
 import cn.bdqn.pojo.Storehouse;
 
 public interface StorehouseMapper {
-	public List<Storehouse> queryStorehouse();
+	//≤È—Ø≤÷ø‚±Ì
+		public List<Storehouse> queryStorehouse();
 }

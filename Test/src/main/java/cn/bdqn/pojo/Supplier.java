@@ -94,6 +94,4 @@ public class Supplier {
 		this.sStatus = sStatus;
 		this.comments = comments;
 	}
-	
-	
 }

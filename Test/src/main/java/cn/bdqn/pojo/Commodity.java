@@ -1,5 +1,6 @@
 package cn.bdqn.pojo;
 
+
 import java.util.List;
 
 import org.aspectj.weaver.AjAttribute.PrivilegedAttribute;
@@ -111,4 +112,5 @@ public class Commodity {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+
 }

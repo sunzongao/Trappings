@@ -5,6 +5,17 @@ public class User {
 	private String uname;
 	private String surname;
 	private String upassword;
+	//״̬
+	private int state;
+	
+	
+	
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
 	public int getId() {
 		return id;
 	}

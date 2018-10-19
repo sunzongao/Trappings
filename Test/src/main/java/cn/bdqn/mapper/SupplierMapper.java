@@ -29,4 +29,8 @@ public interface SupplierMapper {
 	
 	//查询供应商
 	public List<Supplier> querySuppliers();
+
+	//查询供应商列表集合
+	public List<Supplier> queryByName();
+
 }

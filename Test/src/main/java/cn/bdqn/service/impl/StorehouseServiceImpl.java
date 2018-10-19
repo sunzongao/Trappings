@@ -15,6 +15,7 @@ public class StorehouseServiceImpl implements StorehouseService {
 	@Autowired
 	private StorehouseMapper storehouseMapper;
 	
+
 	public List<Storehouse> queryStorehouse() {
 		return storehouseMapper.queryStorehouse();
 	}

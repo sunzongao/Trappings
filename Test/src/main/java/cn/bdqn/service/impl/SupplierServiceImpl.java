@@ -51,5 +51,9 @@ public class SupplierServiceImpl implements SupplierService{
 	}
 	
 
+	
+	public List<Supplier> queryByName() {
+		return supplierMapper.queryByName();
+	}
 
 }

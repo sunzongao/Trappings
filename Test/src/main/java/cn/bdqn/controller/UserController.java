@@ -119,4 +119,16 @@ public class UserController {
 		SecurityUtils.getSubject().logout();
 		return "forward:login.jsp";
 	}
+	/**
+	 * ≈–∂œ’À∫≈ «∑Ò±ªΩ˚”√
+	 */
+	@RequestMapping("/getUserState")
+	@ResponseBody
+	public String getUserState(String uname){
+		User user = userservice.queryUser(uname);
+		if(user==null) {
+			return "-1";
+		}
+		return user.getState()+""; 
+	}
 }

@@ -165,7 +165,7 @@ img {
     line-height: 32px;
     color: #666666;	
 }
-/**********间距*************/
+/**********闂磋窛*************/
 .mt10{margin-top: 10px}
 .mt20{margin-top: 20px}
 .mt30{margin-top: 30px}
@@ -174,7 +174,7 @@ img {
 .mt60{margin-top: 60px}
 .mt70{margin-top: 70px}
 .mt80{margin-top: 80px}
-/*********背景颜色值********/
+/*********鑳屾櫙棰滆壊鍊�********/
 .label-default {
   background-color: #d7d7d7;
 }
@@ -224,7 +224,7 @@ img {
 .label-hui[href]:focus {
   background-color: #f0f0f0;
 }
-/**统一按钮样式**/
+/**缁熶竴鎸夐挳鏍峰紡**/
 .btn{
 	display: inline-block;
     border-style: solid;
@@ -354,7 +354,7 @@ table{ width:100%}
 .display{ display:none}
 .Promp_plate{border-radius: 3px; padding: 10px; color: #FFFFFF; position: relative; margin-bottom: 15px;}
 .Promp_plate a{position: absolute; right: 10px; top:50%; color: #ffffff; margin-top:-7px;}
-/**********上传按钮美化***********/
+/**********涓婁紶鎸夐挳缇庡寲***********/
 .line { position:relative; text-align:left } 
 .line span.span { float:left; padding-top:2px; } 
 .file { position:absolute; left:175px; width:74px; top:2px; height:32px; z-index:111; filter:alpha(opacity=0); opacity:0; cursor: pointer } 
@@ -378,7 +378,7 @@ table{ width:100%}
     border: 1px solid transparent;
     border-radius: 4px;
 }
-/*******颜色值********/
+/*******棰滆壊鍊�********/
 .hover-blue-alt:hover, .bg-blue-alt {
     color: #fff;
     background: #65a6ff!important;
@@ -739,7 +739,7 @@ input[type="color"] {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 .search .label_name{ display: inline-block; float:left; line-height:32px; width:100px; text-align:right; margin-right:10px;}
-/***************提示框*************/
+/***************鎻愮ず妗�*************/
 .alert-info {
     color: #31708f;
     background-color: #d9edf7;
@@ -820,7 +820,7 @@ input[type=radio].ace:checked+.lbl::before
 }
 input[type=checkbox].ace:hover+.lbl::before,input[type=radio].ace:hover+.lbl::before,
 input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::before{border-color: #ff893c;}
-/****表格****/
+/****琛ㄦ牸****/
 .table{ width:100%; text-align:center; font-size:12px;}
 .table td{ padding:0px 10px; }
 .table td a.name{ color:#438EB9}
@@ -865,7 +865,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
     vertical-align: middle ;	
 }
 .pagination>li {display: inline;}
-/******************分页样式属性******************/
+/******************鍒嗛〉鏍峰紡灞炴��******************/
 .dataTables_paginate { text-align: right;}
 .dataTables_paginate .pagination {
     margin: 0px;
@@ -936,7 +936,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
 }
 .dataTables_filter { text-align: right;}
  label{ position: relative}
-/**********************添加内容样式属性************************/
+/**********************娣诲姞鍐呭鏍峰紡灞炴��************************/
 .add_style{}
 .add_style li{ margin:15px 0px; position:relative}
 .add_style .label_name{ float:left; text-align:right; padding-right:10px; height:35px; line-height:35px; color:#999}
@@ -1006,7 +1006,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
     position: absolute;
     top: -6px;
 }
-/****************切换样式属性设置*******************/
+/****************鍒囨崲鏍峰紡灞炴�ц缃�*******************/
 .slideBox{ width:100%;}
 .slideBox .hd{ height:40px; line-height:40px; border-bottom:1px solid #438EB9;}
 .slideBox .hd ul{ position:relative; height:40px; line-height:40px;}
@@ -1028,7 +1028,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
 .order_detailed .Price .right_Price p{ height:30px; line-height:30px;}
 .order_detailed .Price .Price_name { float:left; width:80px;}
 /*************************/
-.track-rcol{width: 580px; padding:10px; font-size:12px; font-family:"新宋体"}
+.track-rcol{width: 580px; padding:10px; font-size:12px; font-family:"鏂板畫浣�"}
 .track-list{padding-left: 5px; position: relative;}
 .track-list li{position: relative; padding: 10px 0 0 20px; line-height: 18px; margin-left:20px; border-left: 1px solid #d9d9d9; color: #999;}
 .track-list li.first{color: red; padding-top: 0; border-left-color: #fff;}
@@ -1038,7 +1038,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
 .track-list li .txt{max-width: 600px; position: relative; top: 4px; display: inline-block; vertical-align: middle;}
 .track-list li.first .time{margin-right: 20px; }
 .track-list li.first .txt{max-width: 600px; }
-/*************可拖拽***********/
+/*************鍙嫋鎷�***********/
 .dd {
     position: relative;
     display: block;
@@ -1179,7 +1179,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
 .dd-list>li[class*="item-"] { border-width: 0; padding: 0;}
 .dd-list>li[class*="item-"]>.dd-handle {border-left: 2px solid;border-left-color: inherit;}
 .dd-list>li>.dd-handle .sticker {position: absolute; right: 0; top: 0;}
-/********************表单验证样式*******************/
+/********************琛ㄥ崟楠岃瘉鏍峰紡*******************/
 .Validform_wrong {
     background: url(../images/icon_error_s.png) no-repeat 0 center;
     color: #ef392b;
@@ -1196,7 +1196,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
     padding-left: 25px;
     margin-left: 20px;	
 }
-/*****************************************通用列表样式属性******************************************/
+/*****************************************閫氱敤鍒楄〃鏍峰紡灞炴��******************************************/
 .bkg_List_style{background-color:#FFF;}
 .bkg_List_style .bkg_List_operation{ height:32px; background-color: #ffffff; line-height:30px; padding:0px;}
 .bkg_List_style .bkg_List_operation .bkg_List_Button_operation li{ float:left; padding:0px 10px; height:30px; line-height:30px; margin-right:10px;}
@@ -1207,7 +1207,7 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
 .bkg_List_icon.icon_delete{background-position:-20px -38px;}
 .bkg_List_icon.icon_close{background-position:-22px -57px;}
 .bkg_List_style .bkg_List{ margin:10px 0px;}
-/*******************表单编辑*****************/
+/*******************琛ㄥ崟缂栬緫*****************/
 .ibox {
     background-color: #fff;
     border: 1px solid #dee5e7;
@@ -1271,13 +1271,13 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
 .ibox-tools.ibox-columns{top:-5px; right:-5px; font-size:12px; font-weight:normal}
 .ibox-tools.ibox-columns select{ font-size:12px}
 .draggable {cursor: move;text-align:left; position:relative; z-index:111; left:0px;}
-/********************************文本列表**************************/
-.help-block{ font-size:12px; font-family:"新宋体"; color:#F60}
+/********************************鏂囨湰鍒楄〃**************************/
+.help-block{ font-size:12px; font-family:"鏂板畫浣�"; color:#F60}
 .help-block.m-b-none{ display:block; margin:5px 0px; color:#999}
 .form-control-static{ color:#666; line-height:30px;}
 .checkbox-inline,
 .radio-inline{ display:block; float:left; margin:5px}
-/*************弹出文本框***********/
+/*************寮瑰嚭鏂囨湰妗�***********/
 .modal-header .close {
     margin-top: -2px;
     float: right;
@@ -1289,3 +1289,8 @@ input[type=checkbox].ace+.lbl:hover::before,input[type=radio].ace+.lbl:hover::be
     filter: alpha(opacity=20);
     opacity: .2;
 }
+
+
+
+
+
