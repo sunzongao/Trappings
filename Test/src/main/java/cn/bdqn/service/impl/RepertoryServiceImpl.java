@@ -22,7 +22,7 @@ public class RepertoryServiceImpl implements RepertoryService {
 
 	@Override
 	public PageUtil<Repertory> queryRepertory(String laidTime, int unitId, 
-			int storehouseId,int brandId, int startRow, int pageSize) {
+			int brandId,int storehouseId, int startRow) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		PageUtil<Repertory> pageUtil = new PageUtil<Repertory>();
 		map.put("laidTime", laidTime);
@@ -31,19 +31,35 @@ public class RepertoryServiceImpl implements RepertoryService {
 		map.put("brandId", brandId);
 		int count = repertoryMapper.count(map);
 		pageUtil.setTotalCount(count);
-		pageUtil.setPageSize(pageSize);
 		pageUtil.setCurrentPage(startRow);
 		int pageIndex = pageUtil.getStartRow();
 		map.put("startRow", pageIndex);
-		map.put("pageSize", pageSize);
+		map.put("pageSize", pageUtil.getPageSize());
 		List<Repertory> lists = repertoryMapper.queryRepertory(map);
 		pageUtil.setLists(lists);
 		return pageUtil;
 	}
 
+	//Ìí¼Ó
 	@Override
 	public int addRepertory(Repertory repertory) {
 		return repertoryMapper.addRepertory(repertory);
+	}
+
+	//É¾³ý
+	@Override
+	public int deleteRepertoy(String commodityId) {
+		return repertoryMapper.deleteRepertoy(commodityId);
+	}
+
+	@Override
+	public Repertory getById(String commodityId) {
+		return repertoryMapper.getById(commodityId);
+	}
+
+	@Override
+	public int updateRepertory(Repertory repertory) {
+		return repertoryMapper.updateRepertory(repertory);
 	}
 
 }

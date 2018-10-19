@@ -23,8 +23,19 @@ public class Repertory {
 	private String repertoryBName;  //品牌Name（自定义）
 	private String repertorySeName;  //所属仓库Name(自定义)
 	private String repertorySName;	//供应商(自定义)
+	private int minimumStock;   //最低库存
 	
 	
+	
+	
+	public int getMinimumStock() {
+		return minimumStock;
+	}
+
+	public void setMinimumStock(int minimumStock) {
+		this.minimumStock = minimumStock;
+	}
+
 	public String getRepertorySName() {
 		return repertorySName;
 	}
@@ -153,10 +164,11 @@ public class Repertory {
 		this.storehouseId = storehouseId;
 	}
 
+
 	public Repertory(String commodityId, String cName, int inventory, double avgPrice, double totalPrice,
 			double pretium, double totalCost, int unitId, int brandId, String supplierId, String laidTime,
 			int storehouseId, String repertoryUName, String repertoryBName, String repertorySeName,
-			String repertorySName) {
+			String repertorySName, int minimumStock) {
 		super();
 		this.commodityId = commodityId;
 		this.cName = cName;
@@ -174,6 +186,7 @@ public class Repertory {
 		this.repertoryBName = repertoryBName;
 		this.repertorySeName = repertorySeName;
 		this.repertorySName = repertorySName;
+		this.minimumStock = minimumStock;
 	}
 
 	public Repertory() {

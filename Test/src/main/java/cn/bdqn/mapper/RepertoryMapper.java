@@ -3,6 +3,8 @@ package cn.bdqn.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.bdqn.pojo.Repertory;
 
 public interface RepertoryMapper {
@@ -14,4 +16,14 @@ public interface RepertoryMapper {
 	
 	//添加库存表
 	public int addRepertory(Repertory repertory);
+	
+	//删除库存
+	public int deleteRepertoy(@Param("commodityId")String  commodityId);
+	
+	//根据Id查询属性值
+	public Repertory getById(@Param("commodityId")String  commodityId);
+	
+	//修改库存
+	public int updateRepertory(Repertory repertory);
+	
 }
