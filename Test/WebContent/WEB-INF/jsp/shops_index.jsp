@@ -62,25 +62,15 @@
 			<div class="r_f Columns_top clearfix header">
 				<!--<div class="time_style l_f"><i class="fa  fa-clock-o"></i><span id="time"></span></div>-->
 				<div class="search_style l_f">
-					<form action="#" method="get" class="sidebar_form">
-						<div class="input-group">
-							<input type="text" name="q" class="form-control"><span
-								class="input-group-btn"><a class="btn_flat"
-								href="javascript:" onclick=""><i class="fa fa-search"></i></a></span>
-						</div>
-					</form>
 				</div>
 				<div class="news l_f ">
-					<a href="#" class="fa fa-bell Notice prompt" id="promptbtn"></a><em>5</em>
+				<shiro:hasRole name="Purchasing"><a href="#" class="fa fa-bell Notice prompt" id="promptbtn"></a><em>6</em></shiro:hasRole>
+				<shiro:hasRole name="Warehouse"><a href="#" class="fa fa-bell Notice prompt" id="promptbtn"></a><em>6</em></shiro:hasRole>
 				</div>
 				<div class="administrator l_f">
-					<img
-						src="${pageContext.request.contextPath }/statics/images/avatar.png"
-						width="36px" /><span class="user-info">欢迎你 <shiro:principal></shiro:principal>
+					<img src="${pageContext.request.contextPath }/statics/images/avatar.png" width="36px" /><span class="user-info">欢迎你 <shiro:principal></shiro:principal>
 					</span><i class="glyph-icon fa  fa-caret-down"></i>
 					<ul class="dropdown-menu">
-						<li><a href="#"><i class="fa fa-user"></i>个人信息</a></li>
-						<li><a href="#"><i class="fa fa-cog"></i>系统设置</a></li>
 						<li><a href="javascript:void(0)" id="Exit_system"><i
 								class="fa fa-user-times"></i>退出</a></li>
 					</ul>
@@ -101,23 +91,6 @@
 					<div class="switch_style">
 						<em class="fa fa-th-large switch"></em> <em
 							class="fa fa-list switch_unfold"></em>
-					</div>
-					<div class="skin_select clearfix">
-						<ul class="dropdown-menu dropdown-caret clearfix">
-							<li><a class="colorpick-btn selected"
-								href="javascript:void(0)" data-val="default" id="default"
-								style="background-color: #222A2D"></a></li>
-							<li><a class="colorpick-btn" href="javascript:void(0)"
-								data-val="blue" style="background-color: #438EB9;"></a></li>
-							<li><a class="colorpick-btn" href="javascript:void(0)"
-								data-val="green" style="background-color: #72B63F;"></a></li>
-							<li><a class="colorpick-btn" href="javascript:void(0)"
-								data-val="gray" style="background-color: #41a2ff;"></a></li>
-							<li><a class="colorpick-btn" href="javascript:void(0)"
-								data-val="red" style="background-color: #FF6868;"></a></li>
-							<li><a class="colorpick-btn" href="javascript:void(0)"
-								data-val="purple" style="background-color: #6F036B;"></a></li>
-						</ul>
 					</div>
 					<!--左侧菜单栏目-->
 					<div class="column_list">
@@ -167,6 +140,31 @@
 		<div class="Sellerber_bottom info" id="bottom">
 			<span class="l_f">版权所有：江苏易佳服饰有限公司</span>
 		</div>
+		  <!--消息提示板块内容-->
+<div class="prompt_style prompt">
+	<div class="prompt_title">通知消息</div>
+	<div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-user icon_prompt label-danger"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-volume-up icon_prompt label-success"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-user icon_prompt label-warning"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="" class=""><i class="fa fa-user icon_prompt label-danger"></i>你有订单还没有处理请及时处理，点击查看详细</a>
+    </div>
+    <div class="prompt_info clearfix submenu">
+	  <div class="tz_title">订单消息（5）</div>
+	  <a href="javascript:void()" class="" name="Personal_info.html" title="订单消息"><i class="fa fa-user icon_prompt label-danger"></i>你有订单还没有处理请及时处理</a>
+    </div>
+  </div> 
+		
 </body>
 </html>
 <script type="text/javascript">
