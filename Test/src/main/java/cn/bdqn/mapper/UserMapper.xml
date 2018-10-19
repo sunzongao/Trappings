@@ -32,4 +32,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT JOIN user u ON u.id=ur.uid
 		WHERE u.uname=#{uname}
 	</select>
+	
+	<select id="queryUsers" resultType="User">
+		select * from user
+	</select>
+	
 </mapper>

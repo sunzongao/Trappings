@@ -37,6 +37,18 @@ public class SupplierServiceImpl implements SupplierService{
 	public int updateSupplier(Supplier s) {
 		return supplierMapper.updateSupplier(s);
 	}
+
+	public int deleteSupplier(String supplierId) {
+		return supplierMapper.deleteSupplier(supplierId);
+	}
+
+	public int addSupplier(Supplier s) {
+		return supplierMapper.addSupplier(s);
+	}
+
+	public List<Supplier> querySuppliers() {
+		return supplierMapper.querySuppliers();
+	}
 	
 
 

@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		department d ON e.departmentId=d.departmentId LEFT JOIN job j ON e.jobId=j.jobId
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="eName!=null and eName!=''">
-				and  e.eName like CONCAT('%',#{eName},'%') 
+				and  e.eName like CONCAT('%',#{eName},'%')
 			</if>
 			<if test="begintime!=null and begintime!='' and (endtime==null or endtime=='')">
 				and e.entryDate >= #{begintime} 

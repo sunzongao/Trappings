@@ -15,12 +15,11 @@ import cn.bdqn.service.UserService;
 public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserMapper mapper;
-	@Override
+
 	public User queryUser(String name) {
 		return mapper.queryUser(name);
 	}
 
-	@Override
 	public Map<String, Object> queryRole(String name) {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("allRoles", mapper.queryRole(name));
@@ -28,9 +27,14 @@ public class UserServiceImpl implements UserService {
 		return map;
 	}
 
-	@Override
 	public List<Permission> queryAllRoleAndPermissions(String name) {
 		return mapper.queryAllRoleAndPermissions(name);
 	}
 
+	public List<User> queryUsers() {
+		return mapper.queryUsers();
+	}
+
+	
+	
 }

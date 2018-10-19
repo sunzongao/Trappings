@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.bdqn.pojo.Data;
 import cn.bdqn.pojo.Permission;
 import cn.bdqn.pojo.Role;
+import cn.bdqn.pojo.User;
 import cn.bdqn.service.UserService;
 import cn.bdqn.util.MyPasswordEncrypt;
 

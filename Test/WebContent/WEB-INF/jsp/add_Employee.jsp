@@ -141,7 +141,22 @@ var end = {
 };
 laydate(start);
 laydate(end);
+
+function RndNum(){
+	var employeeId=$("input[name='employeeId']").val().trim();
+	employeeId="YG";
+    for(var i=0;i<6;i++){
+    	employeeId+=Math.floor(Math.random()*10);
+    }
+    $("#employeeId").val(employeeId);
+}
+
 $(function(){
+	
+	RndNum();
+	
+	
+	
 	//进行工号的查重
 	var employeeId;
 	$("input[name='employeeId']").blur(function(){

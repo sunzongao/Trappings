@@ -45,38 +45,58 @@
 </style>
 </head>
 <body>
-	<!--修改员工信息-->
-	<form action=""
+	<!--新增供应商-->
+	<form action="${pageContext.request.contextPath}/jsp/add_dosupplier.html"
 		method="post">
-		<input name="supplierId" value="${supplier.supplierId}" type="hidden"> 
 		<div class="add_menber" id="add_menber_style">
 			<ul class=" page-content">
 				<li>
-					<label class="label_name">供应商名称：</label>
+					<label class="label_name">供应商编号：</label>
 					<span class="add_name">
-						<input name="sName" value="${supplier.sName}" type="text" class="text_add" />
+						<input name="supplierId" id="supplierId" type="text" class="text_add" />
 					</span>
 					<div class="prompt r_f"></div>
 				</li>
 				
 				<li class="clearfix col-xs-4 col-lg-5 col-ms-5 ">
 					<label class="label_name ">合作时间：</label> 
-	     			<input class="laydate-icon col-xs-4 col-lg-3" name="sDate" value="${supplier.sDate}" id="start" style="margin-left: 10px;width:166px;">
-	     		</li>
-	     			
-	     			
-	     		<li>
-					<label class="label_name">联系人：</label>
+	     			<input class="laydate-icon col-xs-4 col-lg-3" name="sDate"  id="start" style="margin-left: 10px;width:165px;">
+				</li>
+				
+				
+				
+				<li>
+					<label class="label_name">供应商名称：</label>
 					<span class="add_name">
-						<input name="sContacts" type="text" value="${supplier.sContacts}" class="text_add" />
+						<input name="sName" type="text" class="text_add" />
 					</span>
 					<div class="prompt r_f"></div>
-				</li>	
+				</li>
+				
+				
 				
 				<li>
 					<label class="label_name">Email：</label>
 					<span class="add_name">
-						<input name="sEmail" type="text" value="${supplier.sEmail}" class="text_add" />
+						<input name="sEmail" type="text" class="text_add" />
+					</span>
+					<div class="prompt r_f"></div>
+				</li>
+				
+				
+				<li>
+					<label class="label_name">联系人：</label>
+					<span class="add_name">
+						<input name="sContacts" type="text" class="text_add" />
+					</span>
+					<div class="prompt r_f"></div>
+				</li>
+				
+				
+				<li>
+					<label class="label_name">联系地址：</label>
+					<span class="add_name">
+						<input name="sAddress" type="text" class="text_add" />
 					</span>
 					<div class="prompt r_f"></div>
 				</li>
@@ -84,15 +104,7 @@
 				<li>
 					<label class="label_name">联系电话：</label>
 					<span class="add_name">
-						<input name="sPhone" type="text" value="${supplier.sPhone}" class="text_add" />
-					</span>
-					<div class="prompt r_f"></div>
-				</li>
-				
-				<li>
-					<label class="label_name">家庭住址：</label>
-					<span class="add_name">
-						<input name="sAddress" value="${supplier.sAddress}" type="text" class="text_add" style="width: 250px"/>
+						<input name="sPhone" type="text" class="text_add" />
 					</span>
 					<div class="prompt r_f"></div>
 				</li>
@@ -101,36 +113,33 @@
 					<label class="label_name">状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：</label>
 					<span class="add_name"> 
 						<label>
-							<input value="1" name="sStatus" type="radio" class="ace" <c:if test="${supplier.sStatus==1}">checked="checked"</c:if>>
-							<span class="lbl">启用</span>
+							<input  name="sStatus" value="1" type="radio" checked="checked" class="ace">
+							<span class="lbl" >启用</span>
 						</label>&nbsp;&nbsp;&nbsp; 
 						<label>
-						<input name="sStatus" type="radio" class="ace" value="2" <c:if test="${supplier.sStatus==2}">checked="checked"</c:if>>
-							<span class="lbl">禁用</span>
+							<input name="sStatus" value="2" type="radio" class="ace" >
+							<span class="lbl" >禁用</span>
 						</label>&nbsp;&nbsp;&nbsp;
 					</span>
 				</li>
-				
-				<li>
-					<label class="label_name"></label>
-					<span class="add_name">
-					</span>
+				<li class="adderss" style="height: 100px">
+				<label class="label_name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label>
+				<span class="add_name">
+					<textarea  rows="2" cols="115" name="comments" style="height: 100px;"></textarea>
+				</span>
 					<div class="prompt r_f"></div>
 				</li>
 				
-				<li class="adderss">
-					<label class="label_name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label>
-					<span class="add_name">
-						<textarea  rows="2" cols="80" name="comments" style="height: 50px;">${supplier.comments}</textarea>
-					</span>
-					<div class="prompt r_f"></div>
+				<li>
+				</li>
+				<li>
 				</li>
 				
 			</ul>
 		</div>
-		<p style="text-align: center; padding-top: 20px">
-			<a class="btn btn-xs btn-info0" href="javascript:;" id="submit">修改</a>&nbsp;&nbsp;&nbsp; 
-			<a class="btn btn-xs btn-info" href="javascript:;" id="close">关闭</a>
+		<p style="margin-left: 50px">
+			<a class="btn btn-xs btn-info" href="javascript:;" id="submit"  style="font-size: 15px"><em>提交</em></a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-xs btn-info" href="javascript:;" id="reset" style="font-size: 15px">重置</a>
 		</p>
 	</form>
 </body>
@@ -150,19 +159,55 @@ var start = {
 };
 laydate(start);
 
+function RndNum(){
+	var supplierId=$("input[name='supplierId']").val().trim();
+    supplierId="GYS";
+    for(var i=0;i<6;i++){
+    	supplierId+=Math.floor(Math.random()*10);
+    }
+    $("#supplierId").val(supplierId);
+}
 
 $(function(){
-	/*关闭*/
-	$("#close").click(function(){
-		//当你在iframe页面关闭自身时					
-		var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-		parent.layer.close(index); //再执行关闭
+	
+	RndNum();
+
+	
+	//供应商编号查重
+	var supplierId;
+	$("input[name='supplierId']").blur(function(){
+		supplierId=$("#supplierId").val().trim();
+		if(supplierId==null||supplierId.length==0){
+			layer.msg("供应商编号不能为空!");
+			return;
+		}
+		$.post(
+			"${pageContext.request.contextPath}/jsp/supplier_checkid.html",
+			{
+				"supplierId":supplierId
+			},function(data){
+				if(data=="true"){
+					  layer.msg('编号已存在！',{icon:5,time:2000 },  
+							  function () {
+						  $("#submit").hide();
+		                }
+					  );
+				}else{
+					$("#submit").show();
+				}
+			}
+		);
+	})
+	/*重置*/
+	$("#reset").click(function(){
+		//重置当前页面
+		window.location.reload();
 	});
-	/*提交修改*/
+	/*添加*/
 	$("#submit").click(function(){
 		//获取供应商id
-		var supplierId=$("input[type='hidden']").val().trim();
-		//获取修改后的供应商名称
+		var supplierId=$("input[name='supplierId']").val().trim();
+		//获取供应商名称
 		var sName=$("input[name='sName']").val().trim();
 		if(sName==null||sName.length==0){
 			layer.msg("供应商名称不能为空！");
@@ -176,6 +221,11 @@ $(function(){
 		}
 		//获取合作时间
 		var sDate=$("input[name='sDate']").val().trim();
+		if(sDate==null||sDate.length==0){
+			layer.msg("请选择合作开始时间！");
+			return;
+		}
+		
 		//获取联系电话
 		var sPhone=$("input[name='sPhone']").val().trim();
 		if(sPhone==null||sPhone.length==0){
@@ -208,10 +258,9 @@ $(function(){
 		}
 		//获取备注
 		var comments=$("textarea[name='comments']").val().trim();
-		//使用ajax修改员工信息
-		
+		//使用ajax新增供应商信息
 		$.post(
-			"${pageContext.request.contextPath}/jsp/supplier_doupdate.html",
+		"${pageContext.request.contextPath}/jsp/add_dosupplier.html",
 		{	
 			"supplierId":supplierId,
 			"sName":sName,
@@ -224,19 +273,16 @@ $(function(){
 			"comments":comments
 		},function(data){
 			if(data=="true"){
-				layer.alert("修改成功！",{
+				layer.alert("新增成功！",{
 					icon:1,
 					btn:['确定'],
 					yes:function(){
-						//当你在iframe页面关闭自身时					
-						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-						parent.location.reload();//刷新父级页面
-						parent.layer.close(index); //再执行关闭
+						window.location.href="${pageContext.request.contextPath}/jsp/supplier_list.html";
 					}
 				});
 				
 			}else{
-				layer.msg("修改失败！");
+				layer.msg("新增失败！");
 				//刷新当前页面
 				window.location.reload();
 			}
@@ -259,6 +305,18 @@ function getNowFormatDate() {
     }
     var currentdate = year + seperator1 + month + seperator1 + strDate;
     return currentdate;
+}
+//判断某个单选或复选按钮是否被选中至少一个
+function isChecked(chkName){
+	var cps = document.getElementsByName(chkName);
+	var chk = false;
+	for(var i=0;i<cps.length;i++){
+		chk =cps[i].checked;
+		if(chk){
+			break;
+		}
+	}
+	return chk
 }
 </script>
 </html>

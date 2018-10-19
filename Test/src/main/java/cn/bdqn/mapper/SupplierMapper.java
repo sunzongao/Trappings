@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+import org.springframework.aop.IntroductionAdvisor;
 
 import cn.bdqn.pojo.Supplier;
 
@@ -19,4 +20,13 @@ public interface SupplierMapper {
 	
 	//修改供货商信息
 	public int updateSupplier(Supplier s);
+	
+	//删除供应商信息
+	public int deleteSupplier(@Param("supplierId")String supplierId);
+	
+	//新增供应商
+	public int addSupplier(Supplier s);
+	
+	//查询供应商
+	public List<Supplier> querySuppliers();
 }

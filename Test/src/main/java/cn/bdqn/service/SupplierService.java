@@ -1,8 +1,7 @@
 package cn.bdqn.service;
 
-import java.util.Map;
+import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 
 import cn.bdqn.pojo.Supplier;
 import cn.bdqn.util.PageUtil;
@@ -14,4 +13,10 @@ public interface SupplierService {
 	public Supplier getSupplierById(String supplierId);
 	
 	public int updateSupplier(Supplier s);
+	
+	public int deleteSupplier(String supplierId);
+	
+	public int addSupplier(Supplier s);
+	
+	public List<Supplier> querySuppliers();
 }

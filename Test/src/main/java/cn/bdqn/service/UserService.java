@@ -10,4 +10,5 @@ public interface UserService {
 	public User queryUser(String name);
 	public Map<String, Object> queryRole(String name);
 	public List<Permission> queryAllRoleAndPermissions(String name);
+	public List<User> queryUsers();
 }

@@ -20,4 +20,6 @@ public interface EmployeeMapper {
 	public int queryCount(Map<String, Object> map);
 	//根据id返回对象
 	public Employee queryById(@Param("employeeId") String employeeId);
+	
+	
 }

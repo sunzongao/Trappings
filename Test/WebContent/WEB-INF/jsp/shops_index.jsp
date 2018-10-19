@@ -44,7 +44,7 @@
 	type="text/javascript"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/statics/js/jquery.cookie.js"></script>
-<title>店铺管理</title>
+<title>易佳服饰后台管理系统</title>
 </head>
 <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>

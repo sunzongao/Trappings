@@ -13,6 +13,9 @@ public interface UserMapper {
 	// 登录
 	public User queryUser(@Param("uname") String uname);
 
+	//查询角色
+	public List<User> queryUsers();
+	
 	// 查询登录用户所拥有的角色
 	public Set<String> queryRole(@Param("uname") String uname);
 
