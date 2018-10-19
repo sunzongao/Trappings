@@ -165,7 +165,13 @@
 			var password = $("#userpwd").val();
 			var code = $("#Codes_text").val();
 			var remberme = $("#remberme").prop('checked');
-			$.post("${pageContext.request.contextPath}/loginUrl",
+			$.post(
+			"${pageContext.request.contextPath}/getUserState",
+			{
+				"uname":name
+			},function(data){
+				if(data=="1"){
+					$.post("${pageContext.request.contextPath}/loginUrl",
 							{
 								'name' : name,
 								'password' : password,
@@ -185,6 +191,17 @@
 									});
 								}
 							});
+				}else if(data=="-1"){
+					layer.msg("账号错误！",{time:2000,icon:2},function(){
+						window.location.reload();
+					});
+				}else{
+					layer.msg("账号已被禁用，请联系管理员！",{time:2000,icon:2},function(){
+						window.location.reload();
+					});
+				}
+			}
+			);
 		}
 	}
 	$(document).ready(
