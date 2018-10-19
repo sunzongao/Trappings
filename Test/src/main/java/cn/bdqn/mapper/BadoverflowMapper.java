@@ -10,5 +10,5 @@ public interface BadoverflowMapper {
 		public List<Badoverflow> queryBadoverflow(Map<String, Object> map);
 		//²éÑ¯×ÜÊı
 		public int count(Map<String, Object> map);
-		//11
+		//22
 }	
