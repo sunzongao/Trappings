@@ -82,7 +82,10 @@ public class UserController {
 	 * 首页外层展示
 	 */
 	@RequestMapping("/toshops_index.html")
-	public String showList(Model model) {
+	public String showList(HttpSession	 session) {
+		String name=SecurityUtils.getSubject().getPrincipal().toString();
+		User loginuser = userservice.queryUser(name);
+		session.setAttribute("loginUser", loginuser);
 		return "shops_index";
 	} 
 

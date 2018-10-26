@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.bdqn.mapper.DetailedMapper">
+
+	<resultMap type="Detailed" id="queryPro">
+		<id property="id" column="id" />
+		<result property="commodityId" column="commodityId" />
+		<association property="commodity" javaType="Commodity">
+			<result property="cName" column="cName" />
+		</association>
+	</resultMap>
+
+
+	<select id="query" resultMap="queryPro">
+		select d.id,d.commodityId,c.cName from detailed d
+		JOIN commodity c
+		on
+		d.commodityId = c.commodityId
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="procurementId!=null and procurementId!=''">
+				and d.procurementId=#{procurementId}
+			</if>
+		</trim>
+	</select>
+
+
+
+
+
+	<select id="getDetailedById" resultType="Detailed">
+		select * from detailed
+		where id=#{id}
+	</select>
+
+
+
+
+	<insert id="addDetailed" parameterType="Detailed">
+		insert into detailed
+		(commodityId,procurementId,number,price)
+		values(#{commodityId},#{procurementId},#{number},#{price})
+	</insert>
+
+	<delete id="deleteDetailed">
+		delete from detailed where id=#{id}
+	</delete>
+
+	<update id="updateDetailed" parameterType="Detailed">
+		update detailed set price=#{price},number=#{number}
+		where id=#{id}
+	</update>
+
+</mapper>

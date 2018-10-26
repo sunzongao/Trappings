@@ -14,30 +14,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<id property="id" column="id" />
 			<result property="number" column="number" />
 			<result property="price" column="price" />
-			<association property="commodity"
-				javaType="Commodity">
+			<association property="commodity" javaType="Commodity">
 				<id property="commodityId" column="commodityId" />
 				<result property="cName" column="cName" />
 				<result property="comments" column="comments" />
 				<association property="genre" javaType="Genre">
-					<id property="id" column="id"/>
-					<result property="gName" column="gName"/>
+					<id property="genreId" column="genreId" />
+					<result property="gName" column="gName" />
 				</association>
 				<association property="unit" javaType="Unit">
-					<id property="id" column="id"/>
-					<result property="uName" column="uName"/>
+					<id property="unitId" column="unitId" />
+					<result property="uName" column="uName" />
 				</association>
 				<association property="pigment" javaType="Pigment">
-					<id property="id" column="id"/>
-					<result property="pName" column="pName"/>
+					<id property="pigmentId" column="pigmentId" />
+					<result property="pName" column="pName" />
 				</association>
 				<association property="dimension" javaType="Dimension">
-					<id property="id" column="id"/>
-					<result property="dName" column="dName"/>
+					<id property="dimensionId" column="dimensionId" />
+					<result property="dName" column="dName" />
 				</association>
 				<association property="brand" javaType="Brand">
-					<id property="id" column="id"/>
-					<result property="bName" column="bName"/>
+					<id property="brandId" column="brandId" />
+					<result property="bName" column="bName" />
 				</association>
 			</association>
 		</collection>
@@ -48,22 +47,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="queryProcurement" resultMap="Pmap"
 		parameterType="map">
 		select p.procurementId,p.billingTime,s.sName as sName,sto.stoName as
-		stoName,u.surname,p.condition,p.comments
+		stoName,p.userId,p.draftId,usr.surname as draName,u.surname,p.condition,p.comments,p.sign
 		from
 		procurement p
-		left join supplier s on p.supplierId=s.supplierId
+		left join
+		supplier s on p.supplierId=s.supplierId
 		left
 		join storehouse
-		sto on p.storehouseId=sto.storehouseId
-		left join user u
-		on
+		sto on
+		p.storehouseId=sto.storehouseId
+		left join user u on
 		p.userId=u.id
+		left join user usr on p.draftId=usr.id
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="procurementId!=null and procurementId!=''">
 				and p.procurementId like CONCAT('%',#{procurementId},'%')
 			</if>
-			<if test="condition!=null and condition!=''">
+			<if test="condition!=null and condition!='' and condition!=-1 and condition!=-2">
 				and p.condition=#{condition}
+			</if>
+			<if test="condition==-1">
+				and p.condition!=2
+			</if>
+			<if test="condition==-2">
+				and p.condition=2 or p.condition=1
 			</if>
 			<if
 				test="begintime!=null and begintime!='' and (endtime==null or endtime=='')">
@@ -79,11 +86,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{endtime}
 			</if>
 		</trim>
+		order by p.billingTime desc
 		limit #{start},#{end}
 	</select>
 
 	<select id="queryCount" resultType="int" parameterType="map">
-		select count(1) from 
+		select count(1) from
 		procurement p
 		left join supplier s on p.supplierId=s.supplierId
 		left
@@ -96,8 +104,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="procurementId!=null and procurementId!=''">
 				and p.procurementId like CONCAT('%',#{procurementId},'%')
 			</if>
-			<if test="condition!=null and condition!=''">
+			<if test="condition!=null and condition!='' and condition!=-1 and condition!=-2">
 				and p.condition=#{condition}
+			</if>
+			<if test="condition==-1">
+				and p.condition!=2
+			</if>
+			<if test="condition==-2">
+				and p.condition=2 or p.condition=1
 			</if>
 			<if
 				test="begintime!=null and begintime!='' and (endtime==null or endtime=='')">
@@ -120,21 +134,81 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 		p.procurementId,p.billingTime,s.sName as sName,sto.stoName as
 		stoName,u.surname,p.condition,c.commodityId,c.cName as
-		cName,b.bName,g.gName,p.comments,
+		cName,b.bName,g.gName,p.comments,p.userId,
 		un.uName,pig.pName,dim.dName,d.number,d.price
 		from procurement p
-		left join supplier s on p.supplierId=s.supplierId
+		left
+		join supplier s on p.supplierId=s.supplierId
 		left join storehouse
-		sto on p.storehouseId=sto.storehouseId
+		sto on
+		p.storehouseId=sto.storehouseId
 		left join user u on
 		p.userId=u.id
-		left join detailed d on p.procurementId=d.procurementId
-		left join commodity c on c.commodityId=d.commodityId
+		left
+		join detailed d on p.procurementId=d.procurementId
+		left join commodity
+		c on c.commodityId=d.commodityId
 		left join brand b
-		on b.brandId=c.brandId
+		on
+		b.brandId=c.brandId
 		left join genre g on g.genreId=c.genreId
 		left
-		join unit un on un.unitId=c.unitId
+		join
+		unit un on un.unitId=c.unitId
+		left join pigment pig on
+		pig.pigmentId=c.pigmentId
+		left join dimension dim on
+		dim.dimensionId=c.dimensionId
+		where
+		p.procurementId=#{procurementId}
+	</select>
+
+
+	<insert id="addProcurement" parameterType="Procurement">
+		insert into procurement (procurementId,billingTime,supplierId,
+		storehouseId,userId,draftId,`condition`,comments)
+		values(#{procurementId},#{billingTime},#{supplierId},
+		#{storehouseId},#{userId},#{draftId},#{condition},#{comments})
+	</insert>
+
+
+	<update id="updateProcurement" parameterType="Procurement">
+		update procurement set storehouseId=#{storehouseId},
+		userId=#{userId},comments=#{comments}
+		where procurementId=#{procurementId}
+	</update>
+
+	<update id="update" parameterType="Procurement">
+		update procurement set `condition`=#{condition}
+		where procurementId=#{procurementId}
+	</update>
+
+	<select id="getProcurementById" resultMap="Pmap">
+		select 
+		p.procurementId,p.billingTime,p.userId,p.storehouseId,s.sName as
+		sName,sto.stoName as
+		stoName,u.surname,p.condition,c.commodityId,c.cName as
+		cName,b.bName,g.gName,p.comments,
+		un.uName,pig.pName,dim.dName,d.number,d.price,d.id,p.userId
+		from procurement p
+		left
+		join supplier s on p.supplierId=s.supplierId
+		left join storehouse
+		sto on
+		p.storehouseId=sto.storehouseId
+		left join user u on
+		p.userId=u.id
+		left
+		join detailed d on p.procurementId=d.procurementId
+		left join commodity
+		c on c.commodityId=d.commodityId
+		left join brand b
+		on
+		b.brandId=c.brandId
+		left join genre g on g.genreId=c.genreId
+		left
+		join
+		unit un on un.unitId=c.unitId
 		left join pigment pig on
 		pig.pigmentId=c.pigmentId
 		left join dimension dim on

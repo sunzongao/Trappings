@@ -1,24 +1,45 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<link href="${pageContext.request.contextPath }/statics/css/shop.css" type="text/css" rel="stylesheet" />
-<link href="${pageContext.request.contextPath }/statics/css/Sellerber.css" type="text/css"  rel="stylesheet" />
-<link href="${pageContext.request.contextPath }/statics/css/bkg_ui.css" type="text/css"  rel="stylesheet" />
-<link href="${pageContext.request.contextPath }/statics/font/css/font-awesome.min.css"  rel="stylesheet" type="text/css" />
-<script src="${pageContext.request.contextPath }/statics/js/jquery-1.9.1.min.js" type="text/javascript" ></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/jquery.cookie.js"></script>
-<script src="${pageContext.request.contextPath }/statics/js/shopFrame.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath }/statics/js/Sellerber.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath }/statics/js/layer/layer.js" type="text/javascript"></script>
-<script src="${pageContext.request.contextPath }/statics/js/laydate/laydate.js" type="text/javascript"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/statics/js/proTree.js" ></script>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link href="${pageContext.request.contextPath }/statics/css/shop.css"
+	type="text/css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath }/statics/css/Sellerber.css"
+	type="text/css" rel="stylesheet" />
+<link href="${pageContext.request.contextPath }/statics/css/bkg_ui.css"
+	type="text/css" rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath }/statics/font/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<script
+	src="${pageContext.request.contextPath }/statics/js/jquery-1.9.1.min.js"
+	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/statics/js/jquery.cookie.js"></script>
+<script
+	src="${pageContext.request.contextPath }/statics/js/shopFrame.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath }/statics/js/Sellerber.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath }/statics/js/layer/layer.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath }/statics/js/laydate/laydate.js"
+	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/statics/js/proTree.js"></script>
 <title>供应商管理</title>
 </head>
 <!--[if lt IE 9]>
@@ -27,85 +48,128 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <script src="js/css3-mediaqueries.js"  type="text/javascript"></script>
   <![endif]-->
 <body>
-<div class="margin" id="page_style">
-   <div class="operation clearfix same_module mb15">
-   <form id="form1" action="${pageContext.request.contextPath}/jsp/supplier_list.html" method="post">
-   	 <ul class="choice_search">
-	     <li class="clearfix col-xs-2 col-lg-2 col-ms-3 "><label class="label_name " style="width: 80px">供货商名称：</label><input name="sName" value="${sName}" type="text"  class="form-control col-xs-6 col-lg-5" style="width: 100px"/></li>
-	     <button class="btn button_btn bg-deep-blue " onclick="search()"  type="button"><i class="fa  fa-search"></i>&nbsp;搜索</button>
-    </ul>
-   </form>
-  </div>
- <div class="h_products_list clearfix" id="Sellerber">
-   <div class="Sellerber_left menu" id="menuBar">
-    <div class="show_btn" id="rightArrow"><span></span></div>
-    <div class="side_title"><a title="隐藏" class="close_btn"><span></span></a></div> 
-    <div class="menu_style" id="menu_style">
-    <div class="list_content">
-    </div>
-  </div>
- </div>
-</div>
-<div class="bkg_List_style list_Exhibition list_show padding15">
- <div class="bkg_List_operation clearfix searchs_style">
-  <ul class="bkg_List_Button_operation">
-   <li class="btn btn-danger"><a href="javascrpt:void()" onclick="deleteItem()" class="btn_add" ><em class="bkg_List_icon icon_add"></em>删除用户</a></li>
-  </ul>
- </div>
-  <div class="datalist_show">
- <div class="bkg_List clearfix datatable_height confirm">
-  <table class="table  table_list table_striped table-bordered">
-   <thead>
-   <tr>
-     <th  width="40"><label><input id="a" type="checkbox" class="ace" /><span class="lbl"></span></label></th>
-     <th>供货商编号</th>
-     <th>供货商名称</th>
-     <th>联系人</th>
-     <th>联系电话</th>
-     <th>Email</th>
-     <th>联系地址</th>	
-     <th>合作时间</th>
-     <th>状态</th>
-      <th>编辑</th>	
-    </tr>
-   </thead>
-   <tbody>
-   	<c:forEach items="${pageUtil.lists}" var="s">
-   		 <tr>
-	     <td><label><input type="checkbox" value="${s.supplierId}" name="ace" class="ace"><span class="lbl"></span></label></td>
-	     <td>${s.supplierId}</td>
-	     <td><a href="javascript:;${s.supplierId }" onClick="userinfo(this)">${s.sName}</a></td>
-	     <td>${s.sContacts}</td>
-	     <td>${s.sPhone}</td>
-	     <td>${s.sEmail}</td>
-	     <td>${s.sAddress}</td>
-	     <td>${s.sDate}</td>
-	     <c:if test="${s.sStatus==1}">
-	     	<td>启用</td>
-	     </c:if>
-	     <c:if test="${s.sStatus==2}">
-	     	<td>禁用</td>
-	     </c:if>
-	     <td class="td-manage">
-	        <a title="编辑" onclick="member_edit(this)" href="javascript:;${s.supplierId}"  class="btn btn-xs btn-info" >编辑</a> 
-	        <a title="删除" onclick="member_del(this,'${s.supplierId}')" href="javascript:;"   class="btn btn-xs btn-delete" >删除</a>
-	     </td>
-   	 </tr>
-   	</c:forEach>
-   </tbody>
-  </table>
-  	<p style="margin-top: 5px;text-align: center;">
-		<a href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=1&sName=${sName}" class="btn btn-xs btn-info" <c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
-		<a href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=${pageUtil.currentPage-1}&sName=${sName}" class="btn btn-xs btn-info" <c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
-		<a href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=${pageUtil.currentPage+1}&sName=${sName}" class="btn btn-xs btn-info" <c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>下一页</a>&nbsp;&nbsp;
-		<a href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=${pageUtil.totalPage}&sName=${sName}" class="btn btn-xs btn-info" <c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>尾页</a>
-		<span style="font-size: 16px;">第${pageUtil.currentPage}页/共${pageUtil.totalPage}页</span>
-  	</p>
-    </div>
-   </div>
-  </div>
- </div>
-</div>
+	<div class="margin" id="page_style">
+		<div class="operation clearfix same_module mb15">
+			<form id="form1"
+				action="${pageContext.request.contextPath}/jsp/supplier_list.html"
+				method="post">
+				<ul class="choice_search">
+					<li class="clearfix col-xs-2 col-lg-2 col-ms-3 "><label
+						class="label_name " style="width: 80px">供货商名称：</label><input
+						name="sName" value="${sName}" type="text"
+						class="form-control col-xs-6 col-lg-5" style="width: 100px" /></li>
+					<button class="btn button_btn bg-deep-blue " onclick="search()"
+						type="button">
+						<i class="fa  fa-search"></i>&nbsp;搜索
+					</button>
+				</ul>
+			</form>
+		</div>
+		<div class="h_products_list clearfix" id="Sellerber">
+			<div class="Sellerber_left menu" id="menuBar">
+				<div class="show_btn" id="rightArrow">
+					<span></span>
+				</div>
+				<div class="side_title">
+					<a title="隐藏" class="close_btn"><span></span></a>
+				</div>
+				<div class="menu_style" id="menu_style">
+					<div class="list_content"></div>
+				</div>
+			</div>
+		</div>
+		<shiro:hasPermission name="GYSLB">
+			<div class="bkg_List_style list_Exhibition list_show padding15">
+
+				<div class="bkg_List_operation clearfix searchs_style">
+
+					<ul class="bkg_List_Button_operation">
+						<li class="btn btn-danger"><a href="javascrpt:void()"
+							onclick="deleteItem()" class="btn_add"><em
+								class="bkg_List_icon icon_add"></em>批量删除</a></li>
+					</ul>
+
+				</div>
+		</shiro:hasPermission>
+		<div class="datalist_show">
+			<div class="bkg_List clearfix datatable_height confirm">
+				<table class="table  table_list table_striped table-bordered">
+					<thead>
+						<tr>
+							<shiro:hasPermission name="GYSLB">
+								<th width="40"><label><input id="a" type="checkbox"
+										class="ace" /><span class="lbl"></span></label></th>
+							</shiro:hasPermission>
+							<th>供货商编号</th>
+							<th>供货商名称</th>
+							<th>联系人</th>
+							<th>联系电话</th>
+							<th>Email</th>
+							<th>联系地址</th>
+							<th>合作时间</th>
+							<th>状态</th>
+							<shiro:hasPermission name="GYSLB">
+							<th>编辑</th>
+							</shiro:hasPermission>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${pageUtil.lists}" var="s">
+							<tr>
+								<shiro:hasPermission name="GYSLB">
+									<td><label><input type="checkbox"
+											value="${s.supplierId}" name="ace" class="ace"><span
+											class="lbl"></span></label></td>
+								</shiro:hasPermission>
+								<td>${s.supplierId}</td>
+								<td><a href="javascript:;${s.supplierId }"
+									onClick="userinfo(this)">${s.sName}</a></td>
+								<td>${s.sContacts}</td>
+								<td>${s.sPhone}</td>
+								<td>${s.sEmail}</td>
+								<td>${s.sAddress}</td>
+								<td>${s.sDate}</td>
+								<c:if test="${s.sStatus==1}">
+									<td>启用</td>
+								</c:if>
+								<c:if test="${s.sStatus==2}">
+									<td>禁用</td>
+								</c:if>
+								<shiro:hasPermission name="GYSLB">
+								<td class="td-manage"><a title="编辑"
+									onclick="member_edit(this)" href="javascript:;${s.supplierId}"
+									class="btn btn-xs btn-info">编辑</a> <a title="删除"
+									onclick="member_del(this,'${s.supplierId}')"
+									href="javascript:;" class="btn btn-xs btn-delete">删除</a></td>
+									</shiro:hasPermission>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				<p style="margin-top: 5px; text-align: center;">
+					<a
+						href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=1&sName=${sName}"
+						class="btn btn-xs btn-info"
+						<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
+					<a
+						href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=${pageUtil.currentPage-1}&sName=${sName}"
+						class="btn btn-xs btn-info"
+						<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
+					<a
+						href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=${pageUtil.currentPage+1}&sName=${sName}"
+						class="btn btn-xs btn-info"
+						<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>下一页</a>&nbsp;&nbsp;
+					<a
+						href="${pageContext.request.contextPath}/jsp/supplier_list.html?pageindex=${pageUtil.totalPage}&sName=${sName}"
+						class="btn btn-xs btn-info"
+						<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>尾页</a>
+					<span style="font-size: 16px;">第${pageUtil.currentPage}页/共${pageUtil.totalPage}页</span>
+				</p>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
 
 
 </body>

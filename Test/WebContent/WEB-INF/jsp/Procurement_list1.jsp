@@ -56,7 +56,7 @@
 	<div class="margin" id="page_style">
 		<!--列表展示-->
 		<form id="form1"
-			action="${pageContext.request.contextPath}/jsp/procurement_list.html"
+			action="${pageContext.request.contextPath}/jsp/procurement_list1.html"
 			method="post">
 			<div class="list_Exhibition list_show padding15">
 				<div class="operation clearfix mb15  searchs_style">
@@ -148,19 +148,19 @@
 			</table>
 			<p style="margin-top: 5px; text-align: center;">
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=1&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
+					href="${pageContext.request.contextPath}/jsp/procurement_list1.html?pageindex=1&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=${pageUtil.currentPage-1}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
+					href="${pageContext.request.contextPath}/jsp/procurement_list1.html?pageindex=${pageUtil.currentPage-1}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=${pageUtil.currentPage+1}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
+					href="${pageContext.request.contextPath}/jsp/procurement_list1.html?pageindex=${pageUtil.currentPage+1}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>下一页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=${pageUtil.totalPage}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
+					href="${pageContext.request.contextPath}/jsp/procurement_list1.html?pageindex=${pageUtil.totalPage}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>尾页</a>
 				<span style="font-size: 16px;">第${pageUtil.currentPage}页/共${pageUtil.totalPage}页</span>
