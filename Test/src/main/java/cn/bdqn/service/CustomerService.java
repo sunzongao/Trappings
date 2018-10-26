@@ -9,7 +9,7 @@ public interface CustomerService {
 	public PageUtil<Customer>queryAll(String cName,int cId,int currentPage,int pageSize);
 	public int add(Customer customer);
 	
-	public int delete(int customerId);
+	public int delete(String customerId);
 	
 	public Customer updateById(@Param("id")String id);
 	

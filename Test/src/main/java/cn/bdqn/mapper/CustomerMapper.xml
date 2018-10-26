@@ -48,10 +48,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<update id="update" parameterType="Customer">
-		update Customer set customerId=#{customerId},cName=#{cName},
+		update Customer set cName=#{cName},
 		cContacts=#{cContacts},cPhone=#{cPhone},
 		cAddress=#{cAddress},cId=#{cId},comments=#{comments}
-		where id=#{id}
+		where customerId=#{customerId}
 	</update>
 	
 	
