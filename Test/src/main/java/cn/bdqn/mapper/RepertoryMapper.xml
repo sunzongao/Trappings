@@ -7,21 +7,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="queryRepertory" resultType="Repertory"
 		parameterType="java.util.Map">
 		SELECT
-		r.`commodityId`,r.`cName`,r.`inventory`,r.minimumStock
-		,u.`unitId`,b.`brandId`,s.`supplierId`,u.`uName`
+		r.`commodityId`,c.`cName` AS
+		repertoryCName,r.`inventory`,r.minimumStock,
+		u.`unitId`,b.`brandId`,s.`supplierId`,u.`uName`
 		AS
 		repertoryUName,b.`bName` AS
 		repertoryBName,s.`sName` AS
 		repertorySName,s.`sAddress`,s.`sContacts`,s.`sPhone`,s.`comments`,r.`laidTime`,se.`stoName`
-		AS repertorySeName FROM repertory AS r
-		INNER JOIN commodity AS c ON
+		AS repertorySeName,se.`storehouseId` FROM repertory AS r
+		LEFT JOIN
+		commodity AS c ON
 		r.commodityId = c.commodityId
-		INNER JOIN unit AS u ON r.unitId =
+		LEFT JOIN unit AS u ON
+		r.unitId =
 		u.unitId
-		INNER JOIN brand AS b ON b.`brandId`=r.`brandId`
-		INNER JOIN
+		LEFT JOIN brand AS b ON b.`brandId`=r.`brandId`
+		LEFT
+		JOIN
 		supplier AS s ON r.`supplierId`=s.`supplierId`
-		INNER JOIN storehouse AS
+		LEFT JOIN storehouse
+		AS
 		se ON r.`storehouseId` = se.`storehouseId`
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="storehouseId!=0">
@@ -34,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				and r.brandId=#{brandId}
 			</if>
 		</trim>
-		  limit #{startRow},#{pageSize}
+		limit #{startRow},#{pageSize}
 	</select>
 
 
@@ -42,17 +47,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="java.util.Map">
 		SELECT
 		COUNT(1) FROM repertory AS r
-		INNER JOIN commodity AS c ON
+		LEFT JOIN commodity AS c ON
 		r.commodityId =
 		c.commodityId
-		INNER JOIN unit AS u ON r.unitId =
+		LEFT JOIN unit AS u ON r.unitId =
 		u.unitId
-		INNER JOIN
+		LEFT JOIN
 		brand AS b ON b.`brandId`=r.`brandId`
-		INNER JOIN
-		supplier AS s ON
+		LEFT JOIN
+		supplier AS s
+		ON
 		r.`supplierId`=s.`supplierId`
-		INNER JOIN storehouse AS
+		LEFT JOIN storehouse AS
 		se ON
 		r.`storehouseId` = se.`storehouseId`
 		<trim prefix="where" prefixOverrides="and | or">
@@ -71,16 +77,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="addRepertory" parameterType="Repertory">
 		INSERT INTO repertory
-		(commodityId,cName,inventory,unitId,
+		(commodityId,inventory,unitId,
 		brandId,supplierId,storehouseId)
-		VALUES(#{commodityId},#{cName},#{inventory},
+		VALUES(#{commodityId},#{inventory},
 		#{unitId},#{brandId},#{supplierId},
 		#{storehouseId})
 	</insert>
 
 	<delete id="deleteRepertoy" parameterType="Repertory">
 		delete from repertory
-		where commodityId=#{commodityId}
+		where commodityId=#{commodityId} AND inventory=0
 	</delete>
 
 	<select id="getById" resultType="Repertory">
@@ -92,11 +98,95 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE
 		repertory
 		SET
-		commodityId= #{commodityId},cName = #{cName},inventory=
-		#{inventory},unitId = #{unitId},brandId = #{brandId},supplierId =
-		#{supplierId},laidTime = #{laidTime},storehouseId = #{storehouseId}
-		WHERE commodityId= #{commodityId}
+		commodityId= #{commodityId},inventory=
+		#{inventory},unitId =
+		#{unitId},brandId = #{brandId},supplierId =
+		#{supplierId},laidTime =
+		#{laidTime},storehouseId = #{storehouseId}
+		WHERE commodityId=
+		#{commodityId}
 	</update>
 
+
+
+	<select id="getByStorehouseId" resultType="Repertory"
+		parameterType="java.util.Map">
+		SELECT
+		r.`commodityId`,c.`cName` AS
+		repertoryCName,r.`inventory`,r.minimumStock,
+		u.`unitId`,b.`brandId`,s.`supplierId`,u.`uName`
+		AS
+		repertoryUName,b.`bName` AS
+		repertoryBName,s.`sName` AS
+		repertorySName,s.`sAddress`,s.`sContacts`,s.`sPhone`,s.`comments`,r.`laidTime`,se.`stoName`
+		AS repertorySeName,se.`storehouseId` FROM repertory AS r
+		LEFT JOIN
+		commodity AS c ON
+		r.commodityId = c.commodityId
+		LEFT JOIN unit AS u ON
+		r.unitId =
+		u.unitId
+		LEFT JOIN brand AS b ON b.`brandId`=r.`brandId`
+		LEFT
+		JOIN
+		supplier AS s ON r.`supplierId`=s.`supplierId`
+		LEFT JOIN storehouse
+		AS
+		se ON r.`storehouseId` = se.`storehouseId`
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="storehouseId!=0">
+				r.storehouseId=#{storehouseId}
+			</if>
+		</trim>
+		limit #{startRow},#{pageSize}
+	</select>
+
+	<select id="count1" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		SELECT
+		COUNT(1) FROM repertory AS r
+		LEFT JOIN commodity AS c ON
+		r.commodityId =
+		c.commodityId
+		LEFT JOIN unit AS u ON r.unitId =
+		u.unitId
+		LEFT JOIN
+		brand AS b ON b.`brandId`=r.`brandId`
+		LEFT JOIN
+		supplier AS s
+		ON
+		r.`supplierId`=s.`supplierId`
+		LEFT JOIN storehouse AS
+		se ON
+		r.`storehouseId` = se.`storehouseId`
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="storehouseId!=0">
+				r.storehouseId=#{storehouseId}
+			</if>
+		</trim>
+	</select>
+
+	<!--修改最低库存量 -->
+	<update id="updateRepertoryAllMinimumStock"
+		parameterType="Repertory">
+		UPDATE repertory SET minimumStock =#{minimumStock}
+	</update>
+
+	<!-- 根据Id和所属仓库查询属性值 -->
+	<select id="getByIdAndStorehouseId" resultType="Repertory">
+		SELECT * FROM
+		repertory WHERE commodityId=#{commodityId} AND
+		storehouseId=#{storehouseId}
+	</select>
+
+
+	<!--库存调拨 -->
+	<update id="updateInventoryAllocation" parameterType="Repertory">
+		UPDATE
+		repertory SET 
+		inventory=#{inventory}
+		 WHERE commodityId=#{commodityId} AND
+		storehouseId=#{storehouseId}
+	</update>
 
 </mapper>

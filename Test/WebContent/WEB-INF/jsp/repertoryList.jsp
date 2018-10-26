@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -35,7 +36,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <button class="btn button_btn btn-danger" type="button" onclick=""><i class="fa fa-trash-o"></i>&nbsp;删除</button>
 <span class="submenu"><a href="javascript:void(0)" name="" onclick="add_AD_sort()" class="btn button_btn bg-deep-blue" title="添加库存"><i class="fa  fa-edit"></i>&nbsp;添加库存</a></span>
 
-<div class="search  clearfix">
+<div class="search  clearfix"> 
 				<select name="brandId" id="brandId" 
 					class="form-control col-xs-6" style="width: 23%">
 					<option value="0">--商品品牌 --</option>
@@ -84,10 +85,10 @@ bordered"
 								class="ace"><span class="lbl"></span></label></th>
 						<th>商品编号</th>
 						<th>商品名称</th>
-						<th>库存量</th>
-						<th>单位</th>
-						<th>品牌</th>
+						<th>商品单位</th>
+						<th>商品品牌</th>
 						<th>供应商</th>
+						<th>库存量</th>
 						<th>入库时间</th>
 						<th>所属仓库</th>
 						<th>操作</th>
@@ -102,16 +103,16 @@ bordered"
 							</label>
 							</th>
 							<th>${r.commodityId }</th>
-							<th>${r.cName }</th>
-							<th>${r.inventory }</th>
+							<th>${r.repertoryCName }</th>
 							<th>${r.repertoryUName}</th>
 							<th>${r.repertoryBName }</th>
 							<th>${r.repertorySName }</th>
-							<th>${r.laidTime }</th>
+							<th>${r.inventory }</th>
+							<th>${fn:substring(r.laidTime,0,10) }</th>
 							<th>${r.repertorySeName }</th>
 							<th>
 							<a title="编辑" onclick="member_edit(this)" href="javascript:;${r.commodityId}"  class="btn bg-deep-blue  operation_btn" >编辑</a> 
-							<a title="删除" href="javascript:void()" onclick="picture_del(this,'${r.commodityId}')" class="btn btn-danger operation_btn">删除</a> 
+							<a title="删除" href="javascript:void()" onclick="picture_del(this,'${r.commodityId}','${r.inventory }')" class="btn btn-danger operation_btn">删除</a> 
 							</th>
 					</c:forEach>
 				</thead>
@@ -144,9 +145,9 @@ bordered"
 				</select>
 				<span id="msg"></span>
    </span></li>
-   <li class="clearfix"><label class="label_name col-xs-2">商品名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
+<!--    <li class="clearfix"><label class="label_name col-xs-2">商品名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
    		<input name="商品名称" type="text" id="cName" disabled="disabled"  class="col-xs-10 col-sm-5" style="width:450px" >
-   </span></li>
+   </span></li> -->
    <li class="clearfix"><label class="label_name col-xs-2">库存数量：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
    		<input name="库存数量" type="text" id="inventory" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
    <li class="clearfix"><label class="label_name col-xs-2">商品单位：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
@@ -260,14 +261,16 @@ bordered"
 				});
 			}); 
 	/*库存-删除*/
-function picture_del(obj,id){
+function picture_del(obj,id,inventory){
 	layer.confirm('确认要删除吗？',function(index){
 		$.post(
 			"${pageContext.request.contextPath}/jsp/deleteRepertory",
-			{"commodityId":id},function(data){
+			{"commodityId":id,"inventory":inventory},function(data){
 				if(data=="true"){
 				$(obj).parents("tr").remove();
 				layer.msg('已删除!',{icon:1,time:1000});
+				}else if(data=="false"){
+					layer.msg('库存数量大于0，不能删除!',{icon:1,time:1000});
 				}
 			}
 		);
@@ -316,7 +319,7 @@ function add_AD_sort( ){
 		  if(num>0){  return false;}	 	
           else{
         	  var commodityId = $("#commodityId").val();
-        	  var cName = $("#cName").val();
+        	  /* var cName = $("#cName").val(); */
         	  var inventory = $("#inventory").val();
         	  var unitId = $("#unitId1").val();
         	  var brandId = $("#brandId1").val();
@@ -338,7 +341,7 @@ function add_AD_sort( ){
         		  layer.msg("请选择所属仓库！");
         		  return;
         	  }
-        	  $.post("${pageContext.request.contextPath}/jsp/addRepertory",{"commodityId":commodityId,"cName":cName,"inventory":inventory,
+        	  $.post("${pageContext.request.contextPath}/jsp/addRepertory",{"commodityId":commodityId,"inventory":inventory,
 					"unitId":unitId,"brandId":brandId,"supplierId":supplierId,"storehouseId":storehouseId
 				},function(data){
 					if(data=="true"){

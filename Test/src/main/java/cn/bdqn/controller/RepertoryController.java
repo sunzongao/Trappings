@@ -17,12 +17,14 @@ import com.alibaba.druid.sql.visitor.functions.If;
 import cn.bdqn.pojo.Brand;
 import cn.bdqn.pojo.Commodity;
 import cn.bdqn.pojo.Data;
+import cn.bdqn.pojo.Detail;
 import cn.bdqn.pojo.Repertory;
 import cn.bdqn.pojo.Storehouse;
 import cn.bdqn.pojo.Supplier;
 import cn.bdqn.pojo.Unit;
 import cn.bdqn.service.BrandService;
 import cn.bdqn.service.CommodityService;
+import cn.bdqn.service.DetailService;
 import cn.bdqn.service.RepertoryService;
 import cn.bdqn.service.StorehouseService;
 import cn.bdqn.service.SupplierService;
@@ -55,6 +57,9 @@ public class RepertoryController {
 
 	@Autowired
 	private SupplierService supplierService;
+	
+	@Autowired
+	private DetailService detailService;
 
 	// 查询、分页
 	@RequestMapping("/jsp/repertoryList.html")
@@ -92,9 +97,9 @@ public class RepertoryController {
 	@ResponseBody
 	public String xianshi(String CommodityId, String cName, Model model) {
 		Commodity commodity = commodityService.getCommodityIdByCName(CommodityId);
-		if(commodity==null) {
+		if (commodity == null) {
 			return "0";
-		}else {
+		} else {
 			return commodity.getcName();
 		}
 	}
@@ -122,8 +127,8 @@ public class RepertoryController {
 	 */
 	@RequestMapping("/jsp/deleteRepertory")
 	@ResponseBody
-	public String deleteRepertory(String commodityId) {
-		if (repertoryService.deleteRepertoy(commodityId) > 0) {
+	public String deleteRepertory(String commodityId, int inventory) {
+		if (repertoryService.deleteRepertoy(commodityId, inventory) > 0) {
 			return "true";
 		} else {
 			return "false";
@@ -132,6 +137,7 @@ public class RepertoryController {
 
 	/**
 	 * 跳转修改页面
+	 * 
 	 * @param id
 	 * @param model
 	 * @return
@@ -158,25 +164,76 @@ public class RepertoryController {
 		model.addAttribute("suppliers", suppliers);
 		return "repertoryUpdate";
 	}
-	
-	//处理修改页面
+
+	/**
+	 * 处理修改页面
+	 * @param repertory
+	 * @return
+	 */
 	@RequestMapping("/jsp/doRepertoryUpdate")
 	@ResponseBody
 	public String updateRepertory(Repertory repertory) {
-		if(repertoryService.updateRepertory(repertory)>0) {
+		if (repertoryService.updateRepertory(repertory) > 0) {
 			return "true";
 		}
 		return "false";
 	}
-	
-	//根据commodityId查重
+
+	/**
+	 * 根据commodityId查重
+	 * @param commodityId
+	 * @return
+	 */
 	@RequestMapping("/jsp/chaChong")
 	@ResponseBody
 	public String chaChong(String commodityId) {
-		if(repertoryService.getById(commodityId)!=null) {
+		if (repertoryService.getById(commodityId) != null) {
 			return "true";
 		}
 		return "false";
 	}
+
+	/**
+	 * 跳转到修改最低库存页面
+	 * @param repertorys
+	 * @return
+	 */
+	@RequestMapping("/jsp/toUpdateRepertoryAllMinimumStock")
+	public String toUpdateRepertoryAllMinimumStock(Repertory repertorys) {
+		return "updateRepertoryAllMinimumStock";
+	}
+
+	/**
+	 * 修改最低库存
+	 * @param repertory
+	 * @return
+	 */
+	@RequestMapping("/jsp/updateRepertoryAllMinimumStock")
+	@ResponseBody
+	public String updateRepertoryAllMinimumStock(Repertory repertory) {
+		if (repertoryService.updateRepertoryAllMinimumStock(repertory) > 0) {
+			return "true";
+		}
+		return "false";
+	}
+
+	/**
+	 * 跳转到库存调拨页面
+	 * @param commodityId
+	 * @param model
+	 * @return
+	 */
+	/*@RequestMapping("/jsp/toUpdateInventoryAllocationRepertoryDetail")
+	public String getByCommodityId(String commodityId,int storehouseId,Model model) {
+		//根据商品编号Id和所属仓库的Id查询对应的数据
+		Repertory repertory = repertoryService.getByIdAndStorehouseId(commodityId, storehouseId);
+		// 获取仓库集合
+		List<Storehouse> storehouses = storehouseService.queryStorehouse();
+		model.addAttribute("repertory", repertory);
+		model.addAttribute("storehouses", storehouses);
+		return "updateInventoryAllocationRepertoryDetail";
+	}
+*/
+	
 
 }

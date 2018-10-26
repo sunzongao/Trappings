@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import cn.bdqn.pojo.Check;
-
+/**
+ * 库存盘点
+ * @author Administrator
+ *
+ */
 public interface CheckMapper {
-	//查询盘点表、分页
-	public List<Check> queryCheck(Map<String, Object> map);
-	//查询盘点表总数
-	public int count(Map<String, Object>map);
+	//添加库存盘点表
+	public int addCheck(Check check);
 }
