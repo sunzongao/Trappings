@@ -68,7 +68,7 @@
 				<shiro:hasRole name="Warehouse"><a href="#" class="fa fa-bell Notice prompt" id="promptbtn"></a><em>6</em></shiro:hasRole>
 				</div>
 				<div class="administrator l_f">
-					<img src="${pageContext.request.contextPath }/statics/images/avatar.png" width="36px" /><span class="user-info">欢迎你 <shiro:principal></shiro:principal>
+					<img src="${pageContext.request.contextPath }/statics/images/avatar.png" width="36px" /><span class="user-info">欢迎你 ${loginUser.surname}
 					</span><i class="glyph-icon fa  fa-caret-down"></i>
 					<ul class="dropdown-menu">
 						<li><a href="javascript:void(0)" id="Exit_system"><i

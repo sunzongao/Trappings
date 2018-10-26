@@ -41,4 +41,24 @@ public class ProcurementServiceImpl implements ProcurementService{
 		return procurementMapper.getProcurementByCode(procurementId);
 	}
 
+
+	public int addProcurement(Procurement p) {
+		return procurementMapper.addProcurement(p);
+	}
+
+
+	public int updateProcurement(Procurement p) {
+		return procurementMapper.updateProcurement(p);
+	}
+
+
+	public List<Procurement> getProcurementById(String procurementId) {
+		return procurementMapper.getProcurementById(procurementId);
+	}
+
+
+	public int update(Procurement p) {
+		return procurementMapper.update(p);
+	}
+
 }

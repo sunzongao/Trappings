@@ -3,7 +3,111 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
+
+
+
 <mapper namespace="cn.bdqn.mapper.CommodityMapper">
+
+	<resultMap type="Commodity" id="Cmap">
+		<id property="commodityId" column="commodityId" />
+		<result property="cName" column="cName" />
+		<result property="comments" column="comments" />
+		<association property="genre" javaType="Genre">
+			<id property="genreId" column="genreId" />
+			<result property="gName" column="gName" />
+		</association>
+		<association property="unit" javaType="Unit">
+			<id property="unitId" column="unitId" />
+			<result property="uName" column="uName" />
+		</association>
+		<association property="pigment" javaType="Pigment">
+			<id property="pigmentId" column="pigmentId" />
+			<result property="pName" column="pName" />
+		</association>
+		<association property="dimension" javaType="Dimension">
+			<id property="dimensionId" column="dimensionId" />
+			<result property="dName" column="dName" />
+		</association>
+		<association property="brand" javaType="Brand">
+			<id property="brandId" column="brandId" />
+			<result property="bName" column="bName" />
+		</association>
+		<association property="supplier" javaType="Supplier">
+			<id property="supplierId" column="supplierId" />
+			<result property="sName" column="sName" />
+		</association>
+	</resultMap>
+
+	<select id="queryCommodity" resultMap="Cmap" parameterType="map">
+		select c.commodityId,c.cName,g.gName,un.uName,
+		pig.pName,dim.dName,s.sName,b.bName,c.comments
+		from commodity c
+		left
+		join genre g on g.genreId=c.genreId
+		left join unit un on
+		un.unitId=c.unitId
+		left join pigment pig on pig.pigmentId=c.pigmentId
+		left join dimension dim on dim.dimensionId=c.dimensionId
+		left join
+		supplier
+		s on s.supplierId=c.supplierId
+		left join brand b on
+		b.brandId=c.brandId
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="commodityId!=null and commodityId!=''">
+				and commodityId LIKE CONCAT('%',#{commodityId},'%')
+			</if>
+			<if test="genreId!=null and genreId> 0">
+				and c.genreId=#{genreId}
+			</if>
+			<if test="unitId!=null and unitId > 0">
+				and c.unitId=#{unitId}
+			</if>
+			<if test="supplierId!=null and supplierId!='-1'">
+				and c.supplierId=#{supplierId}
+			</if>
+			<if test="brandId!=null and brandId > 0">
+				and c.brandId=#{brandId}
+			</if>
+		</trim>
+		limit #{start},#{end}
+	</select>
+
+	<select id="queryCount" resultType="int" parameterType="map">
+		select count(1)
+		from commodity c
+		left join genre g on
+		g.genreId=c.genreId
+		left join unit un on un.unitId=c.unitId
+		left join
+		pigment pig on pig.pigmentId=c.pigmentId
+		left join dimension dim on
+		dim.dimensionId=c.dimensionId
+		left join supplier
+		s on
+		s.supplierId=c.supplierId
+		left join brand b on b.brandId=c.brandId
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="commodityId!=null and commodityId!=''">
+				and commodityId LIKE CONCAT('%',#{commodityId},'%')
+			</if>
+			<if test="genreId!=null and genreId> 0">
+				and c.genreId=#{genreId}
+			</if>
+			<if test="unitId!=null and unitId > 0">
+				and c.unitId=#{unitId}
+			</if>
+			<if test="supplierId!=null and supplierId!='-1'">
+				and c.supplierId=#{supplierId}
+			</if>
+			<if test="brandId!=null and brandId > 0">
+				and c.brandId=#{brandId}
+			</if>
+		</trim>
+	</select>
+
+
 	<select id="queryCommodityIdAndCName" resultType="Commodity">
 		SELECT
 		commodityId,cName FROM commodity
@@ -14,4 +118,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		commodityId,cName FROM commodity WHERE commodityId=#{commodityId}
 	</select>
 
+	<select id="queryCommodityById" resultType="Commodity"
+		parameterType="map">
+		select * from commodity
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="commodityId!=null and commodityId!=''">
+				and commodityId LIKE CONCAT('%',#{commodityId},'%')
+			</if>
+			<if test="supplierId!=null and supplierId!=''">
+				and supplierId=#{supplierId}
+			</if>
+		</trim>
+
+	</select>
+
+
+	<select id="getCommodityById" resultMap="Cmap">
+		select
+		c.commodityId,c.cName,g.genreId,g.gName,un.unitId,un.uName,
+		pig.pName,pig.pigmentId,dim.dimensionId,dim.dName,s.supplierId,
+		s.sName,b.brandId,b.bName,c.comments
+		from commodity c
+		left join genre g
+		on g.genreId=c.genreId
+		left join unit un on un.unitId=c.unitId
+		left join
+		pigment pig on pig.pigmentId=c.pigmentId
+		left join dimension dim on
+		dim.dimensionId=c.dimensionId
+		left join supplier
+		s on
+		s.supplierId=c.supplierId
+		left join brand b on b.brandId=c.brandId
+		where commodityId=#{commodityId}
+	</select>
+
+
+	<update id="updateCommodity" parameterType="Commodity">
+		update commodity set
+		cName=#{cName},genreId=#{genreId},
+		unitId=#{unitId},pigmentId=#{pigmentId},dimensionId=#{dimensionId},
+		supplierId=#{supplierId},brandId=#{brandId},comments=#{comments}
+		where
+		commodityId=#{commodityId}
+	</update>
+
+	<delete id="deleteCommodity">
+		delete from commodity where
+		commodityId=#{commodityId}
+	</delete>
+	
+	
+	<update id="addCommodity" parameterType="Commodity">
+		insert into commodity(commodityId,cName,genreId,unitId,
+		pigmentId,dimensionId,supplierId,brandId,comments)
+		values(#{commodityId},#{cName},#{genreId},#{unitId},
+		#{pigmentId},#{dimensionId},#{supplierId},#{brandId},#{comments})
+	</update>
+	
+	
 </mapper>

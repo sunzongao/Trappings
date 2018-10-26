@@ -19,4 +19,13 @@ public interface ProcurementMapper {
 	public int queryCount(Map<String, Object> map);
 	//根据订单编号获取信息
 	public List<Procurement> getProcurementByCode(@Param("procurementId")String procurementId);
+	//创建采购单
+	public int addProcurement(Procurement p);
+	//修改采购单信息
+	public int updateProcurement(Procurement p);
+	//修改状态
+	public int update(Procurement p);
+	
+	//根据订单编号获取对象
+	public List<Procurement> getProcurementById(@Param("procurementId")String procurementId);
 }

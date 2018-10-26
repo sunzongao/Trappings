@@ -30,6 +30,22 @@ public class Commodity {
 	//商品品牌
 	private int brandId;
 	private Brand brand;
+	//供应商
+	private String supplierId;
+	private Supplier supplier;
+	
+	public String getSupplierId() {
+		return supplierId;
+	}
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
+	}
+	public Supplier getSupplier() {
+		return supplier;
+	}
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 	//备注
 	private String comments;
 	

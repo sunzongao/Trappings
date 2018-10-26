@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -32,9 +33,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <form action="" method="get">
 <div class="margin advertising" id="page_style">
   <div class="operation clearfix">
+  <shiro:hasPermission name="KCPD">
 <button class="btn button_btn btn-danger" type="button" onclick=""><i class="fa fa-trash-o"></i>&nbsp;删除</button>
 <span class="submenu"><a href="javascript:void(0)" name="" onclick="add_AD_sort()" class="btn button_btn bg-deep-blue" title="添加库存"><i class="fa  fa-edit"></i>&nbsp;添加库存</a></span>
-
+</shiro:hasPermission>
 <div class="search  clearfix">
 				<select name="brandId" id="brandId" 
 					class="form-control col-xs-6" style="width: 23%">
@@ -80,20 +82,27 @@ bordered"
 				id="sample-table">
 				<thead>
 					<tr>
+					<shiro:hasPermission name="KCPD">
 						<th width="30"><label><input type="checkbox"
 								class="ace"><span class="lbl"></span></label></th>
+					</shiro:hasPermission>
 						<th>商品编号</th>
 						<th>商品名称</th>
 						<th>库存量</th>
 						<th>单位</th>
 						<th>品牌</th>
 						<th>供应商</th>
+						<shiro:hasPermission name="KCPD">
 						<th>入库时间</th>
+						</shiro:hasPermission>
 						<th>所属仓库</th>
+						<shiro:hasPermission name="KCPD">
 						<th>操作</th>
+						</shiro:hasPermission>
 					</tr>
 					<c:forEach var="r" items="${pageUtil.lists }">
 						<tr>
+						<shiro:hasPermission name="KCPD">
 							<th>
 							<label>
 							<input type="hidden" value="${r.commodityId }" />
@@ -101,18 +110,23 @@ bordered"
 								<span class="lbl"></span>
 							</label>
 							</th>
+							</shiro:hasPermission>
 							<th>${r.commodityId }</th>
 							<th>${r.cName }</th>
 							<th>${r.inventory }</th>
 							<th>${r.repertoryUName}</th>
 							<th>${r.repertoryBName }</th>
 							<th>${r.repertorySName }</th>
+							<shiro:hasPermission name="KCPD">
 							<th>${r.laidTime }</th>
+							</shiro:hasPermission>
 							<th>${r.repertorySeName }</th>
+							<shiro:hasPermission name="KCPD">
 							<th>
 							<a title="编辑" onclick="member_edit(this)" href="javascript:;${r.commodityId}"  class="btn bg-deep-blue  operation_btn" >编辑</a> 
 							<a title="删除" href="javascript:void()" onclick="picture_del(this,'${r.commodityId}')" class="btn btn-danger operation_btn">删除</a> 
 							</th>
+							</shiro:hasPermission>
 					</c:forEach>
 				</thead>
 				<tbody>

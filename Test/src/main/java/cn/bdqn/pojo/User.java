@@ -8,8 +8,15 @@ public class User {
 	//״̬
 	private int state;
 	
+	private int jobId;
 	
 	
+	public int getJobId() {
+		return jobId;
+	}
+	public void setJobId(int jobId) {
+		this.jobId = jobId;
+	}
 	public int getState() {
 		return state;
 	}
