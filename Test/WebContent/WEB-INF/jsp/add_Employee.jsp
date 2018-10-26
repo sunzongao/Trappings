@@ -52,7 +52,7 @@
 		<div class="add_menber" id="add_menber_style">
 			<ul class=" page-content">
 				<li><label class="label_name">工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label><span
-					class="add_name"><input name="employeeId" id="employeeId"
+					class="add_name"><input name="employeeId" id="employeeId" readonly="readonly"
 						 type="text" class="text_add" /></span>
 					<div class="prompt r_f"></div></li>
 				<li><label class="label_name">员工姓名：</label><span

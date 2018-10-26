@@ -71,6 +71,10 @@
 					<img src="${pageContext.request.contextPath }/statics/images/avatar.png" width="36px" /><span class="user-info">欢迎你 ${loginUser.surname}
 					</span><i class="glyph-icon fa  fa-caret-down"></i>
 					<ul class="dropdown-menu">
+					<shiro:hasRole name="Warehouse">
+						<li><a href="javascript:void(0)" id="Exit_user"><i
+								class="fa fa-user-times"></i>修改库存预警数量</a></li>
+					</shiro:hasRole>
 						<li><a href="javascript:void(0)" id="Exit_system"><i
 								class="fa fa-user-times"></i>退出</a></li>
 					</ul>
@@ -169,7 +173,18 @@
 </html>
 <script type="text/javascript">
 //设置框架
- $(function() {  	
+ $(function() {  
+	 $("#Exit_user").click(function(){
+		 layer.open({
+		        type: 2,
+		        title: '授权',
+				maxmin: true, 
+				shadeClose:true, //点击遮罩关闭层
+				scrollbar: true,
+		        area : ['800px' , '450px'],
+		        content:""
+		      }); 
+	 });
 	 $.get("${pageContext.request.contextPath}/getdata",null,
 				function(data) {
 		 			var d=JSON.parse(data);
