@@ -1,15 +1,11 @@
 package cn.bdqn.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,12 +18,12 @@ import cn.bdqn.util.PageUtil;
 
 @Controller
 public class CustomerController {
-	@Resource(name="customerService")
+	@Autowired
 	private CustomerService customerService;
-	@Resource(name="customertypeService")
+	@Autowired
 	private CustomertypeService customertypeService;
 	
-	
+	 
 	@RequestMapping("/jsp/customerShow.html")
 	public String customerShow(String cName,@RequestParam(defaultValue="0")int cId,Model model,@RequestParam(defaultValue="1")int currentPage)throws Exception{
 		List<Customertype>lists = customertypeService.query();
@@ -37,8 +33,9 @@ public class CustomerController {
 		model.addAttribute("lists", lists);
 		model.addAttribute("cName", cName);
 		model.addAttribute("cId", cId);
-		return "Advertising_sort";
+		return "customerShow";
 	}
+	
 //	
 //	@RequestMapping("/jsp/toadd.html")
 //	public String toadd(Model model)throws Exception{
@@ -49,21 +46,22 @@ public class CustomerController {
 	
 	@RequestMapping(value="/jsp/doadd", produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	public Object doadd(Customer customer,Model model)throws Exception{	
-		List<Customertype>lists = customertypeService.query();
-    	model.addAttribute("lists", lists);
-		int result=customerService.add(customer);
-		Map<String,Object> map=new HashMap<String,Object>();
-		map.put("result", result);
-		return map;
+	public String doadd(Customer customer,Model model){	
+		List<Customertype> lists = customertypeService.query();
+		model.addAttribute("lists", lists);
+		if(customerService.add(customer)>0) {
+			return "true";	
+		}
+		return "false";
 	}
 	
 	@RequestMapping("/jsp/del")
-	public Object delete(int customerId)throws Exception{
+	@ResponseBody
+	public String delete(String customerId){
 		if(customerService.delete(customerId)>0) {
-			return 1;
+			return "true";
 		}
-		return 0;
+		return "false";
 	}
 	
 	
@@ -76,12 +74,14 @@ public class CustomerController {
 		model.addAttribute("customer", customer);
 		return "customerUpdate";
 	}
+	
 	@RequestMapping("/jsp/update.html")
-	public String update(Customer customer,Model model)throws Exception{
+	@ResponseBody
+	public String update(Customer customer,Model model){
 		if(customerService.update(customer)>0){
-			return "forward:/show.html";
+			return "true";
 		}
-		return "update";
+		return "false";
 	}
 	
 }

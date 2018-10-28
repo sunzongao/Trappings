@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.druid.stat.TableStat.Mode;
-import com.sun.xml.internal.rngom.parse.Parseable;
 
 import cn.bdqn.pojo.Detailed;
 import cn.bdqn.service.DetailedService;

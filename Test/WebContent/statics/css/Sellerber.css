@@ -1,4 +1,4 @@
-#Sellerber .Sellerber_header{  position:fixed; top:0px; width:100%;  color:#FFF; z-index:12}
+﻿#Sellerber .Sellerber_header{  position:fixed; top:0px; width:100%;  color:#FFF; z-index:12}
 #Sellerber .Sellerber_header .logo{ min-width:350px; height:100%}
 #Sellerber .Sellerber_left{ position:relative; z-index:1111; background-color:#FFF;}
 #Sellerber .list_content{  position:relative;  }
@@ -307,7 +307,7 @@
 .input-group-btn .btn_flat{ display:block; height:38px;}
 .input-group-btn .btn_flat i{display: block;height: 38px;line-height: 38px; color:#666}
 /***************澶氶�夋悳绱㈡牱寮�******************/
-.choice_search .label_name{ height:32px; line-height:32px; float:left; text-align:right; width:75px;}
+.choice_search .label_name{ height:32px; line-height:32px;float:left;  text-align:right; width:75px;}
 /*******************鑿滃崟鏍忔牱寮忓睘鎬�*************************/
 .nav-list>li:first-child { border-top: 0;}
 .nav-list>dd,

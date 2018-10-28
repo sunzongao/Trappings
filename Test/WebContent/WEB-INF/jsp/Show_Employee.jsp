@@ -22,13 +22,13 @@
 	 <!--用户信息-->
  <div class="userinfo_style" id="userinfo_style" style="">
  	<div class="member_show" >
-<div class="member_jbxx clearfix" >
+ <div class="member_jbxx clearfix" >
   <img class="img" src="${pageContext.request.contextPath}/statics/images/user.png">
   <dl  class="right_xxln">
   <dt><span class="">${employee.eName}</span> <span class=""></span></dt>
   <dd class="" style="margin-left:0">${employee.comments}</dd>
   </dl>
-</div>
+</div> 
 <div class="member_content">
   <ul>
    <li><label class="label_name">性别：</label><span class="name">${employee.eSex}</span></li>

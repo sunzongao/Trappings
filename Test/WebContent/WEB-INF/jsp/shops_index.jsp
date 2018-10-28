@@ -177,12 +177,12 @@
 	 $("#Exit_user").click(function(){
 		 layer.open({
 		        type: 2,
-		        title: '授权',
+		        title: '修改库存预警数量',
 				maxmin: true, 
 				shadeClose:true, //点击遮罩关闭层
 				scrollbar: true,
-		        area : ['800px' , '450px'],
-		        content:""
+		        area : ['500px' , '200px'],
+		        content:"${pageContext.request.contextPath}/jsp/toUpdateRepertoryAllMinimumStock"
 		      }); 
 	 });
 	 $.get("${pageContext.request.contextPath}/getdata",null,

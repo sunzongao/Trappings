@@ -8,12 +8,8 @@ package cn.bdqn.pojo;
  */
 public class Repertory {
 	private String commodityId; // 商品编号 外键关联商品表
-	private String cName; // 商品名称
+	private String repertoryCName; // 商品名称(自定义)
 	private int inventory; // 库存量
-	private double avgPrice; // 成本价
-	private double totalPrice; // 成本总值
-	private double pretium; // 销售价
-	private double totalCost; // 总价值
 	private int unitId; // 单位id 外键关联单位表
 	private int brandId; // 品牌编号 外键关联品牌表
 	private String supplierId; // 供应商编号 外键关联供应商表
@@ -23,160 +19,100 @@ public class Repertory {
 	private String repertoryBName;  //品牌Name（自定义）
 	private String repertorySeName;  //所属仓库Name(自定义)
 	private String repertorySName;	//供应商(自定义)
-	private int minimumStock;   //最低库存
-	
-	
-	
-	
-	public int getMinimumStock() {
-		return minimumStock;
+	private int minimumStock;   //最低库存 
+	private int quantity;  
+	public int getQuantity() {
+		return quantity;
 	}
-
-	public void setMinimumStock(int minimumStock) {
-		this.minimumStock = minimumStock;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
-
-	public String getRepertorySName() {
-		return repertorySName;
-	}
-
-	public void setRepertorySName(String repertorySName) {
-		this.repertorySName = repertorySName;
-	}
-
-	public String getRepertoryUName() {
-		return repertoryUName;
-	}
-
-	public void setRepertoryUName(String repertoryUName) {
-		this.repertoryUName = repertoryUName;
-	}
-
-	public String getRepertoryBName() {
-		return repertoryBName;
-	}
-
-	public void setRepertoryBName(String repertoryBName) {
-		this.repertoryBName = repertoryBName;
-	}
-
-	public String getRepertorySeName() {
-		return repertorySeName;
-	}
-
-	public void setRepertorySeName(String repertorySeName) {
-		this.repertorySeName = repertorySeName;
-	}
-
 	public String getCommodityId() {
 		return commodityId;
 	}
-
 	public void setCommodityId(String commodityId) {
 		this.commodityId = commodityId;
 	}
-
-	public String getcName() {
-		return cName;
+	public String getRepertoryCName() {
+		return repertoryCName;
 	}
-
-	public void setcName(String cName) {
-		this.cName = cName;
+	public void setRepertoryCName(String repertoryCName) {
+		this.repertoryCName = repertoryCName;
 	}
-
 	public int getInventory() {
 		return inventory;
 	}
-
 	public void setInventory(int inventory) {
 		this.inventory = inventory;
 	}
-
-	public double getAvgPrice() {
-		return avgPrice;
-	}
-
-	public void setAvgPrice(double avgPrice) {
-		this.avgPrice = avgPrice;
-	}
-
-	public double getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
-
-	public double getPretium() {
-		return pretium;
-	}
-
-	public void setPretium(double pretium) {
-		this.pretium = pretium;
-	}
-
-	public double getTotalCost() {
-		return totalCost;
-	}
-
-	public void setTotalCost(double totalCost) {
-		this.totalCost = totalCost;
-	}
-
 	public int getUnitId() {
 		return unitId;
 	}
-
 	public void setUnitId(int unitId) {
 		this.unitId = unitId;
 	}
-
 	public int getBrandId() {
 		return brandId;
 	}
-
 	public void setBrandId(int brandId) {
 		this.brandId = brandId;
 	}
-
 	public String getSupplierId() {
 		return supplierId;
 	}
-
 	public void setSupplierId(String supplierId) {
 		this.supplierId = supplierId;
 	}
-
 	public String getLaidTime() {
 		return laidTime;
 	}
-
 	public void setLaidTime(String laidTime) {
 		this.laidTime = laidTime;
 	}
-
 	public int getStorehouseId() {
 		return storehouseId;
 	}
-
 	public void setStorehouseId(int storehouseId) {
 		this.storehouseId = storehouseId;
 	}
-
-
-	public Repertory(String commodityId, String cName, int inventory, double avgPrice, double totalPrice,
-			double pretium, double totalCost, int unitId, int brandId, String supplierId, String laidTime,
-			int storehouseId, String repertoryUName, String repertoryBName, String repertorySeName,
-			String repertorySName, int minimumStock) {
+	public String getRepertoryUName() {
+		return repertoryUName;
+	}
+	public void setRepertoryUName(String repertoryUName) {
+		this.repertoryUName = repertoryUName;
+	}
+	public String getRepertoryBName() {
+		return repertoryBName;
+	}
+	public void setRepertoryBName(String repertoryBName) {
+		this.repertoryBName = repertoryBName;
+	}
+	public String getRepertorySeName() {
+		return repertorySeName;
+	}
+	public void setRepertorySeName(String repertorySeName) {
+		this.repertorySeName = repertorySeName;
+	}
+	public String getRepertorySName() {
+		return repertorySName;
+	}
+	public void setRepertorySName(String repertorySName) {
+		this.repertorySName = repertorySName;
+	}
+	public int getMinimumStock() {
+		return minimumStock;
+	}
+	public void setMinimumStock(int minimumStock) {
+		this.minimumStock = minimumStock;
+	}
+	
+	public Repertory(String commodityId, String repertoryCName, int inventory, int unitId, int brandId,
+			String supplierId, String laidTime, int storehouseId, String repertoryUName, String repertoryBName,
+			String repertorySeName, String repertorySName, int minimumStock, int quantity) {
 		super();
 		this.commodityId = commodityId;
-		this.cName = cName;
+		this.repertoryCName = repertoryCName;
 		this.inventory = inventory;
-		this.avgPrice = avgPrice;
-		this.totalPrice = totalPrice;
-		this.pretium = pretium;
-		this.totalCost = totalCost;
 		this.unitId = unitId;
 		this.brandId = brandId;
 		this.supplierId = supplierId;
@@ -187,11 +123,15 @@ public class Repertory {
 		this.repertorySeName = repertorySeName;
 		this.repertorySName = repertorySName;
 		this.minimumStock = minimumStock;
+		this.quantity = quantity;
 	}
-
 	public Repertory() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+	
+	
 
 }

@@ -58,9 +58,9 @@
 						<span id="msg"></span>
 					</span></li>
 					<li class="clearfix"><label class="label_name col-xs-2">商品名称：&nbsp;&nbsp;</label><span
-						class="cont_style col-xs-9"> <input name="cName" type="text"
-							id="cName" disabled="disabled" class="col-xs-10 col-sm-5"
-							style="width: 450px" value="${repertory.cName }">
+						class="cont_style col-xs-9"> <input name="repertoryCName" type="text"
+							id="repertoryCName" disabled="disabled" class="col-xs-10 col-sm-5"
+							style="width: 450px" value="${repertory.repertoryCName }">
 					</span></li>
 					<li class="clearfix"><label class="label_name col-xs-2">库存数量：&nbsp;&nbsp;</label><span
 						class="cont_style col-xs-9"> <input name="inventory" type="text"
@@ -128,13 +128,13 @@
 	 $(function(){
 			$("#commodityId").change(function(){
 				var id = $("#commodityId").val();
-				var cName = $("#cName").val();
+				var repertoryCName = $("#repertoryCName").val();
 				$.ajax({
 						type:"post",
 						url:"${pageContext.request.contextPath}/AjaxErJiLianDong",
 						data:{'CommodityId':id},
 						success:function(data){
-							$("#cName").val(data);
+							$("#repertoryCName").val(data);
 						}
 				})
 			})	; 
@@ -172,13 +172,13 @@
 		/*提交修改*/
 		$("#submit").click(function(){
 			var commodityId = $("#commodityId").val().trim();
-			var cName = $("#cName").val().trim();
+			var repertoryCName = $("#repertoryCName").val().trim();
 			var unitId = $("#unitId").val().trim();
 			var brandId = $("#brandId").val().trim();
 			var supplierId = $("#supplierId").val().trim();
 			var storehouseId = $("#storehouseId").val().trim();
 			var inventory = $("input[name='inventory']").val().trim();
-			if(inventory==0){
+			if(inventory==""){
 				layer.msg("库存数量不能为空！");
 				return;
 			}
@@ -187,7 +187,7 @@
 			"${pageContext.request.contextPath}/jsp/doRepertoryUpdate",
 			{	
 				"commodityId":commodityId,
-				"cName":cName,
+				"repertoryCName":repertoryCName,
 				"inventory":inventory,
 				"unitId":unitId,
 				"brandId":brandId,
