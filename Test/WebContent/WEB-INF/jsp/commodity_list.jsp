@@ -93,7 +93,7 @@
 						</c:forEach>
 					</select> <select name="supplierId" id="supplierId"
 						class="form-control col-xs-6" style="width: 180px">
-						<option value="-1">-供货商-</option>
+						<option value="">-供货商-</option>
 						<c:forEach var="s" items="${suppliers}">
 							<option value="${s.supplierId}"
 								<c:if test="${s.supplierId ==supplierId }">selected="selected"</c:if>>${s.sName }</option>
@@ -159,19 +159,19 @@
 				</table>
 				<p style="margin-top: 5px; text-align: center;">
 					<a
-						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=1"
+						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=1&commodityId=${commodityId}&genreId=${genreId}&unitId=${unitId}&brandId=${brandId }&supplierId=${supplierId}"
 						class="btn btn-xs btn-info"
 						<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
 					<a
-						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=${pageUtil.currentPage-1}"
+						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=${pageUtil.currentPage-1}&commodityId=${commodityId}&genreId=${genreId}&unitId=${unitId}&brandId=${brandId }&supplierId=${supplierId}"
 						class="btn btn-xs btn-info"
 						<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
 					<a
-						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=${pageUtil.currentPage+1}"
+						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=${pageUtil.currentPage+1}&commodityId=${commodityId}&genreId=${genreId}&unitId=${unitId}&brandId=${brandId }&supplierId=${supplierId}"
 						class="btn btn-xs btn-info"
 						<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>下一页</a>&nbsp;&nbsp;
 					<a
-						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=${pageUtil.totalPage}"
+						href="${pageContext.request.contextPath}/jsp/commodity_list.html?pageindex=${pageUtil.totalPage}&commodityId=${commodityId}&genreId=${genreId}&unitId=${unitId}&brandId=${brandId }&supplierId=${supplierId}"
 						class="btn btn-xs btn-info"
 						<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>尾页</a>
 					<span style="font-size: 16px;">第${pageUtil.currentPage}页/共${pageUtil.totalPage}页</span>
@@ -219,12 +219,13 @@ function deleteItem(){
 				{
 					"id":a
 				},function(data){
-					if(data=="true"){
-						layer.msg('删除成功！');
-						window.location.reload();
-					}else{
-						layer.msg('删除异常！');
-					}
+					layer.alert("删除成功！",{
+						icon:1,
+						btn:['确定'],
+						yes:function(){
+							location.reload();
+						}
+					});
 				}
 			);
 	});
@@ -239,10 +240,15 @@ function member_del(obj,id){
 		{
 			"commodityId":id
 		},function(data){
-			if(data=="true"){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
-			}
+			layer.alert("删除成功！",{
+				icon:1,
+				btn:['确定'],
+				yes:function(){
+					$(obj).parents("tr").remove();
+					layer.msg('已删除!',{icon:1,time:1000});
+					location.reload();
+				}
+			});
 		}
 		);
 	});

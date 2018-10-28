@@ -183,6 +183,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where procurementId=#{procurementId}
 	</update>
 
+	<update id="updateSign" parameterType="Procurement">
+		update procurement set sign=#{sign}
+		where procurementId=#{procurementId}
+	</update>
+
 	<select id="getProcurementById" resultMap="Pmap">
 		select 
 		p.procurementId,p.billingTime,p.userId,p.storehouseId,s.sName as

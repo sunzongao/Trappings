@@ -61,4 +61,9 @@ public class ProcurementServiceImpl implements ProcurementService{
 		return procurementMapper.update(p);
 	}
 
+
+	public int updateSign(Procurement p) {
+		return procurementMapper.updateSign(p);
+	}
+
 }

@@ -124,6 +124,32 @@ public class ProcurementController {
 		return "Procurement_list1";
 	}
 	
+	
+	/**
+	 * 显示采购单审核页面
+	 * @param pageindex
+	 * @param procurementId
+	 * @param begintime
+	 * @param endtime
+	 * @param condition
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/jsp/procurement_list2.html")
+	public String procurementList2(String pageindex,String procurementId,String begintime, String endtime,Integer condition,Model model) {
+		int temp=1;
+		if(pageindex!=null) {
+			temp=Integer.parseInt(pageindex);
+		}
+		PageUtil<Procurement> pageUtil = procurementService.queryProcurement(procurementId, 6, begintime, endtime, temp);
+		model.addAttribute("pageUtil",pageUtil);
+		model.addAttribute("procurementId",procurementId);
+		model.addAttribute("begintime",begintime);
+		model.addAttribute("endtime",endtime);
+		model.addAttribute("condition",condition);
+		return "Procurement_list2";
+	}
+	
 	/**
 	 * 审核采购单
 	 * @param employee
@@ -132,13 +158,44 @@ public class ProcurementController {
 	@RequestMapping("/jsp/procurement_shen.html")
 	@ResponseBody
 	public String procurementShen(Procurement p) {
-		System.out.println(p.getCondition());
 		if(procurementService.update(p)>0) {
 			return "true";
 		}else {
 			return "false";
 		}
 	}
+	
+	/**
+	 * 发布采购单
+	 * @param employee
+	 * @return
+	 */
+	@RequestMapping("/jsp/procurement_fabu.html")
+	@ResponseBody
+	public String procurementFaBu(Procurement p) {
+		if(procurementService.update(p)>0) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
+	
+	/**
+	 * 签收采购单
+	 * @param employee
+	 * @return
+	 */
+	@RequestMapping("/jsp/procurement_qianshou.html")
+	@ResponseBody
+	public String procurementQianshou(Procurement p) {
+		if(procurementService.updateSign(p)>0) {
+			return "true";
+		}else {
+			return "false";
+		}
+	}
+	
 	
 	/**
 	 * 显示采购单详细信息

@@ -26,6 +26,9 @@ public interface ProcurementMapper {
 	//修改状态
 	public int update(Procurement p);
 	
+	//修改签收状态
+	public int updateSign(Procurement p);
+	
 	//根据订单编号获取对象
 	public List<Procurement> getProcurementById(@Param("procurementId")String procurementId);
 }

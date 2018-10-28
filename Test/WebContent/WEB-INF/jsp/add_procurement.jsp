@@ -86,8 +86,11 @@ textarea {
 													id="supplierId" style="width: 159px" onchange="show()">
 														<option value="-1">请选择</option>
 														<c:forEach var="s" items="${suppliers}">
-															<option value="${s.supplierId}"
-																<c:if test="${s.supplierId==supplierId}">selected="selected"</c:if>>${s.sName}</option>
+															<c:if test="${s.sStatus!=2 }">
+																<option value="${s.supplierId}"
+																	<c:if test="${s.supplierId==supplierId}">selected="selected"</c:if>>${s.sName}</option>
+															</c:if>
+
 														</c:forEach>
 												</select>
 											</span>
@@ -107,32 +110,36 @@ textarea {
 											</span>
 												<div class="prompt r_f"></div></li>
 
-												<li style="margin-top: 20px"><label class="label_name"
-													style="float: left; padding-right: 14px">经办人：</label> <span
-													class="add_name"> <select  name="userId" id="userId"
-														style="width: 159px">
-															<option value="0">请选择</option>
-															<c:if test="${loginUser.id!=5 }">
+											<li style="margin-top: 20px"><label class="label_name"
+												style="float: left; padding-right: 14px">经办人：</label> <span
+												class="add_name"> <select name="userId" id="userId"
+													style="width: 159px">
+														<option value="0">请选择</option>
+														<c:if test="${loginUser.id!=5 }">
 															<c:forEach var="u" items="${users}">
 																<option value="${u.id}"
 																	<c:if test="${u.id==userId }">selected="selected"</c:if>
 																	<c:if test="${u.jobId!=1 }">style="display:none;"</c:if>>${u.surname}</option>
 															</c:forEach>
 														</c:if>
-													</select>
-												</span>
-													<div class="prompt r_f"></div></li>
+												</select>
+											</span>
+												<div class="prompt r_f"></div></li>
 											<input name="draftId" id="draftId" type="hidden"
 												class="text_add" value="${loginUser.id}" />
-												<li style="margin-top: 20px"><label class="label_name"
-													style="float: left; padding-right: 14px">状态：</label> <span
-													class="add_name"> <select name="condition"
-														id="condition" style="width: 165px">
-															<c:if test="${loginUser.id!=5 }"><option value="5">未发布</option></c:if>
-															<c:if test="${loginUser.id==5 }"><option value="2">未审核</option></c:if>
-													</select>
-												</span>
-													<div class="prompt r_f"></div></li>
+											<li style="margin-top: 20px"><label class="label_name"
+												style="float: left; padding-right: 14px">状态：</label> <span
+												class="add_name"> <select name="condition"
+													id="condition" style="width: 165px">
+														<c:if test="${loginUser.id!=5 }">
+															<option value="5">未发布</option>
+														</c:if>
+														<c:if test="${loginUser.id==5 }">
+															<option value="2">未审核</option>
+														</c:if>
+												</select>
+											</span>
+												<div class="prompt r_f"></div></li>
 											<li class="adderss" style="height: 100px; margin-top: 20px">
 												<label class="label_name">备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label>
 												<span class="add_name"> <textarea rows="2" cols="50"
@@ -215,7 +222,8 @@ textarea {
 										<thead>
 											<tr>
 												<td width="40" style="border-top: none; border-left: none;"><label><input
-														type="checkbox" class="ace" name="aaa" /><span class="lbl"></span></label></td>
+														type="checkbox" class="ace" name="aaa" /><span
+														class="lbl"></span></label></td>
 												<td
 													style="border-top: none; border-left: none; border-right: none;">商品编号</td>
 												<td
@@ -562,19 +570,16 @@ textarea {
 												"draftId" : parseInt(draftId),
 												"condition" : parseInt(condition),
 												"comments" : comments
-											},
-											function(data) {
+											}, function(data) {
 												if (data == "true") {
-													layer
-															.alert(
-																	"采购单创建成功！",
-																	{
-																		icon : 1,
-																		btn : [ '确定' ],
-																		yes : function() {
-																			window.history.go(-1);
-																		}
-																	});
+													layer.alert("采购单创建成功！", {
+														icon : 1,
+														btn : [ '确定' ],
+														yes : function() {
+															window.history
+															.go(-1).reload();
+														}
+													});
 
 												} else {
 													layer.msg("采购单创建失败！");
