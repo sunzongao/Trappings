@@ -96,7 +96,7 @@
 					</tr>
 				</thead>
 				<tbody>
-						<c:forEach items="${pageUtil.lists}" var="p">
+					<c:forEach items="${pageUtil.lists}" var="p">
 						<c:if test="${loginUser.id==p.userId}">
 							<input type="hidden" name="condition" class="condition"
 								value="${p.condition }" />
@@ -114,17 +114,17 @@
 									<td class="td-status">未签收</td>
 								</c:if>
 								<td class="td-manage"><a
-									onClick="member_stop(this,'${ p.procurementId}','${p.sign}')" href="javascript:;"
-									title="签收"
+									onClick="member_stop(this,'${ p.procurementId}','${p.sign}')"
+									href="javascript:;" title="签收"
 									class="<c:if test="${p.sign==2}">btn btn-xs btn-status</c:if>"><c:if
 											test="${p.sign==2}">签收</c:if></a> <a title="查看"
 									onclick="procurementinfo(this)"
 									href="javascript:;${p.procurementId}"
 									class="btn btn-xs btn-info">查看</a></td>
 							</tr>
-							</c:if>
-						</c:forEach>
-					
+						</c:if>
+					</c:forEach>
+
 
 
 				</tbody>
@@ -187,9 +187,6 @@ function procurementinfo(id){
         content:'${pageContext.request.contextPath}/jsp/procurement_show.html?id='+id,
 	 })
 }
-
-
-
 
 	$(function () { $(".displayPart").displayPart();  });
 	//设置内页框架布局

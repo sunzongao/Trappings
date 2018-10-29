@@ -48,34 +48,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		parameterType="map">
 		select
 		p.procurementId,p.billingTime,s.sName as sName,sto.stoName as
-		stoName,u.surname,p.condition,c.commodityId,c.cName as
-		cName,b.bName,g.gName,p.comments,p.userId,
-		un.uName,pig.pName,dim.dName,d.number,d.price,p1.putTime,u1.surname,p.sign
-		from put p1
-LEFT JOIN procurement p on p1.procurementId=p.procurementId
-		left
-		join supplier s on p.supplierId=s.supplierId
-		left join storehouse
-		sto on
-		p.storehouseId=sto.storehouseId
-		left join user u on
-		p.userId=u.id
-	LEFT JOIN `user` u1 on p.draftId=u1.id
-		left
-		join detailed d on p.procurementId=d.procurementId
-		left join commodity
-		c on c.commodityId=d.commodityId
-		left join brand b
-		on
-		b.brandId=c.brandId
-		left join genre g on g.genreId=c.genreId
-		left
-		join
-		unit un on un.unitId=c.unitId
-		left join pigment pig on
-		pig.pigmentId=c.pigmentId
-		left join dimension dim on
-		dim.dimensionId=c.dimensionId
+		stoName,u.surname,p.condition,p.sign,us.surname as draName,p.userId
+		from procurement p
+		left join supplier s on p.supplierId=s.supplierId
+		left join storehouse sto on p.storehouseId=sto.storehouseId
+		left join user u on p.userId=u.id
+		left join user us on us.id=p.draftId
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="procurementId!=null and procurementId!=''">
 				and p.procurementId like CONCAT('%',#{procurementId},'%')

@@ -1,6 +1,8 @@
 package cn.bdqn.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.bdqn.pojo.Commodity;
 import cn.bdqn.pojo.Detailed;
 import cn.bdqn.pojo.Procurement;
+import cn.bdqn.pojo.Put;
 import cn.bdqn.pojo.Storehouse;
 import cn.bdqn.pojo.Supplier;
 import cn.bdqn.pojo.User;
 import cn.bdqn.service.CommodityService;
 import cn.bdqn.service.DetailedService;
 import cn.bdqn.service.ProcurementService;
+import cn.bdqn.service.PutService;
 import cn.bdqn.service.StorehouseService;
 import cn.bdqn.service.SupplierService;
 import cn.bdqn.service.UserService;
@@ -50,6 +54,9 @@ public class ProcurementController {
 	
 	@Autowired
 	private DetailedService detailedService;
+	
+	@Autowired
+	private PutService putService;
 	/**
 	 * 显示采购单
 	 * @param pageindex
@@ -142,6 +149,7 @@ public class ProcurementController {
 			temp=Integer.parseInt(pageindex);
 		}
 		PageUtil<Procurement> pageUtil = procurementService.queryProcurement(procurementId, 6, begintime, endtime, temp);
+	
 		model.addAttribute("pageUtil",pageUtil);
 		model.addAttribute("procurementId",procurementId);
 		model.addAttribute("begintime",begintime);
@@ -188,8 +196,10 @@ public class ProcurementController {
 	 */
 	@RequestMapping("/jsp/procurement_qianshou.html")
 	@ResponseBody
-	public String procurementQianshou(Procurement p) {
+	public String procurementQianshou(Procurement p,String procurementId) {
+		SimpleDateFormat putTime = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
 		if(procurementService.updateSign(p)>0) {
+			putService.addPut(procurementId, putTime.format(new Date()));
 			return "true";
 		}else {
 			return "false";

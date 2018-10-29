@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cn.bdqn.mapper.ProcurementMapper">
+<mapper namespace="cn.bdqn.mapper.PutMapper">
 
 	<resultMap type="Put" id="Pmap">
 		<result property="putTime" column="putTime"/>
@@ -47,196 +47,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 
-	<select id="queryProcurement" resultMap="Pmap"
-		parameterType="map">
-		select p.procurementId,p.billingTime,s.sName as sName,sto.stoName as
-		stoName,p.userId,p.draftId,usr.surname as
-		draName,u.surname,p.condition,p.comments,p.sign
-		from
-		procurement p
-		left
-		join
-		supplier s on p.supplierId=s.supplierId
-		left
-		join storehouse
-		sto on
-		p.storehouseId=sto.storehouseId
-		left join user u on
-		p.userId=u.id
-		left
-		join user usr on p.draftId=usr.id
-		<trim prefix="where" prefixOverrides="and | or">
-			<if test="procurementId!=null and procurementId!=''">
-				and p.procurementId like CONCAT('%',#{procurementId},'%')
-			</if>
-			<if
-				test="condition!=null and condition!='' and condition!=-1 and condition!=-2">
-				and p.condition=#{condition}
-			</if>
-			<if test="condition==-1">
-				and p.condition!=2
-			</if>
-			<if test="condition==-2">
-				and p.condition=2 or p.condition=1
-			</if>
-			<if
-				test="begintime!=null and begintime!='' and (endtime==null or endtime=='')">
-				and p.billingTime >= #{begintime}
-			</if>
-			<if
-				test="begintime!=null and begintime!='' and endtime!=null and endtime!=''">
-				and p.billingTime BETWEEN #{begintime} and #{endtime}
-			</if>
-			<if
-				test="endtime!=null and endtime!='' and (begintime==null or begintime=='')">
-				and p.billingTime <![CDATA[ <= ]]>
-				#{endtime}
-			</if>
-		</trim>
-		order by p.billingTime desc
-		limit #{start},#{end}
-	</select>
-
-	<select id="queryCount" resultType="int" parameterType="map">
-		select count(1) from
-		procurement p
-		left join supplier s on
-		p.supplierId=s.supplierId
-		left
-		join storehouse
-		sto on
-		p.storehouseId=sto.storehouseId
-		left join user u
-		on
-		p.userId=u.id
-		<trim prefix="where" prefixOverrides="and | or">
-			<if test="procurementId!=null and procurementId!=''">
-				and p.procurementId like CONCAT('%',#{procurementId},'%')
-			</if>
-			<if
-				test="condition!=null and condition!='' and condition!=-1 and condition!=-2">
-				and p.condition=#{condition}
-			</if>
-			<if test="condition==-1">
-				and p.condition!=2
-			</if>
-			<if test="condition==-2">
-				and p.condition=2 or p.condition=1
-			</if>
-			<if
-				test="begintime!=null and begintime!='' and (endtime==null or endtime=='')">
-				and p.billingTime >= #{begintime}
-			</if>
-			<if
-				test="begintime!=null and begintime!='' and endtime!=null and endtime!=''">
-				and p.billingTime BETWEEN #{begintime} and #{endtime}
-			</if>
-			<if
-				test="endtime!=null and endtime!='' and (begintime==null or begintime=='')">
-				and p.billingTime <![CDATA[ <= ]]>
-				#{endtime}
-			</if>
-		</trim>
-	</select>
+	
 
 
-	<select id="getProcurementByCode" resultMap="Pmap">
-		select
-		p.procurementId,p.billingTime,s.sName as sName,sto.stoName as
-		stoName,u.surname,p.condition,c.commodityId,c.cName as
-		cName,b.bName,g.gName,p.comments,p.userId,
-		un.uName,pig.pName,dim.dName,d.number,d.price
-		from procurement p
-		left
-		join supplier s on p.supplierId=s.supplierId
-		left join storehouse
-		sto on
-		p.storehouseId=sto.storehouseId
-		left join user u on
-		p.userId=u.id
-		left
-		join detailed d on p.procurementId=d.procurementId
-		left join commodity
-		c on c.commodityId=d.commodityId
-		left join brand b
-		on
-		b.brandId=c.brandId
-		left join genre g on g.genreId=c.genreId
-		left
-		join
-		unit un on un.unitId=c.unitId
-		left join pigment pig on
-		pig.pigmentId=c.pigmentId
-		left join dimension dim on
-		dim.dimensionId=c.dimensionId
-		where
-		p.procurementId=#{procurementId}
-	</select>
-
-
-	<insert id="addProcurement" parameterType="Procurement">
+	<insert id="addPut" parameterType="Put">
 		insert into
-		procurement (procurementId,billingTime,supplierId,
-		storehouseId,userId,draftId,`condition`,comments)
-		values(#{procurementId},#{billingTime},#{supplierId},
-		#{storehouseId},#{userId},#{draftId},#{condition},#{comments})
+		put (procurementId,putTime)
+		values(#{procurementId},#{putTime})
 	</insert>
 
 
-	<update id="updateProcurement" parameterType="Procurement">
-		update procurement
-		set storehouseId=#{storehouseId},
-		userId=#{userId},comments=#{comments}
-		where
-		procurementId=#{procurementId}
-	</update>
-
-	<update id="update" parameterType="Procurement">
-		update procurement set
-		`condition`=#{condition}
-		where procurementId=#{procurementId}
-	</update>
-
-	<update id="updateSign" parameterType="Procurement">
-		update procurement set
-		sign=#{sign}
-		where procurementId=#{procurementId}
-	</update>
-
-	<select id="getProcurementById" resultMap="Pmap">
-		select
-		p.procurementId,p.billingTime,p.userId,p.storehouseId,s.sName as
-		sName,sto.stoName as
-		stoName,u.surname,p.condition,c.commodityId,c.cName as
-		cName,b.bName,g.gName,p.comments,
-		un.uName,pig.pName,dim.dName,d.number,d.price,d.id,p.userId
-		from
-		procurement p
-		left
-		join supplier s on p.supplierId=s.supplierId
-		left join
-		storehouse
-		sto on
-		p.storehouseId=sto.storehouseId
-		left join user u on
-		p.userId=u.id
-		left
-		join detailed d on p.procurementId=d.procurementId
-		left join commodity
-		c on c.commodityId=d.commodityId
-		left join brand b
-		on
-		b.brandId=c.brandId
-		left join genre g on g.genreId=c.genreId
-		left
-		join
-		unit un on un.unitId=c.unitId
-		left join pigment pig on
-		pig.pigmentId=c.pigmentId
-		left join dimension dim on
-		dim.dimensionId=c.dimensionId
-		where
-		p.procurementId=#{procurementId}
-	</select>
 
 </mapper>

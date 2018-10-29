@@ -48,7 +48,6 @@
 	<!--修改员工信息-->
 	<form action="${pageContext.request.contextPath}/jsp/doEmployeeUpdate"
 		method="post">
-		<input name="employeeId" value="${employee.employeeId}" type="hidden"> 
 		<div class="add_menber" id="add_menber_style">
 			<ul class=" page-content">
 				<li><label class="label_name">工&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</label><span
@@ -206,7 +205,7 @@ $(function(){
 	/*提交修改*/
 	$("#submit").click(function(){
 		//获取员工id
-		var employeeId=$("input[type='hidden']").val().trim();
+		var employeeId=$("input[name='employeeId']").val().trim();
 		//获取修改后的姓名
 		var eName=$("input[name='eName']").val().trim();
 		if(eName==null||eName.length==0){
