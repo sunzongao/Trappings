@@ -21,6 +21,23 @@ public class Repertory {
 	private String repertorySName;	//供应商(自定义)
 	private int minimumStock;   //最低库存 
 	private int quantity;  
+	private int storehouseId1; //调往仓库
+	private int inventoryGap;  //盘点的差距
+	
+	
+	
+	public int getInventoryGap() {
+		return inventoryGap;
+	}
+	public void setInventoryGap(int inventoryGap) {
+		this.inventoryGap = inventoryGap;
+	}
+	public int getStorehouseId1() {
+		return storehouseId1;
+	}
+	public void setStorehouseId1(int storehouseId1) {
+		this.storehouseId1 = storehouseId1;
+	}
 	public int getQuantity() {
 		return quantity;
 	}
@@ -106,9 +123,11 @@ public class Repertory {
 		this.minimumStock = minimumStock;
 	}
 	
+	
 	public Repertory(String commodityId, String repertoryCName, int inventory, int unitId, int brandId,
 			String supplierId, String laidTime, int storehouseId, String repertoryUName, String repertoryBName,
-			String repertorySeName, String repertorySName, int minimumStock, int quantity) {
+			String repertorySeName, String repertorySName, int minimumStock, int quantity, int storehouseId1,
+			int inventoryGap) {
 		super();
 		this.commodityId = commodityId;
 		this.repertoryCName = repertoryCName;
@@ -124,6 +143,8 @@ public class Repertory {
 		this.repertorySName = repertorySName;
 		this.minimumStock = minimumStock;
 		this.quantity = quantity;
+		this.storehouseId1 = storehouseId1;
+		this.inventoryGap = inventoryGap;
 	}
 	public Repertory() {
 		super();

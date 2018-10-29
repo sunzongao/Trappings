@@ -175,14 +175,16 @@ function add_AD_baoyi(commodityId,unitId,brandId,storehouseId){
 		
 		$.post("${pageContext.request.contextPath}/jsp/addDetail",
 				{"commodityId":commodityId,"unitId":unitId,"brandId":brandId,"inventoryGap":inventoryGap,
-				  "checkId":checkId,"overflowOrBreakage":overflowOrBreakage,"storehouseId":storehouseId },
+				  "checkId":checkId,"overflowOrBreakage":overflowOrBreakage,"storehouseId":storehouseId},
 				  function(data){
 					  if(data=="true"){
 						  layer.msg('报溢成功!', {
 								icon : 1,
 								time : 1000
 							});
+						  $("#baoyi").hide();
 					  }
+					  
 				  });
 	});	
 };
@@ -208,6 +210,7 @@ function add_AD_baosun(commodityId,unitId,brandId,storehouseId){
 								icon : 1,
 								time : 1000
 							});
+						  $("#baosun").hide();
 					  }
 				  });
 	});
@@ -230,11 +233,13 @@ function add_AD_baosun(commodityId,unitId,brandId,storehouseId){
 	$(function() {
 		$("input[name='jisuan']").change(
 				function() {
+					//输入的值
 					var text = $(this).val();
+					//库存量
 					var text2 = $(this).parent().prev().html();
 					var cha = text - text2;
 					$(this).parent().next().html(cha);
-					if (cha > text2) {
+					if (text > text2) {
 						$(this).parent().next().next().next().children(
 								"a:eq(1)").show();
 						$(this).parent().next().next().next().children(

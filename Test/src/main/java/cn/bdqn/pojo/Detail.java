@@ -21,6 +21,15 @@ public class Detail {
 	private String detailUSurName; // 用户名称(自定义)
 	private String detailUName; // 商品单位(自定义)
 	private String detailStoName; // 所属仓库（自定义）
+	private int detailInventory;  //库存量（自定义）
+
+	
+	public int getDetailInventory() {
+		return detailInventory;
+	}
+	public void setDetailInventory(int detailInventory) {
+		this.detailInventory = detailInventory;
+	}
 	public String getCommodityId() {
 		return commodityId;
 	}
@@ -99,9 +108,10 @@ public class Detail {
 	public void setDetailStoName(String detailStoName) {
 		this.detailStoName = detailStoName;
 	}
+	
 	public Detail(String commodityId, String detailCName, int unitId, int brandId, int inventoryGap,
 			int overflowOrBreakage, int userId, String checkId, int storehouseId, String detailBName,
-			String detailUSurName, String detailUName, String detailStoName) {
+			String detailUSurName, String detailUName, String detailStoName, int detailInventory) {
 		super();
 		this.commodityId = commodityId;
 		this.detailCName = detailCName;
@@ -116,6 +126,7 @@ public class Detail {
 		this.detailUSurName = detailUSurName;
 		this.detailUName = detailUName;
 		this.detailStoName = detailStoName;
+		this.detailInventory = detailInventory;
 	}
 	public Detail() {
 		super();

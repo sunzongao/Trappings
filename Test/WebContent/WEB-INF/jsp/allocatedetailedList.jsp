@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -43,7 +44,7 @@
 	src="${pageContext.request.contextPath }/statics/js/jquery.dataTables.min.js"></script>
 <script
 	src="${pageContext.request.contextPath }/statics/js/jquery.dataTables.bootstrap.js"></script>
-<title>盘点详细</title>
+<title>调拨详细</title>
 </head>
 <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>
@@ -54,13 +55,13 @@
 	<form action="" method="post" id="form">
 		<div class="margin advertising" id="page_style">
 			<div class="operation clearfix">
-				<select name="overflowOrBreakage" id="overflowOrBreakage">
-					<option value="1"
-						<c:if  test="${overflowOrBreakage eq '1'}">selected</c:if>>报溢</option>
-					<option value="2"
-						<c:if  test="${overflowOrBreakage eq '2'}">selected</c:if>>报损</option>
-				</select>
-
+				<label class="label_name "></label> <input
+							class="laydate-icon col-xs-4 col-lg-3" name="allocateTime" style="width: 160px"
+							value="${allocateTime}" id="start"> 
+							<button class="btn button_btn bg-deep-blue " onclick="search()"
+							type="button" style="margin-left: 20px; margin-bottom: 2px ">
+							<i class="fa  fa-search"></i>&nbsp;搜索
+						</button>
 				<div class="search  clearfix"></div>
 			</div>
 			<!--分类管理-->
@@ -69,41 +70,38 @@
 					id="sample-table">
 					<thead>
 						<tr id="first">
-							<th>盘点编号</th>
+							<th>调拨编号</th>
 							<th>商品名称</th>
 							<th>商品单位</th>
 							<th>商品品牌</th>
-							<th>盘点差距</th>
-							<th>报损/报溢</th>
-							<th>所属仓库</th>
-							<th>上报人</th>
-							<th>操作</th>
+							<th>调拨时间</th>
+							<th>原属仓库</th>
+							<th>调走数量</th>
+							<th>调往仓库</th>
+							<th>调来数量</th>
+							<th>调拨人</th>
 						</tr>
 						<div id="se">
 							<c:forEach var="d" items="${pageUtil.lists }">
 								<tr>
-									<th>${d.checkId }</th>
-									<th>${d.detailCName }</th>
-									<th>${d.detailUName}</th>
-									<th>${d.detailBName }</th>
-									<th>${d.inventoryGap }</th>
-									<th><c:if test="${d.overflowOrBreakage == 1}">
-											报溢
-										</c:if> <c:if test="${d.overflowOrBreakage == 2 }">
-											报损
+									<th>${d.allocateId }</th>
+									<th>${d.allocatedetailedCName }</th>
+									<th>${d.allocatedetailedUName}</th>
+									<th>${d.allocatedetailedBName }</th>
+									<th>${fn:substring(d.allocateTime,0,10) }</th>
+									<th><c:if test="${d.theOriginalWarehouse == 1}">
+											中央仓库
+										</c:if> <c:if test="${d.theOriginalWarehouse == 2 }">
+											一号仓库
+										</c:if> <c:if test="${d.theOriginalWarehouse == 3 }">
+											二号仓库
 										</c:if></th>
-									<th>${d.detailStoName }</th>
-									<th>${d.detailUSurName }</th>
-									<th><a title="更新"
-										onclick="add_AD_gengxin('${d.storehouseId}','${d.commodityId }',${d.inventoryGap },${d.overflowOrBreakage},${d.detailInventory })"
-										href="javascript:void()" id="gengxin"
-										class="btn bg-deep-blue  operation_btn" >更新</a>
+									<th>${d.quantity }</th>
+									<th>${d.allocatedetailedStoName }</th>
+									<th>${d.quantity }</th>
+									<th>${d.allocatedetailedSurName }</th>
 								</tr>
 							</c:forEach>
-							<input type="hidden" name="overflowOrBreakage"
-								id="overflowOrBreakage" /> <input type="hidden"
-								name="storehouseId" id="storehouseId" />
-
 						</div>
 					</thead>
 					<tbody>
@@ -133,66 +131,10 @@
 </html>
 <script>
 
-function add_AD_gengxin(storehouseId,commodityId,inventoryGap,overflowOrBreakage,detailInventory){
-	alert(overflowOrBreakage);
-	 if (overflowOrBreakage == 1) {
-		 var jia = detailInventory+inventoryGap;
-		 $.post("${pageContext.request.contextPath}/jsp/updateRepertoryInventoryJia.html",
-				 	{"storehouseId":storehouseId,
-			 			"commodityId":commodityId,
-			 			"inventoryGap":inventoryGap,
-			 			"inventory":jia
-			 		},function(data){
-						if(data=="true"){
-							layer.msg('更新成功!', {
-								icon : 1,
-								time : 1000
-							});
-						}else{
-							layer.msg('更新失败!', {
-								icon : 1,
-								time : 1000
-							});
-						} 
-			 		}
-		 			)
-	}else if(overflowOrBreakage == 2){
-		 var jian = detailInventory + inventoryGap;
-		 $.post("${pageContext.request.contextPath}/jsp/updateRepertoryInventoryjian.html",
-				 	{"storehouseId":storehouseId,
-			 			"commodityId":commodityId,
-			 			"inventoryGap":inventoryGap,
-			 			"inventory":jian
-			 		},function(data){
-						if(data=="true"){
-							layer.msg('更新成功!', {
-								icon : 1,
-								time : 1000
-							});
-						}else{
-							layer.msg('更新失败!', {
-								icon : 1,
-								time : 1000
-							});
-						} 
-			 		}
-		 		)
+/* 设置内页框架布局 */
+function search(){
+		$("#form").submit();
 	}
-	 
-	 			
-}
-
-/*点击仓库列表下拉框，自动在表格中显示别的值  */
-$(function() {
-	$("#overflowOrBreakage")
-			.change(
-					function() {
-						var id = $("#overflowOrBreakage").val();
-						window.location.href = "${pageContext.request.contextPath}/jsp/InventoryInDetail.html?overflowOrBreakage="
-								+ id;
-					});
-});
-	
 
 	/* 分页 */
 	function jump(currenntPage) {
@@ -259,27 +201,27 @@ $(function() {
 	});
 	/******时间设置*******/
 	var start = {
-		elem : '#start',
-		format : 'YYYY-MM-DD',
-		min : laydate.now(), //设定最小日期为当前日期
-		max : '2099-06-16', //最大日期
-		istime : true,
-		istoday : false,
-		choose : function(datas) {
-			end.min = datas; //开始日选好后，重置结束日的最小日期
-			end.start = datas //将结束日的初始值设定为开始日
-		}
+	  elem: '#start',
+	  format: 'YYYY-MM-DD',
+	 // min: laydate.now(), //设定最小日期为当前日期
+	  max: '2099-06-16', //最大日期
+	  istime: true,
+	  istoday: false,
+	  choose: function(datas){
+	       end.min = datas; //开始日选好后，重置结束日的最小日期
+	       end.start = datas //将结束日的初始值设定为开始日
+	  }
 	};
 	var end = {
-		elem : '#end',
-		format : 'YYYY-MM-DD',
-		min : laydate.now(),
-		max : '2099-06-16',
-		istime : true,
-		istoday : false,
-		choose : function(datas) {
-			start.max = datas; //结束日选好后，重置开始日的最大日期
-		}
+	  elem: '#end',
+	  format: 'YYYY-MM-DD',
+	  //min: laydate.now(),
+	  max: '2099-06-16',
+	  istime: true,
+	  istoday: false,
+	  choose: function(datas){
+	      start.max = datas; //结束日选好后，重置开始日的最大日期
+	  }
 	};
 	laydate(start);
 	laydate(end);

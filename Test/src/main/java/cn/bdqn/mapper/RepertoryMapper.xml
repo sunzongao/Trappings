@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		brandId,supplierId,storehouseId)
 		VALUES(#{commodityId},#{inventory},
 		#{unitId},#{brandId},#{supplierId},
-		#{storehouseId})
+		#{storehouseId1})
 	</insert>
 
 	<delete id="deleteRepertoy" parameterType="Repertory">
@@ -180,13 +180,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 
-	<!--库存调拨 -->
+
+	<!--库存调拨（减） -->
 	<update id="updateInventoryAllocation" parameterType="Repertory">
 		UPDATE
-		repertory SET 
-		inventory=#{inventory}
-		 WHERE commodityId=#{commodityId} AND
+		repertory SET
+		inventory=inventory-#{quantity}
+		WHERE
+		commodityId=#{commodityId} AND
 		storehouseId=#{storehouseId}
+	</update>
+	<!--库存调拨 （加） -->
+	<update id="updateInventoryAllocationJan"
+		parameterType="Repertory">
+		UPDATE
+		repertory SET
+		inventory=inventory+#{quantity}
+		WHERE
+		commodityId=#{commodityId} AND
+		storehouseId=#{storehouseId1}
+	</update>
+
+	<!-- 修改库存的库存量 从报溢出来的数据加入库存量的数据 -->
+	<update id="updateRepertoryInventoryJia"
+		parameterType="Repertory">
+		UPDATE
+		`repertory`
+		SET
+		`inventory` =
+		#{inventory}
+		WHERE `commodityId` = #{commodityId}
+		AND
+		`storehouseId` = #{storehouseId}
+	</update>
+
+	<!-- 修改库存的库存量 用库存量减去报损出来的数据 -->
+	<update id="updateRepertoryInventoryjian"
+		parameterType="Repertory">
+		UPDATE
+		`repertory`
+		SET
+		`inventory` =
+		#{inventory}
+		WHERE `commodityId` = #{commodityId}
+		AND
+		`storehouseId` = #{storehouseId}
 	</update>
 
 </mapper>

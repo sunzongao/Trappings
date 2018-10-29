@@ -92,30 +92,27 @@
 								<tr>
 									<th>${r.commodityId}</th>
 									<th>${r.repertoryCName }</th>
-									<th>${r.repertoryUName}</th>
+									<th id="${r.unitId }">${r.repertoryUName}</th>
 									<th>${r.repertoryBName }</th>
 									<th>${r.inventory }</th>
-									<th width="8%"><input type="text" name="quantity" id="quantity"
-										onkeyup="value=value.replace(/[^\d]/g,'')"
+									<th width="8%"><input type="text" name="quantity"
+										id="quantity" onkeyup="value=value.replace(/[^\d]/g,'')"
 										placeholder="请手动输入调走数量"
 										style='border-left: 0px; border-top: 0px; border-right: 0px; border-bottom: 1px; background-color: #F2F2F2' /></th>
 									<th>${r.repertorySeName }</th>
-									<th>
-									<select name="storehouseId1" id="storehouseId1"
-										class="form-control col-xs-6"  style="width: 72%">
-										<option value="0">请选择调往仓库</option>
+									<th><select name="storehouseId1" id="storehouseId1"
+										class="form-control col-xs-6" style="width: 72%">
+											<option value="0">请选择调往仓库</option>
 											<c:forEach var="s" items="${storehouses }">
 												<option value="${s.storehouseId }">${s.stoName }</option>
 											</c:forEach>
 									</select></th>
-									<th><a title="调拨"
-										onclick="update_AND_diaobo('${r.commodityId}','${r.storehouseId}','${r.inventory}')"
+									<th><a title="调拨" id="submit"
+										onclick="update_AND_diaobo('${r.commodityId}','${r.storehouseId}',${r.inventory},'${r.unitId }','${r.brandId }','${r.supplierId }','${r.laidTime }','${r.minimumStock }')"
 										href="javascript:void()"
 										class="btn bg-deep-blue  operation_btn">调拨</a>
 								</tr>
 							</c:forEach>
-							<input type="hidden" name="overflowOrBreakage"
-								id="overflowOrBreakage" />
 						</div>
 					</thead>
 					<tbody>
@@ -161,50 +158,78 @@
 </body>
 </html>
 <script>
-
-	function update_AND_diaobo(commodityId,storehouseId,inventory){
+	function update_AND_diaobo(commodityId, storehouseId, inventory, unitId,
+			brandId, supplierId, laidTime, minimumStock) {
 		var storehouseId1 = $("#storehouseId1").val();
-		var shuliang = $("input[name='quantity']").val();
-		var cha = inventory-shuliang;
- 		if(shuliang > inventory){
+		var shuliang = parseInt($("input[name='quantity']").val());
+		var allocateId = $("#allocateId").val();
+		if (shuliang > inventory) {
 			layer.msg("调走数量不能大于库存量！");
 			return;
 		} 
-		if(shuliang==""){
+		if (shuliang == "") {
 			layer.msg("请输入调走数量！");
 			return;
 		}
-		if(shuliang==0){
+		if (shuliang == 0) {
 			layer.msg("调走数量必须大于0！");
 			return;
 		}
-		if(storehouseId1==0){
+		if (storehouseId1 == 0) {
 			layer.msg("请选择调往仓库！");
 			return;
 		}
-		if(storehouseId1==storehouseId){
+		if (storehouseId1 == storehouseId) {
 			layer.msg("调往仓库不能和现属仓库在同一仓库！");
 			return;
 		}
-		$.post("${pageContext.request.contextPath}/jsp/updateInventoryAllocationRepertoryDetail",
-						{"commodityId":commodityId,"storehouseId":storehouseId,"inventory":cha},
-					function(data){
-						if(data=="true"){
-							layer.msg('库存调拨成功!', {
-								icon : 1,
-								time : 1000
-							});
-							window.location.reload();
-						}else{
-							layer.msg('库存调拨失败!', {
-								icon : 1,
-								time : 1000
-							});
-						}
-					}
-		)
-		
+		$
+				.post(
+						"${pageContext.request.contextPath}/jsp/updateInventoryAllocationRepertoryDetail",
+						{
+							"commodityId" : commodityId,
+							"storehouseId" : storehouseId,
+							"quantity" : shuliang,
+							"storehouseId1" : storehouseId1,
+							"inventory" : inventory,
+							"unitId" : unitId,
+							"brandId" : brandId,
+							"supplierId" : supplierId,
+							"laidTime" : laidTime,
+							"minimumStock" : minimumStock
+						}, function(data) {
+							if (data == "true") {
+								layer.msg('库存调拨成功!', {
+									icon : 1,
+									time : 1000
+								});
+								window.location.reload();
+							} else {
+								layer.msg('库存调拨失败!', {
+									icon : 2,
+									time : 1000
+								});
+							}
+						})
+				$.post("${pageContext.request.contextPath}/jsp/addAllocatedetailed.html",
+						{
+							"commodityId" : commodityId,
+							"storehouseId" : storehouseId1,
+							"quantity" : shuliang,
+							"allocateId":allocateId,
+							"inventory" : inventory,
+							"unitId" : unitId,
+							"brandId" : brandId,
+							"supplierId" : supplierId,
+							"theOriginalWarehouse":storehouseId
+				},function(data){
+					
+				}
+						)
+
 	}
+	
+
 
 	/*点击仓库列表下拉框，自动在表格中显示别的值  */
 	$(function() {
@@ -216,37 +241,14 @@
 									+ id;
 						});
 	});
-	
+
 	/* 分页 */
 	function jump(currenntPage) {
 		$("#currenntPage").val(currenntPage);
 		$("#form").submit();
 	}
 
-	/* 根据商品编号查重 */
-	$("#commodityId").change(function() {
-		var id = $("#commodityId").val();
-		$.ajax({
-			type : "post",
-			url : "${pageContext.request.contextPath}/jsp/chaChong",
-			data : {
-				'commodityId' : id
-			},
-			dataType : "json",
-			success : function(data) {
-				if (data == true) {
-					$(".layui-layer-btn0").hide();
-					$("#msg").text("商品编号不可以使用").css({
-						color : "red"
-					});
-				} else {
-					$(".layui-layer-btn0").show();
-					$("#msg").text("商品编号可以使用").css("color", "green");
-				}
-			}
-		});
-	});
-
+	
 	jQuery(function($) {
 		var oTable1 = $('#sample-table').dataTable({
 			"data" : dataSet,
@@ -277,43 +279,9 @@
 
 				});
 	});
-	/*库存-删除*/
-	function picture_del(obj, id, inventory) {
-		layer.confirm('确认要删除吗？', function(index) {
-			$.post("${pageContext.request.contextPath}/jsp/deleteRepertory", {
-				"commodityId" : id,
-				"inventory" : inventory
-			}, function(data) {
-				if (data == "true") {
-					$(obj).parents("tr").remove();
-					layer.msg('已删除!', {
-						icon : 1,
-						time : 1000
-					});
-				} else if (data == "false") {
-					layer.msg('库存数量大于0，不能删除!', {
-						icon : 1,
-						time : 1000
-					});
-				}
-			});
-		});
-	}
 
-	/*库存-编辑*/
-	function member_edit(id) {
-		layer
-				.open({
-					type : 2,
-					title : '修改库存信息',
-					maxmin : true,
-					shadeClose : true, //点击遮罩关闭层
-					scrollbar : true,
-					area : [ '800px', '450px' ],
-					content : "${pageContext.request.contextPath}/jsp/repertoryUpdate?id="
-							+ id
-				});
-	}
+
+
 
 	/*checkbox激发事件*/
 	$('#checkbox').on('click', function() {

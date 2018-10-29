@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.bdqn.mapper.AllocatedetailedMapper">
+
+	<insert id="addAllocatedetailed"
+		parameterType="Allocatedetailed">
+		INSERT INTO `allocatedetailed` (
+		`allocateId`,
+		`commodityId`,
+		`brandId`,
+		`unitId`,
+		`quantity`,
+		`storehouseId`,
+		`userId`,
+		`theOriginalWarehouse`
+		)
+		VALUES
+		(
+		#{allocateId},
+		#{commodityId},
+		#{brandId},
+		#{unitId},
+		#{quantity},
+		#{storehouseId},
+		#{userId},
+		#{theOriginalWarehouse}
+		)
+	</insert>
+
+	<select id="queryAllocatedetailed" resultType="Allocatedetailed">
+		SELECT
+		a.`allocateId`,
+		a.`allocateTime`,
+		a.`brandId`,
+		a.`commodityId`,
+		a.`quantity`,
+		a.`storehouseId`,
+		a.`theOriginalWarehouse`,
+		a.`unitId`,
+		a.`userId`,
+		c.`brandId`,
+		c.`cName` AS allocatedetailedCName,
+		c.`comments`,
+		c.`commodityId`,
+		c.`dimensionId`,
+		c.`genreId`,
+		c.`pigmentId`,
+		c.`unitId`,
+		b.`bName` AS allocatedetailedBName,
+		b.`brandId`,
+		u.`uName` AS allocatedetailedUName,
+		u.`unitId`,
+		s.`stoName`
+		AS allocatedetailedStoName,
+		s.`storehouseId`,
+		ur.`id`,
+		ur.`state`,
+		ur.`surname` AS allocatedetailedSurName,
+		ur.`uname`,
+		ur.`upassword`
+		FROM
+		allocatedetailed AS a
+		LEFT JOIN commodity AS c
+		ON c.`commodityId` =
+		a.`commodityId`
+		LEFT JOIN brand AS b
+		ON b.`brandId` = c.`brandId`
+		LEFT
+		JOIN unit AS u
+		ON u.`unitId` = c.`unitId`
+		LEFT JOIN storehouse AS s
+		ON
+		s.`storehouseId` = a.`storehouseId`
+		LEFT JOIN `user` AS ur
+		ON ur.`id` =
+		a.`userId`
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="allocateTime!=null and allocateTime!=''">
+				a.allocateTime LIKE CONCAT('%',#{allocateTime},'%')
+			</if>
+		</trim>
+		LIMIT #{startRow},#{pageSize}
+	</select>
+
+	<select id="count" resultType="java.lang.Integer">
+		SELECT
+		COUNT(1)
+		FROM
+		allocatedetailed AS a
+		LEFT JOIN commodity AS c
+		ON
+		c.`commodityId` =
+		a.`commodityId`
+		LEFT JOIN brand AS b
+		ON b.`brandId` =
+		c.`brandId`
+		LEFT
+		JOIN unit AS u
+		ON u.`unitId` = c.`unitId`
+		LEFT JOIN
+		storehouse AS s
+		ON
+		s.`storehouseId` = a.`storehouseId`
+		LEFT JOIN `user`
+		AS ur
+		ON ur.`id` =
+		a.`userId`
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="allocateTime!=null and allocateTime!=''">
+				a.allocateTime LIKE CONCAT('%',#{allocateTime},'%')
+			</if>
+		</trim>
+	</select>
+</mapper>

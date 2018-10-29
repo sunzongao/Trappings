@@ -9,8 +9,10 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.bdqn.mapper.AllocatedetailedMapper;
 import cn.bdqn.mapper.DetailMapper;
 import cn.bdqn.mapper.RepertoryMapper;
+import cn.bdqn.pojo.Allocatedetailed;
 import cn.bdqn.pojo.Badoverflow;
 import cn.bdqn.pojo.Detail;
 import cn.bdqn.pojo.Repertory;
@@ -23,7 +25,7 @@ public class RepertoryServiceImpl implements RepertoryService {
 	@Autowired
 	private RepertoryMapper repertoryMapper;
 	@Autowired
-	private DetailMapper detailMapper;
+	private AllocatedetailedMapper allocatedetailedMapper;
 
 	@Override
 	public PageUtil<Repertory> queryRepertory(String laidTime, int unitId, int brandId, int storehouseId,
@@ -90,6 +92,14 @@ public class RepertoryServiceImpl implements RepertoryService {
 
 	@Override
 	public int updateInventoryAllocation(Repertory repertory) {
+		//库存调拨的时候 如果仓库中没有这行数据，就添加一条数据，如果有那就修改修改库存量
+		if(repertoryMapper.getByIdAndStorehouseId(repertory.getCommodityId()
+				,repertory.getStorehouseId1())==null){
+			repertory.setInventory(repertory.getQuantity());
+			repertoryMapper.addRepertory(repertory);
+		}else {
+			repertoryMapper.updateInventoryAllocationJan(repertory);
+		}
 		return repertoryMapper.updateInventoryAllocation(repertory);
 	}
 
@@ -97,5 +107,16 @@ public class RepertoryServiceImpl implements RepertoryService {
 	public Repertory getByIdAndStorehouseId(String commodityId, int storehouseId) {
 		return repertoryMapper.getByIdAndStorehouseId(commodityId, storehouseId);
 	}
+
+	@Override
+	public int updateRepertoryInventoryJia(Repertory repertory) {
+		return repertoryMapper.updateRepertoryInventoryJia(repertory);
+	}
+
+	@Override
+	public int updateRepertoryInventoryjian(Repertory repertory) {
+		return repertoryMapper.updateRepertoryInventoryjian(repertory);
+	}
+
 
 }
