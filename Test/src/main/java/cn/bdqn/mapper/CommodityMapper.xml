@@ -58,16 +58,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="commodityId!=null and commodityId!=''">
 				and commodityId LIKE CONCAT('%',#{commodityId},'%')
 			</if>
-			<if test="genreId!=null and genreId> 0">
+			<if test="genreId != null and genreId!= -1">
 				and c.genreId=#{genreId}
 			</if>
-			<if test="unitId!=null and unitId > 0">
+			<if test="unitId != null and unitId != -1">
 				and c.unitId=#{unitId}
 			</if>
-			<if test="supplierId!=null and supplierId!='-1'">
+			<if test="supplierId != null and supplierId!=''">
 				and c.supplierId=#{supplierId}
 			</if>
-			<if test="brandId!=null and brandId > 0">
+			<if test="brandId !=null and brandId != -1">
 				and c.brandId=#{brandId}
 			</if>
 		</trim>
@@ -92,16 +92,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="commodityId!=null and commodityId!=''">
 				and commodityId LIKE CONCAT('%',#{commodityId},'%')
 			</if>
-			<if test="genreId!=null and genreId> 0">
+			<if test="genreId != null and genreId!= -1">
 				and c.genreId=#{genreId}
 			</if>
-			<if test="unitId!=null and unitId > 0">
+			<if test="unitId != null and unitId != -1">
 				and c.unitId=#{unitId}
 			</if>
-			<if test="supplierId!=null and supplierId!='-1'">
+			<if test="supplierId != null and supplierId!=''">
 				and c.supplierId=#{supplierId}
 			</if>
-			<if test="brandId!=null and brandId > 0">
+			<if test="brandId !=null and brandId != -1">
 				and c.brandId=#{brandId}
 			</if>
 		</trim>

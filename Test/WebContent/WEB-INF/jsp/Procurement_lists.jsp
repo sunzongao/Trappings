@@ -140,15 +140,15 @@
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_lists.html?pageindex=${pageUtil.currentPage-1}"
+					href="${pageContext.request.contextPath}/jsp/procurement_lists.html?pageindex=${pageUtil.currentPage-1}&procurementId=${procurementId }&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_lists.html?pageindex=${pageUtil.currentPage+1}"
+					href="${pageContext.request.contextPath}/jsp/procurement_lists.html?pageindex=${pageUtil.currentPage+1}&procurementId=${procurementId }&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>下一页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_lists.html?pageindex=${pageUtil.totalPage}"
+					href="${pageContext.request.contextPath}/jsp/procurement_lists.html?pageindex=${pageUtil.totalPage}&procurementId=${procurementId }&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>尾页</a>
 					<span style="font-size: 16px;">第${pageUtil.currentPage}页/共${pageUtil.totalPage}页</span>
@@ -170,12 +170,13 @@ function member_stop(obj,id,con){
 					"procurementId" : id,
 					"condition":con
 				}, function(data) {
-					if (data == "true") {
-						layer.msg('审核成功！');
-						window.location.href="${pageContext.request.contextPath}/jsp/procurement_lists.html";
-					} else {
-						layer.msg('审核失败！');
-					}
+					layer.alert("审核成功！",{
+						icon:1,
+						btn:['确定'],
+						yes:function(){
+							location.reload();
+						}
+					});
 				});
 	});
 }

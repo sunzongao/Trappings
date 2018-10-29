@@ -56,17 +56,11 @@
 	<div class="margin" id="page_style">
 		<!--列表展示-->
 		<form id="form1"
-			action="${pageContext.request.contextPath}/jsp/procurement_list.html"
+			action="${pageContext.request.contextPath}/jsp/procurement_list2.html"
 			method="post">
 			<div class="list_Exhibition list_show padding15">
 				<div class="operation clearfix mb15  searchs_style">
-					<span class="submenu"> <a
-						href="${pageContext.request.contextPath}/jsp/procurement_toadd.html"
-						name="" class="btn button_btn bg-deep-blue" title="采购进货"> <i
-							class="fa  fa-edit"></i>&nbsp;采购进货
-					</a>
-					</span>
-					<div class="search  clearfix">
+					<div class="search  clearfix" style="margin-right: 150px">
 						<label class="label_name">单据号：</label> <input name="procurementId"
 							type="text" class="" value="${procurementId }" />
 						<button class="btn button_btn bg-deep-blue " onclick="search()"
@@ -97,12 +91,15 @@
 						<td>收货仓库</td>
 						<td>经办人</td>
 						<td>制定人</td>
-						<td>状态</td>
+						<td>签收状态</td>
 						<td>操作</td>
 					</tr>
 				</thead>
 				<tbody>
 						<c:forEach items="${pageUtil.lists}" var="p">
+						<c:if test="${loginUser.id==p.userId}">
+							<input type="hidden" name="condition" class="condition"
+								value="${p.condition }" />
 							<tr>
 								<td>${p.procurementId }</td>
 								<td>${p.billingTime }</td>
@@ -110,57 +107,43 @@
 								<td>${p.stoName }</td>
 								<td>${p.surname }</td>
 								<td>${p.draName }</td>
-								<c:if test="${p.condition==1}">
-									<td class="td-status">已审核</td>
-								</c:if>
-								<c:if test="${p.condition==2}">
-									<td class="td-status">未审核</td>
-								</c:if>
-								<c:if test="${p.condition==3}">
+								<c:if test="${p.sign==1}">
 									<td class="td-status">已签收</td>
 								</c:if>
-								<c:if test="${p.condition==4}">
+								<c:if test="${p.sign==2}">
 									<td class="td-status">未签收</td>
 								</c:if>
-								<c:if test="${p.condition==5}">
-									<td class="td-status">未发布</td>
-								</c:if>
-								<c:if test="${p.condition==6}">
-									<td class="td-status">已发布</td>
-								</c:if>
-								<td class="td-manage"><shiro:hasPermission name="CGGL">
-										<a onClick="member_stop(this,'${p.procurementId}','${p.condition}','${p.surname}')" href="javascript:;"
-											title="发布"
-											class="<c:if test="${p.condition==5||p.condition==1}">btn btn-xs btn-status</c:if>"><c:if
-												test="${p.condition==5||p.condition==1}">发布</c:if></a>
-										<a title="编辑"
-											onclick="procurementupdate('${p.procurementId}')"
-											href="javascript:;" class="btn btn-xs btn-info">编辑</a>
-									</shiro:hasPermission> <a title="查看" onclick="procurementinfo(this)"
+								<td class="td-manage"><a
+									onClick="member_stop(this,'${ p.procurementId}','${p.sign}')" href="javascript:;"
+									title="签收"
+									class="<c:if test="${p.sign==2}">btn btn-xs btn-status</c:if>"><c:if
+											test="${p.sign==2}">签收</c:if></a> <a title="查看"
+									onclick="procurementinfo(this)"
 									href="javascript:;${p.procurementId}"
 									class="btn btn-xs btn-info">查看</a></td>
 							</tr>
+							</c:if>
 						</c:forEach>
-
 					
+
 
 				</tbody>
 			</table>
 			<p style="margin-top: 5px; text-align: center;">
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=1"
+					href="${pageContext.request.contextPath}/jsp/procurement_list2.html?pageindex=1"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>首页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=${pageUtil.currentPage-1}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
+					href="${pageContext.request.contextPath}/jsp/procurement_list2.html?pageindex=${pageUtil.currentPage-1}&procurementId=${procurementId }&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==1}">style="display: none;"</c:if>>上一页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=${pageUtil.currentPage+1}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
+					href="${pageContext.request.contextPath}/jsp/procurement_list2.html?pageindex=${pageUtil.currentPage+1}&procurementId=${procurementId }&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>下一页</a>&nbsp;&nbsp;
 				<a
-					href="${pageContext.request.contextPath}/jsp/procurement_list.html?pageindex=${pageUtil.totalPage}&procurementId=${procurementId}&begintime=${begintime}&endtime=${endtime}"
+					href="${pageContext.request.contextPath}/jsp/procurement_list2.html?pageindex=${pageUtil.totalPage}&procurementId=${procurementId }&begintime=${begintime}&endtime=${endtime}"
 					class="btn btn-xs btn-info"
 					<c:if test="${pageUtil.currentPage==pageUtil.totalPage}">style="display: none;"</c:if>>尾页</a>
 				<span style="font-size: 16px;">第${pageUtil.currentPage}页/共${pageUtil.totalPage}页</span>
@@ -173,23 +156,16 @@
 </body>
 </html>
 <script>
-
-
-
-/*发布*/
-function member_stop(obj,id,con,sur){
-	if(sur==""){
-		layer.msg('请选择经办人！');
-		return;
-	}
-	var con=6;
-	layer.confirm('是否发布？',function(index){
-		$.post("${pageContext.request.contextPath}/jsp/procurement_fabu.html",
+/*签收*/
+function member_stop(obj,id,con){
+	var con=1;
+	layer.confirm('是否签收？',function(index){
+		$.post("${pageContext.request.contextPath}/jsp/procurement_qianshou.html",
 				{
 					"procurementId" : id,
-					"condition":con
+					"sign":con
 				}, function(data) {
-					layer.alert("发布成功！",{
+					layer.alert("签收成功！",{
 						icon:1,
 						btn:['确定'],
 						yes:function(){
@@ -200,19 +176,6 @@ function member_stop(obj,id,con,sur){
 	});
 }
 
-
-
-//修改订单信息
-function procurementupdate(id){
-	 layer.open({
-        type: 2,
-        title: '修改订单',
-		maxmin: true, 
-		shadeClose:false, //点击遮罩关闭层
-        area : ['890px' , '480px'],
-        content:'${pageContext.request.contextPath}/jsp/procurement_toupdate.html?id='+id,
-	 })
-}
 //查看订单详情
 function procurementinfo(id){
 	 layer.open({
@@ -224,18 +187,7 @@ function procurementinfo(id){
         content:'${pageContext.request.contextPath}/jsp/procurement_show.html?id='+id,
 	 })
 }
-//编辑订单
-function member_edit(id){
-	  layer.open({
-        type: 2,
-        title: '修改供应商信息',
-		maxmin: true, 
-		shadeClose:true, //点击遮罩关闭层
-		scrollbar: true,
-        area : ['800px' , '400px'],
-        content:"${pageContext.request.contextPath}/jsp/supplier_toupdate.html?id="+id,
-        });
-}
+
 
 
 
@@ -291,11 +243,4 @@ var end = {
 };
 laydate(start);
 laydate(end);
-/*删除*/
-function member_del(obj,id){
-	layer.confirm('确认要删除吗？',function(index){
-		$(obj).parents("tr").remove();
-		layer.msg('已删除!',{icon:1,time:1000});
-	});
-}
 </script>

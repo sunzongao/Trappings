@@ -36,7 +36,7 @@
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/statics/js/proTree.js"></script>
 </head>
-<body style="height: 510px;width:815px;overflow: scroll; ">
+<body style="height: 440px;width:815px;overflow: scroll; ">
 	<!--用户信息-->
 	<div class="userinfo_style" id="userinfo_style">
 		<div class="member_show">

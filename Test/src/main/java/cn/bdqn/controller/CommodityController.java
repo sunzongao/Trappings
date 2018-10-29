@@ -67,12 +67,6 @@ public class CommodityController {
 		if(pageindex!=null) {
 			temp=Integer.parseInt(pageindex);
 		}
-		System.out.println(temp);
-		System.out.println(commodityId);
-		System.out.println(genreId);
-		System.out.println(unitId);
-		System.out.println(supplierId);
-		System.out.println(brandId);
 		PageUtil<Commodity> pageUtil = commodityService.queryCommodity(commodityId,genreId,unitId,supplierId,brandId,temp);
 		model.addAttribute("pageUtil",pageUtil);
 		model.addAttribute("commodityId",commodityId);
