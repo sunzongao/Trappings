@@ -31,7 +31,12 @@ public interface RepertoryService {
 	// 根据Id和所属仓库查询属性值
 	public Repertory getByIdAndStorehouseId(String commodityId, int storehouseId);
 
-	// 库存调拨
+	// 库存调拨(减)
 	public int updateInventoryAllocation(Repertory repertory);
 
+	// 修改库存的库存量 从报溢出来的数据加入库存量的数据
+	public int updateRepertoryInventoryJia(Repertory repertory);
+
+	// 修改库存的库存量 用库存量减去报损出来的数据
+	public int updateRepertoryInventoryjian(Repertory repertory);
 }

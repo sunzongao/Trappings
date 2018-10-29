@@ -10,16 +10,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		d.`brandId`,d.`checkId`,d.`commodityId`,d.`inventoryGap`,
 		d.`overflowOrBreakage`,d.`storehouseId`,d.`unitId`,d.`userId`,
 		c.`brandId`,c.`cName` AS detailCName,
-		b.`bName` AS detailBName,b.`brandId`,ut.`uName` AS
+		b.`bName` AS
+		detailBName,b.`brandId`,ut.`uName` AS
 		detailUName,ut.`unitId`,ck.`checkId`,ck.`checkTime`,
 		ck.`userId`,u.`id`,u.`state`,u.`surname`
-		AS detailUSurName,u.`uname`,u.`upassword`,
-		s.`stoName` AS detailStoName,s.`storehouseId`
-		FROM detail AS d INNER JOIN commodity AS c ON c.`commodityId` =
-		d.`commodityId` LEFT JOIN brand AS b ON d.`brandId` = b.`brandId` LEFT
-		JOIN unit AS ut ON d.`unitId` = ut.`unitId`
-		LEFT JOIN `check` AS ck ON ck.`checkId`=d.`checkId` LEFT JOIN `user` AS u
-		ON d.`userId` = u.`id` LEFT JOIN storehouse AS s ON
+		AS
+		detailUSurName,u.`uname`,u.`upassword`,
+		s.`stoName` AS
+		detailStoName,s.`storehouseId`,r.`inventory` AS detailInventory
+		FROM
+		detail AS d INNER JOIN commodity AS
+		c ON c.`commodityId` =
+		d.`commodityId` LEFT JOIN repertory AS r ON
+		r.`storehouseId`=d.`storehouseId`
+		LEFT JOIN brand AS b ON d.`brandId` =
+		b.`brandId` LEFT
+		JOIN unit AS ut ON
+		d.`unitId` = ut.`unitId`
+		LEFT JOIN
+		`check` AS ck ON
+		ck.`checkId`=d.`checkId` LEFT JOIN `user` AS u
+		ON
+		d.`userId` = u.`id`
+		LEFT JOIN storehouse AS s ON
 		d.`storehouseId`=s.`storehouseId`
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="overflowOrBreakage!=0">
@@ -32,11 +45,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="count" resultType="java.lang.Integer">
 		SELECT
 		COUNT(1)
-		FROM detail AS d INNER JOIN commodity AS c ON c.`commodityId` =
-		d.`commodityId` LEFT JOIN brand AS b ON d.`brandId` = b.`brandId` LEFT
+		FROM
+		detail AS d INNER JOIN commodity AS c ON
+		c.`commodityId` =
+		d.`commodityId` LEFT JOIN repertory AS r ON
+		r.`storehouseId`=d.`storehouseId` LEFT JOIN brand AS b ON d.`brandId`
+		=
+		b.`brandId` LEFT
 		JOIN unit AS ut ON d.`unitId` = ut.`unitId`
-		LEFT JOIN `check` AS ck ON ck.`checkId`=d.`checkId` LEFT JOIN `user` AS u
-		ON d.`userId` = u.`id` LEFT JOIN storehouse AS s ON
+		LEFT JOIN
+		`check` AS ck ON
+		ck.`checkId`=d.`checkId` LEFT JOIN `user` AS u
+		ON
+		d.`userId` = u.`id`
+		LEFT JOIN storehouse AS s ON
 		d.`storehouseId`=s.`storehouseId`
 		<trim prefix="where" prefixOverrides="and | or">
 			<if test="overflowOrBreakage!=0">

@@ -58,8 +58,6 @@ public class RepertoryController {
 	@Autowired
 	private SupplierService supplierService;
 	
-	@Autowired
-	private DetailService detailService;
 
 	// 查询、分页
 	@RequestMapping("/jsp/repertoryList.html")
@@ -217,23 +215,7 @@ public class RepertoryController {
 		return "false";
 	}
 
-	/**
-	 * 跳转到库存调拨页面
-	 * @param commodityId
-	 * @param model
-	 * @return
-	 */
-	/*@RequestMapping("/jsp/toUpdateInventoryAllocationRepertoryDetail")
-	public String getByCommodityId(String commodityId,int storehouseId,Model model) {
-		//根据商品编号Id和所属仓库的Id查询对应的数据
-		Repertory repertory = repertoryService.getByIdAndStorehouseId(commodityId, storehouseId);
-		// 获取仓库集合
-		List<Storehouse> storehouses = storehouseService.queryStorehouse();
-		model.addAttribute("repertory", repertory);
-		model.addAttribute("storehouses", storehouses);
-		return "updateInventoryAllocationRepertoryDetail";
-	}
-*/
+
 	
 
 }

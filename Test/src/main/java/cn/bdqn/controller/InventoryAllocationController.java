@@ -56,7 +56,7 @@ public class InventoryAllocationController {
 		Random rand = new Random();
 		String pd = "DB";
 		String allocateId = pd += rand.nextInt(1000000000) + 1;
-		// 当进入库存盘点时，自动给盘点表加入数据
+		// 当进入库存调拨时，自动给调拨表加入数据
 		String userName = SecurityUtils.getSubject().getPrincipal().toString();// 获取用户名
 		User user = userService.queryUser(userName);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
