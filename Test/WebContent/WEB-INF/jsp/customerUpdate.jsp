@@ -24,61 +24,42 @@
 
 
 </head>
-<body>
+<body style="height:480px;overflow: scroll;">
 
 	<!--编辑客户信息-->
 <form action="${pageContext.request.contextPath}/jsp/update.html" method="post">
 <div id="Advert_add_style" class="Advert_add_style padding" >
  <div class="add_style">
  <ul>
-  <li class="clearfix"><label class="label_name col-xs-2">客户编号：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="customerId" value="${customer.customerId}" type="text" id="form-field-1" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-  <li class="clearfix"><label class="label_name col-xs-2">客户名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cName" value="${customer.cName}" type="text" id="form-field-1"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-  <li class="clearfix"><label class="label_name col-xs-2">联系人：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cContacts" value="${customer.cContacts}" type="text" id="form-field-1"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-  <li class="clearfix"><label class="label_name col-xs-2">联系电话：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cPhone" value="${customer.cPhone}" type="text" id="form-field-1"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
-  <li class="clearfix"><label class="label_name col-xs-2">联系地址：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cAddress" value="${customer.cAddress}" type="text" id="form-field-1"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+  <li class="clearfix"><label class="label_name col-xs-2">客户编号：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="customerId" value="${customer.customerId}" disabled="disabled" type="text" id="customerId" class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+  <li class="clearfix"><label class="label_name col-xs-2">客户名称：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cName" value="${customer.cName}" type="text" id="cName"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+  <li class="clearfix"><label class="label_name col-xs-2">联系人：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cContacts" value="${customer.cContacts}" type="text" id="cContacts"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+  <li class="clearfix"><label class="label_name col-xs-2">联系电话：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cPhone" value="${customer.cPhone}" type="text" id="cPhone"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
+  <li class="clearfix"><label class="label_name col-xs-2">联系地址：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><input name="cAddress" value="${customer.cAddress}" type="text" id="cAddress"  class="col-xs-10 col-sm-5" style="width:450px"></span></li>
   
 
   
   <li class="clearfix"><label class="label_name col-xs-2">客户类型：&nbsp;&nbsp;</label><span class="cont_style col-xs-9">
-     <select name="cId" id="form-field-1"  class="col-xs-10 col-sm-5" style="width:450px">
+     <select name="cId" id="cId"  class="col-xs-10 col-sm-5" style="width:450px">
      	<option value="0">全部</option>
      	<c:forEach var="cc" items="${lists}">
-     		<option value="cc.id" 
+     		<option value="${cc.id}" 
      			<c:if test="${cc.id eq customer.cId}">
      				selected
      			</c:if>
-     		>${cc.name }</option>
+     		>${cc.name}</option>
      	</c:forEach>
      </select>  
   </span></li> 
   
    <li class="clearfix"><label class="label_name col-xs-2">备注信息：&nbsp;&nbsp;</label><span class="cont_style col-xs-9"><textarea name="comments" id="comments"  class="form-control col-xs-12 col-sm-5" id="form_textarea" placeholder="" onkeyup="checkLength(this);" style="width:200px" >${customer.comments}</textarea><span class="wordage">剩余字数：<span id="sy" style="color:Red;">50</span>字</span></span></li>
    
-     <!-- <li class="clearfix">
-     <label class="label_name col-xs-2">设置时间：&nbsp;&nbsp;</label> 
-    <div class="Add_content col-xs-9">
-    <label class="l_f checkbox_time"><input type="checkbox" name="checkbox" class="ace" id="checkbox"><span class="lbl">是</span></label>
-    <div class="Date_selection" style="display:none">
-      <span class="label_name">开始日：</span><p class="laydate-icon" id="start" style="width:160px; margin-right:10px; height:30px; line-height:30px; float:left"></p>
-      <span class="label_name">结束日：</span><p class="laydate-icon" id="end" style="width:160px;height:30px; line-height:30px; float:left"></p>
-    </div>
-    </div>   
-    </li> -->
-     <!-- <li class="clearfix"><label class="label_name col-xs-2">图&nbsp;&nbsp;片：&nbsp;&nbsp;</label>
-     <span class="cont_style col-xs-9">        
-       <div id="preview" class="preview_img"><img id="imghead" border="0" src="images/image.png" /></div>
-       <div class="fileInput ">
-        <input type="file" onchange="previewImage(this)" name="upfile" id="upfile" class="upfile"/>
-        <input class="upFileBtn" type="button" value="上传图片" onclick="document.getElementById('upfile').click()" />
-        </div>
-      </span>
-  </li> -->
  </ul>
  </div>
 </div>
 		<p style="text-align: center;">
-			<!-- <a class="btn btn-xs btn-info" href="javascript:;" id="submit">修改</a> -->
-			<input type="submit" class="btn btn-xs btn-info"/>&nbsp;&nbsp;&nbsp; 
+		<a class="btn btn-xs btn-info" href="javascript:;" id="submit">修改</a>
+			&nbsp;&nbsp;&nbsp; 
 			<a class="btn btn-xs btn-info" href="javascript:;" id="close">关闭</a>
 		</p>
 	
@@ -88,6 +69,46 @@
 
 <script type="text/javascript">
 jQuery(function($){
+	$("#submit").click(function(){
+		var customerId = $("#customerId").val().trim();
+		var cName = $("#cName").val().trim();
+		var cContacts = $("#cContacts").val().trim();
+		var cPhone = $("#cPhone").val().trim();
+		var cAddress = $("#cAddress").val().trim();
+		var cId = $("#cId").val().trim();
+		var comments = $("#comments").val().trim();
+		$.post(
+			"${pageContext.request.contextPath}/jsp/update.html",
+			{
+				"customerId":customerId,
+				"cName":cName,
+				"cContacts":cContacts,
+				"cPhone":cPhone,
+				"cAddress":cAddress,
+				"cId":cId,
+				"comments":comments
+			},function(data){		
+				  if(data=="true"){
+  					  layer.alert('修改成功！',{
+  			               title: '提示框',				
+  								icon:1,		
+  						  },function(){
+  							//当你在iframe页面关闭自身时					
+  							var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+  							parent.layer.close(index); //再执行关闭
+  						  });  
+  				  }else{
+  					  layer.alert('修改失败！',{
+ 			               	title: '提示框',				
+ 							icon:1,	
+ 						  });
+  					
+  				  }
+  				  layer.close();
+  			  
+			}
+		);
+	});
 	function checkLength(which) {
 		var maxChars = 50; //
 		if(which.value.length > maxChars){
@@ -117,8 +138,8 @@ jQuery(function($){
 	});
 	
 	
-	$("#submit").click(function(){
-		window.location.href="${pageContext.request.contextPath}/jsp/update.html";
-	})
+	 $("#close").click(function(){
+		window.location.close();
+	}) 
 })
 </script>

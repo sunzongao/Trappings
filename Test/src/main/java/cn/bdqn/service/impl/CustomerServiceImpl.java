@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.bdqn.mapper.CustomerMapper;
@@ -15,7 +16,7 @@ import cn.bdqn.util.PageUtil;
 @Service("customerService")
 public class CustomerServiceImpl implements CustomerService {
 	
-	@Resource(name="customerMapper")
+	@Autowired
 	private CustomerMapper customerMapper;
 
 	@Override
@@ -41,10 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerMapper.add(customer);
 	}
 
-	@Override
-	public int delete(int customerId) {
-		return customerMapper.delete(customerId);
-	}
+	
 
 	@Override
 	public Customer updateById(String id) {
@@ -55,5 +53,13 @@ public class CustomerServiceImpl implements CustomerService {
 	public int update(Customer customer) {
 		return customerMapper.update(customer);
 	}
+
+	@Override
+	public int delete(String customerId) {
+		// TODO Auto-generated method stub
+		return customerMapper.delete(customerId);
+	}
+
+	
 
 }

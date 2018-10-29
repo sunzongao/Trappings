@@ -14,7 +14,7 @@ public interface CustomerMapper {
 	
 	public int add(Customer customer);  //添加客户信息
 	
-	public int delete(int customerId);
+	public int delete(String  customerId);
 	
 	
 	//编辑客户信息
